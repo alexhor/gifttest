@@ -15,21 +15,15 @@ class PluginLoader {
 		new SettingsPage;
 	}
 
-	public function setup() {
-		/*
-		 * Run plugin first time setup
-		 */
-	}
-	
 	public function init() {
 		/*
 		 * Initialise the plugin
 		 */
-		// load test domain
-		load_plugin_textdomain( 'gifttest', false, 'lang/' );
+		$pluginDir = dirname( plugin_basename( __DIR__ ) ) . '/lang';
+		load_plugin_textdomain( 'gifttest', false, $pluginDir );
 		Shortcode::register();
 	}
-	
+
 	public function adminScripts() {
 		/*
 		 * Register scripts and styles for the admin panel

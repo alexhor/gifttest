@@ -19,7 +19,27 @@ class Content extends Element {
 		$data = wp_parse_args( $data, [
 			'text' => '',
 		]);
-		$data['text'] = wp_kses_post( $data['text'] );
+		$this->sanitizeData();
 		parent::__construct( $id, $data );
+	}
+
+	private function sanitizeData() {
+		/*
+		 * Sanitize this elements data
+		 */
+		$this->data['text'] = wp_kses_post( $this->data['text'] );
+	}
+
+	public function jsonSerialize() {
+		/*
+		 * Return a json serializeable representation of the content element
+		 * @return array
+		 */
+		$this->sanitizeData();
+		return [
+			'id' => (int) esc_attr( $this->getId() ),
+			'type' => (int) esc_attr( $this->getType() ),
+			'data' => $this->data,
+		];
 	}
 }

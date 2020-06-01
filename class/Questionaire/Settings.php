@@ -154,6 +154,8 @@ class Settings implements \JsonSerializable {
 		foreach ( $this->settings as &$setting ) {
 			$setting = esc_attr( $setting );
 		}
+		$this->settings['id'] = (int) $this->settings['id'];
+		$this->settings['shownTalentCount'] = (int) $this->settings['shownTalentCount'];
 		return $this->settings;
 	}
 

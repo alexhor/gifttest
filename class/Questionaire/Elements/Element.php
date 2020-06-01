@@ -64,8 +64,8 @@ abstract class Element implements IElement, \JsonSerializable {
 		}
 
 		return [
-			'id' => esc_attr( $this->getId() ),
-			'type' => esc_attr( $this->getType() ),
+			'id' => (int) esc_attr( $this->getId() ),
+			'type' => (int) esc_attr( $this->getType() ),
 			'data' => $this->data,
 		];
 	}

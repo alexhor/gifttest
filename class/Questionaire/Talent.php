@@ -19,6 +19,17 @@ class Talent implements \JsonSerializable {
 		]);
 	}
 
+	private function sanitizeData() {
+		/*
+		 * Sanitize this elements data
+		 */
+		$this->data['text'] = wp_kses_post( $this->data['text'] );
+		$this->data['title'] = esc_html( $this->data['title'] );
+		foreach ( $this->data['questionList'] as &$questionId ) {
+			$questionId = esc_attr( $questionId );
+		}
+	}
+
 	public function getId() {
 		/*
 		 * Get the talents id
@@ -60,14 +71,10 @@ class Talent implements \JsonSerializable {
 		 * Return a json serializeable representation of the talent
 		 * @return array
 		 */
-		$this->data['text'] = wp_kses_post( $this->data['text'] );
-		$this->data['title'] = esc_html( $this->data['title'] );
-		foreach ( $this->data['questionList'] as &$questionId ) {
-			$questionId = esc_attr( $questionId );
-		}
+		$this->sanitizeData();
 
 		return [
-			'id' => esc_attr( $this->getId() ),
+			'id' => (int) esc_attr( $this->getId() ),
 			'data' => $this->data,
 		];
 	}

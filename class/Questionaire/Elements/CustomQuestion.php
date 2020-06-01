@@ -76,8 +76,8 @@ class CustomQuestion extends Element {
 		}
 
 		return [
-			'id' => esc_attr( $this->getId() ),
-			'type' => esc_attr( $this->getType() ),
+			'id' => (int) esc_attr( $this->getId() ),
+			'type' => (int) esc_attr( $this->getType() ),
 			'data' => $data,
 		];
 	}
@@ -115,7 +115,7 @@ class CustomQuestionAnswer implements \JsonSerializable {
 		 * @return array
 		 */
 		return [
-			'id' => $this->getId(),
+			'id' => (int) $this->getId(),
 			'text' => $this->data['text'],
 			'value' => $this->data['value'],
 		];

@@ -203,7 +203,7 @@ class SettingsPage {
 		$element = ElementFactory::get( $questionaireId, $questionId );
 		if ($element === false) $element = ElementFactory::create( $questionaireId, $questionId, ElementType::CustomQuestion );
 		// the element has to be a custom question
-		if ( $element === false || $element->getType() !== ElementType::CustomQuestion ) return $this::jsonResponse( false, [ 'message' => __( 'Creating Answer failed', 'gifttest' ) ] );
+		if ( $element === false || $element->getType() !== ElementType::CustomQuestion ) return $this::jsonResponse( false, [ 'message' => __( 'Creating answer failed', 'gifttest' ) ] );
 
 		// create a new answer
 		$answer = $element->getAnswer( $answerId );

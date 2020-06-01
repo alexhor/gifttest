@@ -63,7 +63,7 @@ class Answer implements \JsonSerializable {
 		$this->data['content'] = esc_html( $this->data['content'] );
 
 		return [
-			'id' => esc_attr( $this->getId() ),
+			'id' => (int) esc_attr( $this->getId() ),
 			'data' => $this->data,
 		];
 	}

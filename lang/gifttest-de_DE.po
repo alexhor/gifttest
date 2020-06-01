@@ -1,0 +1,301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gifttest\n"
+"POT-Creation-Date: 2020-06-01 19:09+0200\n"
+"PO-Revision-Date: 2020-06-01 19:09+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;"
+"_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;"
+"esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: .git\n"
+"X-Poedit-SearchPathExcluded-1: node_modules\n"
+"X-Poedit-SearchPathExcluded-2: js\n"
+
+#: class/PluginLoader.php:72
+msgid "Load Questionaire"
+msgstr "Fragebogen Laden"
+
+#: class/PluginLoader.php:73
+msgid "No questionaire exists yet"
+msgstr "Es existiert noch kein Fragebogen"
+
+#: class/PluginLoader.php:74
+msgid "Add Questionaire"
+msgstr "Fragebogen Hinzufügen"
+
+#: class/PluginLoader.php:75
+msgid "Questionaire Name"
+msgstr "Name des Fragebogens"
+
+#: class/PluginLoader.php:76
+msgid "Edit Questionaire"
+msgstr "Fragebogen Bearbeiten"
+
+#: class/PluginLoader.php:77
+msgid "Name"
+msgstr "Name"
+
+#: class/PluginLoader.php:78
+msgid "Number of talents shown"
+msgstr "Anzahl der angezeigten Talente"
+
+#: class/PluginLoader.php:79
+msgid "Enabel show more talents button"
+msgstr "Zeigen mehr Talente Knopf aktiviert"
+
+#: class/PluginLoader.php:80
+msgid "Yes"
+msgstr "Ja"
+
+#: class/PluginLoader.php:81
+msgid "No"
+msgstr "Nein"
+
+#: class/PluginLoader.php:82
+msgid "Elements"
+msgstr "Elemente"
+
+#: class/PluginLoader.php:83
+msgid "Add Element"
+msgstr "Element Hinzufügen"
+
+#: class/PluginLoader.php:84
+msgid "Text"
+msgstr "Text"
+
+#: class/PluginLoader.php:85
+msgid "Question"
+msgstr "Frage"
+
+#: class/PluginLoader.php:86
+msgid "Delete Element"
+msgstr "Element Löschen"
+
+#: class/PluginLoader.php:87
+msgid "Custom Question"
+msgstr "Benutzerdefinierte Frage"
+
+#: class/PluginLoader.php:88
+msgid "Answers"
+msgstr "Antworten"
+
+#: class/PluginLoader.php:89
+msgid "Answer"
+msgstr "Antwort"
+
+#: class/PluginLoader.php:90
+msgid "Answer Content"
+msgstr "Antwort Inhalt"
+
+#: class/PluginLoader.php:91
+msgid "Answer Value"
+msgstr "Antwort Wert"
+
+#: class/PluginLoader.php:92
+msgid "Add Answer"
+msgstr "Antwort Hinzufügen"
+
+#: class/PluginLoader.php:93
+msgid "Edit Answers"
+msgstr "Antwort Bearbeiten"
+
+#: class/PluginLoader.php:94
+msgid "Talents"
+msgstr "Talente"
+
+#: class/PluginLoader.php:95
+msgid "Talent"
+msgstr "Talent"
+
+#: class/PluginLoader.php:96
+msgid "Edit Talents"
+msgstr "Talente Bearbeiten"
+
+#: class/PluginLoader.php:97
+msgid "Talent Title"
+msgstr "Talent Titel"
+
+#: class/PluginLoader.php:98
+msgid "Talent Text"
+msgstr "Talent Text"
+
+#: class/PluginLoader.php:99
+msgid "Add Talent"
+msgstr "Talent Hinzufügen"
+
+#: class/PluginLoader.php:100
+msgid "Question List"
+msgstr "Fragen Liste"
+
+#: class/PluginLoader.php:101
+msgid "Add Question"
+msgstr "Frage Hinzufügen"
+
+#: class/PluginLoader.php:102
+msgid "Content"
+msgstr "Inhalt"
+
+#: class/PluginLoader.php:103
+msgid "Invalid Element"
+msgstr "Ungültiges Element"
+
+#: class/PluginLoader.php:104
+msgid "Save"
+msgstr "Speichern"
+
+#: class/PluginLoader.php:105
+msgid "Delete"
+msgstr "Löschen"
+
+#: class/PluginLoader.php:106
+msgid "Export"
+msgstr "Exportieren"
+
+#: class/PluginLoader.php:107
+msgid "Import Questionaire"
+msgstr "Fragebogen Importieren"
+
+#: class/PluginLoader.php:108
+msgid "Import Failed - Invalid File Content"
+msgstr "Importieren Fehlgeschlagen - Ungültiger Dateiinhalt"
+
+#: class/PluginLoader.php:109
+msgid "Import Successful - Save the questionaire if you want to keep it"
+msgstr ""
+"Import Erfolgreich - Speichere den Fragebogen, wenn du ihn behalten möchtest"
+
+#: class/PluginLoader.php:110
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: class/PluginLoader.php:111
+msgid "Copy"
+msgstr "Kopieren"
+
+#: class/PluginLoader.php:112
+msgid "Copy to clipboard"
+msgstr "In die Zwischenablage kopieren"
+
+#: class/PluginLoader.php:113
+msgid "Copied!"
+msgstr "Kopiert!"
+
+#: class/PluginLoader.php:114
+msgid "Edit Elements"
+msgstr "Elemente Bearbeiten"
+
+#: class/PluginLoader.php:115
+msgid "Do you really want to delete this questionaire?"
+msgstr "Willst du den Fragebogen wirklich löschen?"
+
+#: class/SettingsPage.php:43 class/SettingsPage.php:44
+#: class/SettingsPage.php:58
+msgid "Gift Test"
+msgstr "Gaben Test"
+
+#: class/SettingsPage.php:101
+#, php-format
+msgid "Questionaire \"%s\" created"
+msgstr "Fragebogen \"%s\" erstellt"
+
+#: class/SettingsPage.php:117
+msgid "Invalid data"
+msgstr "Ungültige Daten"
+
+#: class/SettingsPage.php:123
+msgid "Questionaire saved"
+msgstr "Fragebogen gespeichert"
+
+#: class/SettingsPage.php:124
+msgid "Saving questionaire failed"
+msgstr "Fragebogen speichern fehlgeschlagen"
+
+#: class/SettingsPage.php:159
+msgid "Questionaires successfully loaded"
+msgstr "Fragebogen erfolgreich geladen"
+
+#: class/SettingsPage.php:171
+msgid "Questionaire details loading failed"
+msgstr "Fragebogen Details laden fehlgeschlagen"
+
+#: class/SettingsPage.php:172
+msgid "Questionaire details successfully loaded"
+msgstr "Fragebogen Details erfolgreich geladen"
+
+#: class/SettingsPage.php:188
+msgid "Creating element failed"
+msgstr "Element erstellen fehlgeschlagen"
+
+#: class/SettingsPage.php:189
+msgid "Element created"
+msgstr "Element erstellt"
+
+#: class/SettingsPage.php:206 class/SettingsPage.php:225
+msgid "Creating answer failed"
+msgstr "Antwort erstellen fehlgeschlagen"
+
+#: class/SettingsPage.php:210 class/SettingsPage.php:226
+msgid "Answer created"
+msgstr "Antwort erstellt"
+
+#: class/SettingsPage.php:241
+msgid "Creating talent failed"
+msgstr "Talent erstellen fehlgeschlagen"
+
+#: class/SettingsPage.php:242
+msgid "Talent created"
+msgstr "Talent erstellt"
+
+#: class/SettingsPage.php:251
+msgid "Permission denied"
+msgstr "Erlaubnis verweigert"
+
+#: class/SettingsPage.php:255
+msgid "Questionaire deleted"
+msgstr "Fragebogen gelöscht"
+
+#: class/SettingsPage.php:256
+msgid "Deleting questionaire failed"
+msgstr "Fragebogen löschen fehlgeschlagen"
+
+#: class/Shortcode.php:28
+msgid "Continue"
+msgstr "Weiter"
+
+#: class/Shortcode.php:29
+msgid "Back"
+msgstr "Zurück"
+
+#: class/Shortcode.php:30
+msgid "Scoreboard"
+msgstr "Auswertung"
+
+#: class/Shortcode.php:31
+msgid "Print talent list"
+msgstr "Talent Liste ausdrucken"
+
+#: class/Shortcode.php:32
+msgid "Point"
+msgstr "Punkt"
+
+#: class/Shortcode.php:33
+msgid "Points"
+msgstr "Punkte"
+
+#: class/Shortcode.php:34
+msgid "Show more talents"
+msgstr "Mehr Talente anzeigen"
+
+#, fuzzy
+#~ msgid "Creating Answer failed"
+#~ msgstr "Antwort erstellen fehlgeschlagen"
