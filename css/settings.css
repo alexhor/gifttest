@@ -1,0 +1,260 @@
+/* general */
+.tableBodyHidden {
+	display: none;
+}
+
+th {
+	text-align: left;
+}
+
+tr > td:first-child {
+	padding-right: 20px;
+	min-width: 75px;
+}
+
+.wrap {
+	padding-bottom: 150px;
+}
+
+.action {
+	cursor: pointer;
+}
+/* end of general */
+
+/* buttons */
+.wp-core-ui  button.button {
+	margin-right: 40px;
+}
+
+.wp-core-ui  button.button.loading {
+	margin-right: 12px;
+}
+
+button.loading::after {
+	content: '';
+	background-image: url('../image/loading.svg');
+	width: 30px;
+	display: inline-block;
+	height: 25px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+	margin-top: -5px;
+	margin-right: -11px;
+	margin-left: 5px;
+}
+
+.button.button-success {
+	background-color: #28a745;
+	border-color: #28a745;
+	color: #ffffff;
+}
+
+.button.button-success:focus, .button.button-success:hover, .button.button-success:active {
+	background-color: #218838;
+	border-color: #1e7e34;
+	color: #ffffff;
+}
+
+.button.button-danger {
+	background-color: #dc3545;
+	border-color: #dc3545;
+	color: #ffffff;
+}
+
+.button.button-danger:focus, .button.button-danger:hover, .button.button-danger:active {
+	background-color: #c82333;
+	border-color: #bd2130;
+	color: #ffffff;
+}
+
+.button.button-info {
+	background-color: #17a2b8;
+	border-color: #17a2b8;
+	color: #ffffff;
+}
+
+.button.button-info:focus, .button.button-info:hover, .button.button-info:active {
+	background-color: #138496;
+	border-color: #117a8b;
+	color: #ffffff;
+}
+
+button.button-copy {
+	cursor: pointer;
+	height: 20px;
+	width: 20px;
+	vertical-align: super;
+	border: none;
+}
+/* end of buttons */
+
+/* questionaire */
+.questionaireSelectorWrapper {
+	padding-bottom: 14px;
+}
+
+.shortcode > * {
+	display: inline-block;
+}
+/* end of questionaire */
+
+/* quick menu */
+.quickMenuWrapper {
+	position: relative;
+}
+
+.quickMenuWrapper > button.button {
+	display: block;
+}
+
+.quickMenuWrapper .quickMenu {
+	display: inline-flex;
+	flex-direction: column;
+	padding: 1px 10px;
+}
+
+.quickMenuWrapper .quickMenu > * {
+	display: inline-table;
+}
+/* end of quick menu */
+
+/* elements */
+.elements, .answers, .talents {
+	padding: 10px;
+	border: 1px solid #ddd;
+	margin: 15px 0px;
+	border-radius: 7px;
+}
+
+.elements .element {
+	padding: 5px 20px;
+	border: 1px solid #7e8993;
+	border-radius: 6px;
+	background-color: #f3f5f6;
+	margin-bottom: 5px;
+}
+
+.elements .element:focus, .elements .element:hover, .elements .element:active {
+	background-color: #f1f1f1;
+}
+
+.elements .element.sortable-chosen {
+	background-color: white;
+}
+
+.elements .open-panel {
+	cursor: pointer;
+	display: inline-block;
+}
+
+.elements .drag-handle, .elements .answer-drag-handle {
+	cursor: ns-resize;
+}
+
+.elements .elementContents {
+	display: none;
+}
+
+.elements .toggleElementContents, .elements .elementContentsCounterpart, .toggleContents, .contentsCounterpart {
+	cursor: pointer;
+}
+
+.elements .toggleElementContents, .toggleContents {
+	margin-top: 2px;
+}
+
+.talents .talentQuestion {
+	margin: 5px 10px 5px 0px;
+	display: inline-block;
+	padding: 3px 0px 3px 5px;
+	border: 1px solid gray;
+	border-radius: 3px;
+}
+/* end of elements */
+
+/* icons */
+.icon {
+	display: inline-block;
+	height: 15px;
+	width: 15px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center center;
+	margin-bottom: -3px;
+	margin-right: 5px;
+}
+
+.icon-align-justify {
+	background-image: url( '../image/align-justify-solid.svg' );
+}
+
+.icon-trash {
+	background-image: url( '../image/trash-alt-regular.svg' );
+}
+
+.icon-trash-solid {
+	background-image: url( '../image/trash-alt-solid.svg' );
+}
+
+.icon-copy {
+	background-image: url( '../image/copy.svg' );
+}
+
+.icon-edit {
+	background-image: url( '../image/edit.svg' );
+}
+/* end of icons */
+
+/* tooltip */
+.has-tooltip {
+	position: relative;
+}
+
+.has-tooltip .tooltip {
+	display: none;
+	position: absolute;
+	bottom: 100%;
+	background-color: black;
+	color: white;
+	left: 50%;
+	transform: translate(-50%, -8px);
+	padding: 3px 5px;
+	margin: 0;
+	border-radius: 5px;
+}
+
+.has-tooltip .tooltip:after {
+	content: ' ';
+	display: block;
+	width: 0;
+	height: 0;
+	border-color: black transparent transparent transparent;
+	border-style: solid;
+	border-width: 5px;
+	bottom: -10px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.has-tooltip:focus .tooltip.focus {
+	display: block;
+}
+
+.has-tooltip:hover .tooltip.hover {
+	display: block;
+}
+
+.has-tooltip:active .tooltip.active {
+	display: block;
+}
+
+.has-tooltip:focus .tooltip.hover {
+	display: none;
+}
+
+.has-tooltip:active .tooltip.hover, .has-tooltip:active .tooltip.focus {
+	display: none;
+}
+/* end of tooltip */

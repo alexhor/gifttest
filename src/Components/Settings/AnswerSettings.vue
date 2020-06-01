@@ -1,0 +1,187 @@
+<template>
+	<div class="answers elements">
+		<h3 class="toggleContents" @click="toggleContents">
+			{{ text.answers }}
+		</h3>
+
+		<div
+			ref="contentsCounterpart"
+			class="contentsCounterpart"
+			@click="toggleContents">
+			<i class="icon icon-edit" />
+			{{ text.editAnswers }}
+		</div>
+
+		<div ref="contents" class="contents hidden">
+			<draggable
+				v-model="answerList"
+				handle=".drag-handle"
+				draggable=".answer"
+				@input="emitAnswerListUpdate">
+				<div
+					v-for="(answer, i) in answerList"
+					:key="i"
+					class="answer element">
+					<table>
+						<thead>
+							<tr>
+								<th colspan="2">
+									<i class="icon icon-align-justify drag-handle" />
+									<p class="open-panel">
+										{{ answer.data.content }}
+									</p>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<label :for="'answerContent_' + answer.id">
+										{{ text.answerContent }}
+									</label>
+								</td>
+								<td>
+									<input
+										:id="'answerContent_' + answer.id"
+										v-model="answer.data.content"
+										type="text"
+										:placeholder="text.answerContent"
+										@input="emitAnswerListUpdate">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label :for="'answerValue_' + answer.id">
+										{{ text.answerValue }}
+									</label>
+								</td>
+								<td>
+									<input
+										:id="'answerValue_' + answer.id"
+										v-model="answer.data.value"
+										type="number"
+										:placeholder="text.answerValue"
+										@input="emitAnswerListUpdate">
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<button class="button button-danger" @click="deleteAnswer(answer.id)">
+										{{ text.delete }}
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div slot="footer">
+					<button
+						:class="{ loading: addingAnswerInProgress }"
+						:disabled="addingAnswerInProgress"
+						class="button button-primary"
+						@click="addAnswer">
+						{{ text.addAnswer }}
+					</button>
+				</div>
+			</draggable>
+		</div>
+	</div>
+</template>
+
+<script>
+import Vue from 'vue'
+import $ from 'jquery'
+import draggable from 'vuedraggable'
+import utilities from '../Utilities.js'
+const displayMessage = utilities.displayMessage
+/* global ajaxurl */
+/* global gifttest */
+
+export default {
+	name: 'AnswerSettings',
+	components: {
+		draggable,
+	},
+	props: {
+		value: {
+			type: Array,
+			required: true,
+			default: function() { return [] },
+		},
+		questionaireId: {
+			type: Number,
+			required: true,
+		},
+		text: {
+			type: Object,
+			required: true,
+		},
+	},
+	data: function() {
+		return {
+			answerList: this.value,
+			addingAnswerInProgress: false,
+		}
+	},
+	watch: {
+		value: function(newValue, oldValue) {
+			this.answerList = newValue
+		},
+	},
+	methods: {
+		displayMessage,
+		deleteAnswer(answerId) {
+			const self = this
+
+			$.each(self.answerList, function(i, answer) {
+				if (answer.id === answerId) {
+					Vue.delete(self.answerList, i)
+					return false
+				}
+			})
+		},
+		highestAnswerId() {
+			let highestId = 0
+			$.each(this.answerList, function(i, answer) {
+				if (answer.id > highestId) highestId = answer.id
+			})
+			return highestId
+		},
+		addAnswer() {
+			const self = this
+
+			// only one request allowed at a time
+			if (self.addingAnswerInProgress) return
+			else self.addingAnswerInProgress = true
+
+			/* create new answer */
+			// collect data
+			const requestData = {
+				_ajax_nonce: gifttest._ajax_nonce.create_answer,
+				action: 'gifttest_create_questionaire_answer',
+				id: self.highestAnswerId() + 1,
+				questionaireId: self.questionaireId,
+			}
+
+			// do request
+			$.post(ajaxurl, requestData, function(response) {
+				if (response.status === 'success') {
+					self.answerList.push(response.data)
+				} else {
+					self.displayMessage(response.message, response.status)
+				}
+				// loading done
+				self.addingAnswerInProgress = false
+			}, 'json')
+		},
+		toggleContents() {
+			$(this.$refs.contents).toggle()
+			$(this.$refs.contentsCounterpart).toggle()
+		},
+		emitAnswerListUpdate() {
+			this.$emit('input', this.answerList)
+		},
+	},
+}
+</script>

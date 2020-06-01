@@ -1,0 +1,93 @@
+app_name=TalentTest
+
+project_dir=$(CURDIR)
+build_dir=$(CURDIR)/build
+appstore_dir=$(build_dir)/appstore
+source_dir=$(build_dir)/source
+sign_dir=$(build_dir)/sign
+package_name=$(app_name)
+version+=0.0.1
+
+
+all: dev-setup lint build-js-production test
+
+release: npm-init build-js-production appstore
+
+# Dev env management
+dev-setup: clean clean-dev npm-init
+
+npm-init:
+	npm install
+
+npm-update:
+	npm update
+
+# Building
+build-js:
+	npm run dev
+
+build-js-production:
+	npm run build
+
+watch-js:
+	npm run watch
+
+# Testing
+test:
+	npm run test
+
+test-watch:
+	npm run test:watch
+
+test-coverage:
+	npm run test:coverage
+
+# Linting
+lint:
+	npm run lint
+
+lint-fix:
+	npm run lint:fix
+
+# Style linting
+stylelint:
+	npm run stylelint "**/*.css"
+
+stylelint-fix:
+	npm run stylelint:fix "**/*.css"
+
+# Cleaning
+clean:
+	rm -f js/$(app_name)_*.js
+	rm -f js/$(app_name)_*.js.map
+
+clean-dev:
+	rm -rf node_modules
+
+create-tag:
+	git tag -a v$(version) -m "Tagging the $(version) release."
+	git push origin v$(version)
+
+appstore:
+	rm -rf $(build_dir)
+	mkdir -p $(build_dir)
+	rsync -a \
+	--exclude=.git \
+	--exclude=build \
+	--exclude=node_modules \
+	--exclude=.babelrc.js \
+	--exclude=.eslintrc.js \
+	--exclude=.stylelintrc.js \
+	--exclude=.gitignore \
+	--exclude=Makefile \
+	--exclude=package.json \
+	--exclude=package-lock.json \
+	--exclude=webpack.common.js \
+	--exclude=webpack.dev.js \
+	--exclude=webpack.prod.js \
+	--exclude=js/**.js.map \
+	--exclude=README.md \
+	--exclude=src \
+	$(project_dir)/  $(build_dir)/$(app_name)
+	tar -czf $(build_dir)/$(app_name)-$(version).tar.gz \
+		-C $(build_dir) $(app_name)
