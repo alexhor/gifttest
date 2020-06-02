@@ -21,6 +21,9 @@ npm-init:
 npm-update:
 	npm update
 
+todo:
+	grep -r --exclude-dir build --exclude-dir js --exclude-dir node_modules "TODO"
+
 # Building
 build-js:
 	npm run dev
