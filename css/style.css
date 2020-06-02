@@ -71,7 +71,7 @@
 	font-size: 22px;
 	padding: 10px 10px 10px 35px;
 }
-			
+/*
 .answerWrapper .answer .answerInner:hover input[type='radio'] + .customCheckbox {
 	background-color: #ccc;
 }
@@ -121,6 +121,7 @@
 		padding: 0px 30px;
 	}
 }
+*/
 /* end of answer */
 
 /* scoreboard */

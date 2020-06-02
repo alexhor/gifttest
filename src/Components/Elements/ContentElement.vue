@@ -1,5 +1,6 @@
 <template>
 	<div class="element content-element">
+		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div class="content-wrapper" v-html="element.data.text" />
 
 		<button v-if="prevElementExists" class="button button-secondary" @click="prevElement">

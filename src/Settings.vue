@@ -164,9 +164,11 @@
 
 <script>
 import $ from 'jquery'
+
 import ElementSettings from './Components/Settings/ElementSettings.vue'
 import AnswerSettings from './Components/Settings/AnswerSettings.vue'
 import TalentSettings from './Components/Settings/TalentSettings.vue'
+
 import utilities from './Components/Utilities.js'
 const displayMessage = utilities.displayMessage
 const copyToClipboard = utilities.copyToClipboard

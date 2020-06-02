@@ -28,7 +28,7 @@ class PluginLoader {
 		/*
 		 * Register scripts and styles for the admin panel
 		 */
-		wp_register_script( 'gifttest-settings', plugin_dir_url( __FILE__ ) . '../js/GiftTest_Settings.js' );
+		wp_register_script( 'gifttest-settings', plugin_dir_url( __FILE__ ) . '../js/gifttest_Settings.js' );
 		wp_localize_script( 'gifttest-settings', 'gifttest', [
 			'plugin_dir_url' => plugin_dir_url( __DIR__ . '..' ),
 			'_ajax_nonce' => [
@@ -52,7 +52,7 @@ class PluginLoader {
 		/*
 		 * Register normal scripts and styles
 		 */
-		wp_register_script( 'gifttest-questionaire', plugin_dir_url( __FILE__ ) . '../js/GiftTest_Questionaire.js' );
+		wp_register_script( 'gifttest-questionaire', plugin_dir_url( __FILE__ ) . '../js/gifttest_Questionaire.js' );
 		wp_register_style( 'gifttest-style', plugin_dir_url( __FILE__ ) . '../css/style.css' );
 	}
 

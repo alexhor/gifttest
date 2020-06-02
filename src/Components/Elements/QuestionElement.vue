@@ -76,7 +76,7 @@ export default {
 			setTimeout(function() {
 				// only omit if the user didn't change his mind
 				if (self.latestRequestId === requestId) self.$emit('next', answer.id)
-			}, 0) // TODO: reset to 500
+			}, 500)
 		},
 	},
 }

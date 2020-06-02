@@ -9,6 +9,7 @@
 		<div ref="scoreboard" class="scoreboard">
 			<div v-for="talent in shownOrderedTalentList" :key="talent.id" class="score">
 				<h3>{{ talent.data.title }} ({{ scoreText(talentScores[talent.id]) }})</h3>
+				<!-- eslint-disable-next-line vue/no-v-html -->
 				<div v-html="talent.data.text" />
 			</div>
 
@@ -20,6 +21,7 @@
 				<div ref="moreTalents" style="display: none;">
 					<div v-for="talent in moreOrderedTalentList" :key="talent.id" class="score">
 						<h3>{{ talent.data.title }} ({{ scoreText(talentScores[talent.id]) }})</h3>
+						<!-- eslint-disable-next-line vue/no-v-html -->
 						<div v-html="talent.data.text" />
 					</div>
 				</div>

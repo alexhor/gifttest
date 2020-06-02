@@ -1,5 +1,5 @@
 {
-	"name": "GiftTest",
+	"name": "gifttest",
 	"description": "Online Gift Test",
 	"version": "0.0.1",
 	"author": "Alexander Hornig <alexander@h-software.de>",
@@ -34,8 +34,6 @@
 		"jquery": "^3.4.1",
 		"vue": "^2.6.11",
 		"vuedraggable": "^2.23.2",
-		"jspdf": "^1.5.3",
-		"sjcl": "^1.0.8",
 		"@tinymce/tinymce-vue": "^3.2.1"
 	},
 	"engines": {
@@ -64,8 +62,10 @@
 		"node-sass": "^4.14.1",
 		"sass": "^1.26.3",
 		"sass-loader": "^8.0.2",
+		"@wordpress/eslint-plugin": "^6.1.0",
 		"stylelint": "^13.3.1",
 		"stylelint-webpack-plugin": "^1.2.3",
+		"stylelint-config-recommended": "^3.0.0",
 		"vue-loader": "^15.9.1",
 		"vue-style-loader": "^4.1.2",
 		"vue-template-compiler": "^2.6.11",

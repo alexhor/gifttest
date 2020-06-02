@@ -1,17 +1,16 @@
-app_name=TalentTest
+app_name=gifttest
 
 project_dir=$(CURDIR)
 build_dir=$(CURDIR)/build
 appstore_dir=$(build_dir)/appstore
 source_dir=$(build_dir)/source
 sign_dir=$(build_dir)/sign
-package_name=$(app_name)
 version+=0.0.1
 
 
-all: dev-setup lint build-js-production test
+all: dev-setup lint stylelint build-js-production test
 
-release: npm-init build-js-production appstore
+release: npm-init build-js-production lint stylelint appstore
 
 # Dev env management
 dev-setup: clean clean-dev npm-init
@@ -75,7 +74,6 @@ appstore:
 	--exclude=.git \
 	--exclude=build \
 	--exclude=node_modules \
-	--exclude=.babelrc.js \
 	--exclude=.eslintrc.js \
 	--exclude=.stylelintrc.js \
 	--exclude=.gitignore \
@@ -88,6 +86,7 @@ appstore:
 	--exclude=js/**.js.map \
 	--exclude=README.md \
 	--exclude=src \
+	--exclude=lang/**.po \
 	$(project_dir)/  $(build_dir)/$(app_name)
 	tar -czf $(build_dir)/$(app_name)-$(version).tar.gz \
 		-C $(build_dir) $(app_name)
