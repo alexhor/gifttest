@@ -19,35 +19,35 @@ module.exports = {
 		rules: [
 			{
 				test: /\.css$/,
-				exclude: [ /node_modules/ ],
+				exclude: [ /node_modules/, /wpcs/ ],
 				use: ['vue-style-loader', 'css-loader']
 			},
 			{
 				test: /\.scss$/,
-				exclude: [ /node_modules/ ],
+				exclude: [ /node_modules/, /wpcs/ ],
 				use: ['vue-style-loader', 'css-loader', 'sass-loader']
 			},
 			{
 				test: /\.(js|vue)$/,
 				use: 'eslint-loader',
-				exclude: [ /node_modules/, /\.min\.js$/ ],
+				exclude: [ /node_modules/, /wpcs/, /\.min\.js$/ ],
 				enforce: 'pre'
 			},
 			{
 				test: /\.vue$/,
 				loader: 'vue-loader',
-				exclude: /node_modules/
+				exclude: [ /node_modules/, /wpcs/ ],
 			},
 			{
 				test: /\.js$/,
 				loader: 'babel-loader',
-				exclude: /node_modules/
+				exclude: [ /node_modules/, /wpcs/ ],
 			}
 		]
 	},
 	plugins: [
 		new VueLoaderPlugin(),
-		new StyleLintPlugin({ files: "**/*.(sc|sa|c)ss" })
+		new StyleLintPlugin({ files: "css/*.(sc|sa|c)ss" })
 	],
 	resolve: {
 		extensions: ['*', '.js', '.vue']

@@ -48,19 +48,26 @@ test-watch:
 test-coverage:
 	npm run test:coverage
 
-# Linting
+# PHP Linting
 phplint:
 	./wpcs/vendor/bin/phpcs --standard=WordPress --colors --extensions=php -p class $(app_name).php uninstall.php
 
 phplint-fix:
 	./wpcs/vendor/bin/phpcbf --standard=WordPress --colors --extensions=php -p class $(app_name).php uninstall.php
 
+# js Linting
+jslint:
+	npm run jslint
+
+jslint-fix:
+	npm run jslint:fix
+
 # Style linting
 stylelint:
-	npm run stylelint "**/*.css"
+	npm run stylelint "css/*.css"
 
 stylelint-fix:
-	npm run stylelint:fix "**/*.css"
+	npm run stylelint:fix "css/*.css"
 
 # Cleaning
 clean:
