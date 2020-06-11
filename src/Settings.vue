@@ -305,12 +305,17 @@ export default {
 
 			// do request
 			$.post(ajaxurl, requestData, function(response) {
-				self.displayMessage(response.message, response.status)
-				// loading done
-				self.savingQuestionaire = false
+				if (typeof response.message !== 'undefined' && response.message !== null) {
+					self.displayMessage(response.message, response.status)
+				}
 				// make sure the questionaire list is up to date
 				self.loadQuestionaireList()
-			}, 'json')
+			}, 'json').fail(function() {
+				console.debug('Saving Questionaire failed')
+			}).always(function() {
+				// loading done
+				self.savingQuestionaire = false
+			})
 		},
 		deleteQuestionaire() {
 			if (confirm(this.text.really_delete_questionaire)) this.reallyDeleteQuestionaire()
@@ -331,13 +336,21 @@ export default {
 
 			// do request
 			$.post(ajaxurl, requestData, function(response) {
-				self.displayMessage(response.message, response.status)
+				if (typeof response.message !== 'undefined' && response.message !== null) {
+					self.displayMessage(response.message, response.status)
+				}
 				// loading done
 				self.deletingQuestionaire = false
 				self.loadedQuestionaire = false
 				// reload questionaire list
 				self.loadQuestionaireList()
-			}, 'json')
+			}, 'json').fail(function() {
+				console.debug('Deleting Questionaire failed')
+			}).always(function() {
+				// loading done
+				self.deletingQuestionaire = false
+				self.loadedQuestionaire = false
+			})
 		},
 		exportQuestionaire() {
 			const downloadContent = JSON.stringify(this.getQuestionaireAsJson(), null, 4)
@@ -367,12 +380,15 @@ export default {
 			$.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					self.availabeQuestionaireList = response.data
-				} else {
+				} else if (typeof response.message !== 'undefined' && response.message !== null) {
 					self.displayMessage(response.message, response.status)
 				}
+			}, 'json').fail(function() {
+				console.debug('Loading Questionaire list failed')
+			}).always(function() {
 				// loading done
 				self.loading = false
-			}, 'json')
+			})
 		},
 		loadQuestionaireDetails(id) {
 			const self = this
@@ -392,12 +408,15 @@ export default {
 			$.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					self.loadedQuestionaire = response.data
-				} else {
+				} else if (typeof response.message !== 'undefined' && response.message !== null) {
 					self.displayMessage(response.message, response.status)
 				}
-				// reactivate button
+			}, 'json').fail(function() {
+				console.debug('Loading Questionaire details failed')
+			}).always(function() {
+				// loading done
 				self.loadingQuestionaireDetails = false
-			}, 'json')
+			})
 		},
 		createQuestionaire() {
 			const self = this
@@ -423,7 +442,7 @@ export default {
 						id: response.questionaire_id,
 						name: response.questionaire_name,
 					})
-				} else {
+				} else if (typeof response.message !== 'undefined' && response.message !== null) {
 					self.displayMessage(response.message, response.status)
 				}
 				// reactivate button

@@ -122,8 +122,11 @@ if ( ! class_exists( 'Settings_Page' ) ) :
 		 */
 		public function create_questionaire() {
 			// Check permissions and origin.
-			if ( ! $this::current_user_can_modify_gift_tests() || ! check_ajax_referer( 'gifttest_modify_questionaire' ) || ! isset( $_REQUEST['name'] ) || empty( $_REQUEST['name'] ) ) {
+			if ( ! $this::current_user_can_modify_gift_tests() || ! check_ajax_referer( 'gifttest_modify_questionaire' ) || ! isset( $_REQUEST['name'] ) ) {
 				wp_die( 'Invalid request' );
+			}
+			if ( isset( $_REQUEST['name'] ) ) {
+				return $this::json_response( false, array() );
 			}
 
 			$name = sanitize_text_field( wp_unslash( $_REQUEST['name'] ) );

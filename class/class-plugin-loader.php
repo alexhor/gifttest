@@ -97,7 +97,7 @@ if ( ! class_exists( 'Plugin_Loader' ) ) :
 				'load_questionaire'                  => esc_html__( 'Load Questionaire', 'gifttest' ),
 				'no_questionaire_exists_yet'         => esc_html__( 'No questionaire exists yet', 'gifttest' ),
 				'add_questionaire'                   => esc_html__( 'Add Questionaire', 'gifttest' ),
-				'questionaire_name'                   => esc_html__( 'Questionaire Name', 'gifttest' ),
+				'questionaire_name'                  => esc_html__( 'Questionaire Name', 'gifttest' ),
 				'edit_questionaire'                  => esc_html__( 'Edit Questionaire', 'gifttest' ),
 				'name'                               => esc_html__( 'Name', 'gifttest' ),
 				'number_of_gifts_shown'              => esc_html__( 'Number of gifts shown', 'gifttest' ),
