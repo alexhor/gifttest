@@ -1,18 +1,18 @@
 <template>
 	<div class="elements">
-		<h3 class="toggle-element-contents" @click="toggle-element-contents">
+		<h3 class="toggle-element-contents" @click="toggleElementContents">
 			{{ text.elements }}
 		</h3>
 
 		<div
-			ref="element-contents-counterpart"
+			ref="elementContentsCounterpart"
 			class="element-contents-counterpart"
-			@click="toggle-element-contents">
+			@click="toggleElementContents">
 			<i class="icon icon-edit" />
 			{{ text.editElements }}
 		</div>
 
-		<div ref="element-contents" class="element-contents">
+		<div ref="elementContents" class="element-contents">
 			<draggable
 				v-model="elementList"
 				handle=".drag-handle"
@@ -370,9 +370,9 @@ export default {
 			if (body.hasClass('table-body-hidden')) body.removeClass('table-body-hidden')
 			else body.addClass('table-body-hidden')
 		},
-		toggle-element-contents() {
-			$(this.$refs.element-contents).toggle()
-			$(this.$refs.element-contents-counterpart).toggle()
+		toggleElementContents() {
+			$(this.$refs.elementContents).toggle()
+			$(this.$refs.elementContentsCounterpart).toggle()
 		},
 		emitElementListUpdate() {
 			this.$emit('input', this.elementList)
