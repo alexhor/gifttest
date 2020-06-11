@@ -5,12 +5,12 @@ build_dir=$(CURDIR)/build
 appstore_dir=$(build_dir)/appstore
 source_dir=$(build_dir)/source
 sign_dir=$(build_dir)/sign
-version+=0.0.1
+version+=1.0.0
 
 
 all: dev-setup lint stylelint build-js-production test
 
-release: npm-init build-js-production lint stylelint appstore
+release: npm-init build-js-production phplint jslint stylelint appstore
 
 # Dev env management
 dev-setup: clean clean-dev npm-init phplint-init
@@ -82,8 +82,10 @@ create-tag:
 	git push origin v$(version)
 
 appstore:
+	# clean previous builds
 	rm -rf $(build_dir)
 	mkdir -p $(build_dir)
+	# copy files
 	rsync -a \
 	--exclude=.git \
 	--exclude=build \
@@ -99,9 +101,16 @@ appstore:
 	--exclude=webpack.prod.js \
 	--exclude=js/**.js.map \
 	--exclude=README.md \
+	--exclude=**/.gitkeep \
 	--exclude=src \
 	--exclude=wpcs \
 	--exclude=lang/**.po \
 	$(project_dir)/  $(build_dir)/$(app_name)
+	# minify css
+	find $(build_dir)/$(app_name)/css/ -type f \
+		-name "*.css" ! -name "*.min.*" \
+		-exec echo {} \; \
+		-exec npm run uglifycss -- --output {} {} \;
+	# zip everything
 	tar -czf $(build_dir)/$(app_name)-$(version).tar.gz \
 		-C $(build_dir) $(app_name)

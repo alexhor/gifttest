@@ -28,7 +28,8 @@
 		"jslint": "eslint --ext .js,.vue src",
 		"jslint:fix": "eslint --ext .js,.vue src --fix",
 		"stylelint": "stylelint src",
-		"stylelint:fix": "stylelint src --fix"
+		"stylelint:fix": "stylelint src --fix",
+		"uglifycss": "uglifycss"
 	},
 	"dependencies": {
 		"jquery": "^3.4.1",
@@ -73,6 +74,7 @@
 		"webpack": "^4.42.1",
 		"webpack-cli": "^3.3.11",
 		"webpack-merge": "^4.2.2",
-		"webpack-node-externals": "^1.7.2"
+		"webpack-node-externals": "^1.7.2",
+		"uglifycss": "^0.0.29"
 	}
 }
