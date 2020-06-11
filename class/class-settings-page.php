@@ -125,7 +125,7 @@ if ( ! class_exists( 'Settings_Page' ) ) :
 			if ( ! $this::current_user_can_modify_gift_tests() || ! check_ajax_referer( 'gifttest_modify_questionaire' ) || ! isset( $_REQUEST['name'] ) ) {
 				wp_die( 'Invalid request' );
 			}
-			if ( isset( $_REQUEST['name'] ) ) {
+			if ( empty( $_REQUEST['name'] ) ) {
 				return $this::json_response( false, array() );
 			}
 

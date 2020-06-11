@@ -45,7 +45,7 @@ if ( ! class_exists( 'Settings' ) ) :
 					'id'               => 0,
 					'name'             => '',
 					'shown_gift_count' => 5,
-					'show_more_gifts'  => true,
+					'show_more_gifts'  => "true",
 				)
 			);
 
