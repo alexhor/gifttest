@@ -8,9 +8,9 @@ sign_dir=$(build_dir)/sign
 version+=1.0.0
 
 
-all: dev-setup lint stylelint build-js-production test
+all: release
 
-release: npm-init build-js-production phplint jslint stylelint appstore
+release: dev-setup phplint jslint stylelint build-js-production appstore
 
 # Dev env management
 dev-setup: clean clean-dev npm-init phplint-init
@@ -75,7 +75,7 @@ clean:
 	rm -f js/$(app_name)_*.js.map
 
 clean-dev:
-	rm -rf node_modules
+	rm -rf node_modules wpcs build
 
 create-tag:
 	git tag -a v$(version) -m "Tagging the $(version) release."
