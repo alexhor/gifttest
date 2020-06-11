@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once plugin_dir_path( __FILE__ ) . 'class/class-settings-page.php';
+
 
 $settings_page = new Settings_Page();
 $success       = true;
