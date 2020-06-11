@@ -13,13 +13,17 @@ all: dev-setup lint stylelint build-js-production test
 release: npm-init build-js-production lint stylelint appstore
 
 # Dev env management
-dev-setup: clean clean-dev npm-init
+dev-setup: clean clean-dev npm-init phplint-init
 
 npm-init:
 	npm install
 
 npm-update:
 	npm update
+
+phplint-init:
+	composer create-project wp-coding-standards/wpcs --no-dev
+	./wpcs/vendor/bin/phpcs --config-set installed_paths wpcs/
 
 todo:
 	grep -r --exclude-dir build --exclude-dir js --exclude-dir node_modules --exclude-dir .git "TODO"
@@ -45,11 +49,11 @@ test-coverage:
 	npm run test:coverage
 
 # Linting
-lint:
-	npm run lint
+phplint:
+	./wpcs/vendor/bin/phpcs --standard=WordPress --colors --extensions=php -p class $(app_name).php uninstall.php
 
-lint-fix:
-	npm run lint:fix
+phplint-fix:
+	./wpcs/vendor/bin/phpcbf --standard=WordPress --colors --extensions=php -p class $(app_name).php uninstall.php
 
 # Style linting
 stylelint:
@@ -89,6 +93,7 @@ appstore:
 	--exclude=js/**.js.map \
 	--exclude=README.md \
 	--exclude=src \
+	--exclude=wpcs \
 	--exclude=lang/**.po \
 	$(project_dir)/  $(build_dir)/$(app_name)
 	tar -czf $(build_dir)/$(app_name)-$(version).tar.gz \

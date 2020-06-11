@@ -25,8 +25,6 @@
 		"dev": "webpack --config webpack.dev.js",
 		"watch": "webpack --progress --watch --config webpack.dev.js",
 		"build": "webpack --progress --hide-modules --config webpack.prod.js",
-		"lint": "eslint --ext .js,.vue src",
-		"lint:fix": "eslint --ext .js,.vue src --fix",
 		"stylelint": "stylelint src",
 		"stylelint:fix": "stylelint src --fix"
 	},

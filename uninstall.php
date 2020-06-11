@@ -1,16 +1,20 @@
 <?php
-
-namespace GiftTest;
-
-if ( ! defined( 'ABSPATH' ) ) exit;
-
-/*
+/**
  * Cleanup all options on plugin uninstall
+ *
+ * @package gifttest
  */
 
-$settingsPage = new SettingsPage();
-$success = true;
-foreach ( $settingsPage->getQuestionaireList() as $questionaire ) {
+namespace Gift_Test;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+
+$settings_page = new Settings_Page();
+$success       = true;
+foreach ( $settings_page->get_questionaire_list() as $questionaire ) {
 	$success = $success && $questionaire->delete();
 }
 return $success;
