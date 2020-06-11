@@ -14,7 +14,7 @@
 			</div>
 
 			<div v-if="showMoreTalents && moreOrderedTalentList.length > 0">
-				<button class="showMoreTalentsToggle" @click="showMoreTalentsToggle">
+				<button class="show-more-talents-toggle" @click="show-more-talents-toggle">
 					{{ text.showMoreTalents }}
 				</button>
 
@@ -173,7 +173,7 @@ export default {
 
 			self.orderedTalentList.reverse()
 		},
-		showMoreTalentsToggle() {
+		show-more-talents-toggle() {
 			$(this.$refs.moreTalents).toggle()
 			this.moreTalentsShown = !this.moreTalentsShown
 		},

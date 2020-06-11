@@ -1,5 +1,5 @@
 /* general */
-.tableBodyHidden {
+.table-body-hidden {
 	display: none;
 }
 
@@ -8,8 +8,8 @@ th {
 }
 
 tr > td:first-child {
-	padding-right: 20px;
 	min-width: 75px;
+	padding-right: 20px;
 }
 
 .wrap {
@@ -21,8 +21,10 @@ tr > td:first-child {
 }
 /* end of general */
 
+
 /* buttons */
 .wp-core-ui  button.button {
+	color: #fff;
 	margin-right: 40px;
 }
 
@@ -31,66 +33,67 @@ tr > td:first-child {
 }
 
 button.loading::after {
-	content: '';
 	background-image: url('../image/loading.svg');
-	width: 30px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	content: '';
 	display: inline-block;
 	height: 25px;
-	background-size: contain;
-	background-repeat: no-repeat;
-	vertical-align: middle;
 	margin-top: -5px;
 	margin-right: -11px;
 	margin-left: 5px;
+	vertical-align: middle;
+	width: 30px;
 }
 
 .button.button-success {
 	background-color: #28a745;
 	border-color: #28a745;
-	color: #ffffff;
 }
 
-.button.button-success:focus, .button.button-success:hover, .button.button-success:active {
+.button.button-success:focus,
+.button.button-success:hover,
+.button.button-success:active {
 	background-color: #218838;
 	border-color: #1e7e34;
-	color: #ffffff;
 }
 
 .button.button-danger {
 	background-color: #dc3545;
 	border-color: #dc3545;
-	color: #ffffff;
 }
 
-.button.button-danger:focus, .button.button-danger:hover, .button.button-danger:active {
+.button.button-danger:focus,
+.button.button-danger:hover,
+.button.button-danger:active {
 	background-color: #c82333;
 	border-color: #bd2130;
-	color: #ffffff;
 }
 
 .button.button-info {
 	background-color: #17a2b8;
 	border-color: #17a2b8;
-	color: #ffffff;
 }
 
-.button.button-info:focus, .button.button-info:hover, .button.button-info:active {
+.button.button-info:focus,
+.button.button-info:hover,
+.button.button-info:active {
 	background-color: #138496;
 	border-color: #117a8b;
-	color: #ffffff;
 }
 
 button.button-copy {
+	border: none;
 	cursor: pointer;
 	height: 20px;
-	width: 20px;
 	vertical-align: super;
-	border: none;
+	width: 20px;
 }
 /* end of buttons */
 
+
 /* questionaire */
-.questionaireSelectorWrapper {
+.questionaire-selector-wrapper {
 	padding-bottom: 14px;
 }
 
@@ -99,43 +102,47 @@ button.button-copy {
 }
 /* end of questionaire */
 
+
 /* quick menu */
-.quickMenuWrapper {
+.quick-menu-wrapper {
 	position: relative;
 }
 
-.quickMenuWrapper > button.button {
+.quick-menu-wrapper > button.button {
 	display: block;
 }
 
-.quickMenuWrapper .quickMenu {
+.quick-menu-wrapper .quick-menu {
 	display: inline-flex;
 	flex-direction: column;
 	padding: 1px 10px;
 }
 
-.quickMenuWrapper .quickMenu > * {
+.quick-menu-wrapper .quick-menu > * {
 	display: inline-table;
 }
 /* end of quick menu */
 
+
 /* elements */
 .elements, .answers, .talents {
-	padding: 10px;
 	border: 1px solid #ddd;
-	margin: 15px 0px;
 	border-radius: 7px;
+	margin: 15px 0;
+	padding: 10px;
 }
 
 .elements .element {
-	padding: 5px 20px;
+	background-color: #f3f5f6;
 	border: 1px solid #7e8993;
 	border-radius: 6px;
-	background-color: #f3f5f6;
 	margin-bottom: 5px;
+	padding: 5px 20px;
 }
 
-.elements .element:focus, .elements .element:hover, .elements .element:active {
+.elements .element:focus,
+.elements .element:hover,
+.elements .element:active {
 	background-color: #f1f1f1;
 }
 
@@ -148,19 +155,22 @@ button.button-copy {
 	display: inline-block;
 }
 
-.elements .drag-handle, .elements .answer-drag-handle {
+.elements .drag-handle,
+.elements .answer-drag-handle {
 	cursor: ns-resize;
 }
 
-.elements .elementContents {
+.elements .element-contents {
 	display: none;
 }
 
-.elements .toggleElementContents, .elements .elementContentsCounterpart, .toggleContents, .contentsCounterpart {
+.elements .toggle-element-contents,
+.elements .element-contents-counterpart,
+.toggle-contents, .contents-counterpart {
 	cursor: pointer;
 }
 
-.elements .toggleElementContents, .toggleContents {
+.elements .toggle-element-contents, .toggle-contents {
 	margin-top: 2px;
 }
 
@@ -169,52 +179,54 @@ button.button-copy {
 }
 
 .elements .element textarea {
+	min-height: 90px;
 	resize: both;
 	width: 100%;
-	min-height: 90px;
 }
 
-.talents .talentQuestion {
-	margin: 5px 10px 5px 0px;
-	display: inline-block;
-	padding: 3px 0px 3px 5px;
+.talents .talent-question {
 	border: 1px solid gray;
 	border-radius: 3px;
+	display: inline-block;
+	margin: 5px 10px 5px 0;
+	padding: 3px 0 3px 5px;
 }
 /* end of elements */
 
+
 /* icons */
 .icon {
-	display: inline-block;
-	height: 15px;
-	width: 15px;
+	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-position: center center;
+	display: inline-block;
+	height: 15px;
 	margin-bottom: -3px;
 	margin-right: 5px;
+	width: 15px;
 }
 
 .icon-align-justify {
-	background-image: url( '../image/align-justify-solid.svg' );
+	background-image: url(../image/align-justify-solid.svg);
 }
 
 .icon-trash {
-	background-image: url( '../image/trash-alt-regular.svg' );
+	background-image: url(../image/trash-alt-regular.svg);
 }
 
 .icon-trash-solid {
-	background-image: url( '../image/trash-alt-solid.svg' );
+	background-image: url(../image/trash-alt-solid.svg);
 }
 
 .icon-copy {
-	background-image: url( '../image/copy.svg' );
+	background-image: url(../image/copy.svg);
 }
 
 .icon-edit {
-	background-image: url( '../image/edit.svg' );
+	background-image: url(../image/edit.svg);
 }
 /* end of icons */
+
 
 /* tooltip */
 .has-tooltip {
@@ -222,30 +234,30 @@ button.button-copy {
 }
 
 .has-tooltip .tooltip {
-	display: none;
-	position: absolute;
-	bottom: 100%;
 	background-color: black;
-	color: white;
-	left: 50%;
-	transform: translate(-50%, -8px);
-	padding: 3px 5px;
-	margin: 0;
 	border-radius: 5px;
+	bottom: 100%;
+	color: white;
+	display: none;
+	left: 50%;
+	margin: 0;
+	padding: 3px 5px;
+	position: absolute;
+	transform: translate(-50%, -8px);
 }
 
 .has-tooltip .tooltip:after {
-	content: ' ';
-	display: block;
-	width: 0;
-	height: 0;
 	border-color: black transparent transparent transparent;
 	border-style: solid;
 	border-width: 5px;
 	bottom: -10px;
-	position: absolute;
+	content: ' ';
+	display: block;
+	height: 0;
 	left: 50%;
+	position: absolute;
 	transform: translateX(-50%);
+	width: 0;
 }
 
 .has-tooltip:focus .tooltip.focus {
@@ -264,25 +276,27 @@ button.button-copy {
 	display: none;
 }
 
-.has-tooltip:active .tooltip.hover, .has-tooltip:active .tooltip.focus {
+.has-tooltip:active .tooltip.hover,
+.has-tooltip:active .tooltip.focus {
 	display: none;
 }
 /* end of tooltip */
 
+
 /* message container */
 #gifttest-message-container {
 	position: fixed;
-	top: 50px;
 	right: 10px;
+	top: 50px;
 }
 
 #gifttest-message-container .message {
-	padding: 10px 32px 10px 20px;
-	width: 200px;
-	position: relative;
-	border-radius: 4px;
 	border: 1px solid gray;
-	margin: 10px 0px;
+	border-radius: 4px;
+	margin: 10px 0;
+	padding: 10px 32px 10px 20px;
+	position: relative;
+	width: 200px;
 }
 
 #gifttest-message-container .message-success {
@@ -304,15 +318,15 @@ button.button-copy {
 }
 
 #gifttest-message-container .message .message-close-button {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 100%;
-	background-color: transparent;
-	border: none;
 	color: inherit;
+	cursor: pointer;
+	background-color: transparent;
 	font-size: 22px;
 	font-weight: 700;
-	cursor: pointer;
+	height: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	border: none;
 }
 /* end of message container */

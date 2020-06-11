@@ -1,13 +1,13 @@
 <template>
 	<div class="talents elements">
-		<h3 class="toggleContents" @click="toggleContents">
+		<h3 class="toggle-contents" @click="toggle-contents">
 			{{ text.talents }}
 		</h3>
 
 		<div
 			ref="contentsCounterpart"
 			class="contentsCounterpart"
-			@click="toggleContents">
+			@click="toggle-contents">
 			<i class="icon icon-edit" />
 			{{ text.editTalents }}
 		</div>
@@ -36,7 +36,7 @@
 								</th>
 							</tr>
 						</thead>
-						<tbody :ref="'body_' + talent.id" class="tableBodyHidden">
+						<tbody :ref="'body_' + talent.id" class="table-body-hidden">
 							<tr>
 								<td>
 									<label :for="'talentTitle_' + talent.id">
@@ -84,7 +84,7 @@
 									<span
 										v-for="questionId in talent.data.questionList"
 										:key="questionId"
-										class="talentQuestion">
+										class="talent-question">
 										[{{ questionIndex(questionId) + 1 }}] {{ questionTextById(questionId) }}
 										<i class="icon icon-trash action" @click="deleteTalentQuestion(talent, questionId)" />
 									</span>
@@ -267,15 +267,15 @@ export default {
 				self.addingTalentInProgress = false
 			}, 'json')
 		},
-		toggleContents() {
+		toggle-contents() {
 			$(this.$refs.contents).toggle()
 			$(this.$refs.contentsCounterpart).toggle()
 		},
 		toggleBody(talentId) {
 			if (typeof talentId === 'undefined' || talentId === null) return
 			const body = $(this.$refs['body_' + talentId])
-			if (body.hasClass('tableBodyHidden')) body.removeClass('tableBodyHidden')
-			else body.addClass('tableBodyHidden')
+			if (body.hasClass('table-body-hidden')) body.removeClass('table-body-hidden')
+			else body.addClass('table-body-hidden')
 		},
 		emitTalentListUpdate() {
 			this.$emit('input', this.talentList)

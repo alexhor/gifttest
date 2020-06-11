@@ -1,18 +1,18 @@
 <template>
 	<div class="elements">
-		<h3 class="toggleElementContents" @click="toggleElementContents">
+		<h3 class="toggle-element-contents" @click="toggle-element-contents">
 			{{ text.elements }}
 		</h3>
 
 		<div
-			ref="elementContentsCounterpart"
-			class="elementContentsCounterpart"
-			@click="toggleElementContents">
+			ref="element-contents-counterpart"
+			class="element-contents-counterpart"
+			@click="toggle-element-contents">
 			<i class="icon icon-edit" />
 			{{ text.editElements }}
 		</div>
 
-		<div ref="elementContents" class="elementContents">
+		<div ref="element-contents" class="element-contents">
 			<draggable
 				v-model="elementList"
 				handle=".drag-handle"
@@ -34,7 +34,7 @@
 								</th>
 							</tr>
 						</thead>
-						<tbody :ref="'body_' + element.id" class="tableBodyHidden">
+						<tbody :ref="'body_' + element.id" class="table-body-hidden">
 							<tr>
 								<td>
 									<label :for="'questionText_' + element.id">
@@ -72,7 +72,7 @@
 								</th>
 							</tr>
 						</thead>
-						<tbody :ref="'body_' + element.id" class="tableBodyHidden">
+						<tbody :ref="'body_' + element.id" class="table-body-hidden">
 							<tr>
 								<td>
 									<label :for="'questionText_' + element.id">
@@ -156,7 +156,7 @@
 								</th>
 							</tr>
 						</thead>
-						<tbody :ref="'body_' + element.id" class="tableBodyHidden">
+						<tbody :ref="'body_' + element.id" class="table-body-hidden">
 							<tr>
 								<td>
 									<label for="content">
@@ -203,7 +203,7 @@
 					<!-- End of Invalid Element -->
 				</div>
 
-				<div slot="footer" class="quickMenuWrapper">
+				<div slot="footer" class="quick-menu-wrapper">
 					<button
 						:class="{ loading: creatingInProgress }"
 						:disabled="creatingInProgress"
@@ -211,7 +211,7 @@
 						@click="showAddElementSelector = !showAddElementSelector">
 						{{ text.addElement }}
 					</button>
-					<div v-if="showAddElementSelector" class="quickMenu">
+					<div v-if="showAddElementSelector" class="quick-menu">
 						<button
 							v-for="type in elementTypes"
 							:key="type.id"
@@ -367,12 +367,12 @@ export default {
 		toggleBody(elementId) {
 			if (typeof elementId === 'undefined' || elementId === null) return
 			const body = $(this.$refs['body_' + elementId])
-			if (body.hasClass('tableBodyHidden')) body.removeClass('tableBodyHidden')
-			else body.addClass('tableBodyHidden')
+			if (body.hasClass('table-body-hidden')) body.removeClass('table-body-hidden')
+			else body.addClass('table-body-hidden')
 		},
-		toggleElementContents() {
-			$(this.$refs.elementContents).toggle()
-			$(this.$refs.elementContentsCounterpart).toggle()
+		toggle-element-contents() {
+			$(this.$refs.element-contents).toggle()
+			$(this.$refs.element-contents-counterpart).toggle()
 		},
 		emitElementListUpdate() {
 			this.$emit('input', this.elementList)

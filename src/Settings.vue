@@ -7,7 +7,7 @@
 
 			<div v-else>
 				<h2>{{ text.loadQuestionaire }}</h2>
-				<div class="questionaireSelectorWrapper">
+				<div class="questionaire-selector-wrapper">
 					<button
 						v-for="(questionaire, i) in availabeQuestionaireList"
 						:key="i"

@@ -16,7 +16,7 @@
 		</div>
 
 		<div v-else class="questionaireWrapper">
-			<div class="progressbarWrapper">
+			<div class="progressbar-wrapper">
 				<div class="bar">
 					<div class="progress" :style="'width: ' + questionaireProgressAccurate + '%'" />
 					<div class="progress-number">

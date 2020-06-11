@@ -5,9 +5,9 @@
 				{{ element.data.text }}
 			</h4>
 
-			<div class="answerWrapper">
+			<div class="answer-wrapper">
 				<span v-for="answer in answerList" :key="answer.id" class="answer">
-					<label :for="'answer_' + answer.id" class="answerInner">
+					<label :for="'answer_' + answer.id" class="answer-inner">
 						<input
 							:id="'answer_' + answer.id"
 							v-model="resultAnswerId"

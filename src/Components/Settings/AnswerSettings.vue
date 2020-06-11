@@ -1,13 +1,13 @@
 <template>
 	<div class="answers elements">
-		<h3 class="toggleContents" @click="toggleContents">
+		<h3 class="toggle-contents" @click="toggle-contents">
 			{{ text.answers }}
 		</h3>
 
 		<div
 			ref="contentsCounterpart"
 			class="contentsCounterpart"
-			@click="toggleContents">
+			@click="toggle-contents">
 			<i class="icon icon-edit" />
 			{{ text.editAnswers }}
 		</div>
@@ -175,7 +175,7 @@ export default {
 				self.addingAnswerInProgress = false
 			}, 'json')
 		},
-		toggleContents() {
+		toggle-contents() {
 			$(this.$refs.contents).toggle()
 			$(this.$refs.contentsCounterpart).toggle()
 		},
