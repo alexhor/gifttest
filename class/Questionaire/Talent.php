@@ -21,12 +21,12 @@ class Talent implements \JsonSerializable {
 
 	private function sanitizeData() {
 		/*
-		 * Sanitize this elements data
+		 * Sanitize this talents data
 		 */
+		$this->data['title'] = sanitize_text_field( $this->data['title'] );
 		$this->data['text'] = wp_kses_post( $this->data['text'] );
-		$this->data['title'] = esc_html( $this->data['title'] );
 		foreach ( $this->data['questionList'] as &$questionId ) {
-			$questionId = esc_attr( $questionId );
+			$questionId = sanitize_text_field( $questionId );
 		}
 	}
 
@@ -62,6 +62,8 @@ class Talent implements \JsonSerializable {
 		// check if the answer has changed
 		$currentTalent = $this::get( $questionaireId, $this->getId() );
 		$isSame = $this->jsonSerialize() === $currentTalent->jsonSerialize();
+		// sanitize data
+		$this->sanitizeData();
 		// save talent
 		return update_option( 'gifttest_questionaire_' . (string) $questionaireId . '_talent_' . (string) $this->getId(), $this->data, false ) || $isSame;
 	}
@@ -74,7 +76,7 @@ class Talent implements \JsonSerializable {
 		$this->sanitizeData();
 
 		return [
-			'id' => (int) esc_attr( $this->getId() ),
+			'id' => (int) $this->getId(),
 			'data' => $this->data,
 		];
 	}

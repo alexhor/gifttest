@@ -12,7 +12,7 @@ class PluginLoader {
 		add_action( 'init', [ $this, 'init' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'adminScripts' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
-		new SettingsPage;
+		new SettingsPage();
 	}
 
 	public function init() {

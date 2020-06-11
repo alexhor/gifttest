@@ -22,7 +22,7 @@ npm-update:
 	npm update
 
 todo:
-	grep -r --exclude-dir build --exclude-dir js --exclude-dir node_modules "TODO"
+	grep -r --exclude-dir build --exclude-dir js --exclude-dir node_modules --exclude-dir .git "TODO"
 
 # Building
 build-js:

@@ -36,3 +36,5 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once( plugin_dir_path( __FILE__ ) . 'class/PluginLoader.php' );
 $loader = new PluginLoader();
+
+// TODO: implement display message function in Utilities.js

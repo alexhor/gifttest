@@ -54,18 +54,28 @@ abstract class Element implements IElement, \JsonSerializable {
 		return update_option( 'gifttest_questionaire_' . (string) $questionaireId . '_element_' . (string) $this->getId(), $data, false ) || $isSame;
 	}
 
+	private function sanitizeData() {
+		/*
+		 * Sanitize this settings data
+		 */
+		$this->id = (int) sanitize_text_field( $this->id );
+		$this->type = (int) sanitize_text_field( $this->type );
+		foreach ( $this->data as &$data ) {
+			$data = sanitize_text_field( $data );
+		}
+	}
+
 	public function jsonSerialize() {
 		/*
 		 * Return a json serializeable representation of the element
 		 * @return array
 		 */
-		foreach ( $this->data as &$data ) {
-			$data = esc_html( $data );
-		}
+		// sanitize data
+		$this->sanitizeData();
 
 		return [
-			'id' => (int) esc_attr( $this->getId() ),
-			'type' => (int) esc_attr( $this->getType() ),
+			'id' => $this->getId(),
+			'type' => $this->getType(),
 			'data' => $this->data,
 		];
 	}

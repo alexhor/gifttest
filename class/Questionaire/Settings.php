@@ -12,7 +12,13 @@ class Settings implements \JsonSerializable {
 		/*
 		 * @param array $settings: All settings for this questionaire
 		 */
-		$this->settings = $settings;
+		// set default data
+		$this->settings = wp_parse_args( $settings, [
+			'id' => 0,
+			'name' => '',
+			'shownTalentCount' => 5,
+			'showMoreTalents' => true,
+		]);
 
 		foreach ( self::intVals as $key ) {
 			if ( isset ( $this->settings[ $key ] ) ) $this->settings[ $key ] = (int) $this->settings[ $key ];
@@ -25,12 +31,16 @@ class Settings implements \JsonSerializable {
 		 * 
 		 * @return bool: success or failure
 		 */
+		// sanitize data
+		$this->sanitizeData();
+
 		// make sure the questionaire is registered
 		$idList = $this::getQuestionaireIdList();
 		if ( ! in_array( $this->getId(), $idList ) ) {
 			$idList[] = $this->getId();
 			if ( ! $this::updateQuestionaireIdList( $idList ) ) return false;
 		}
+
 		// check if the settings have changed
 		$currentSettings = $this::get( $this->getId() );
 		$isSame = $currentSettings === false || $this->settings === $currentSettings->settings;
@@ -76,19 +86,12 @@ class Settings implements \JsonSerializable {
 		 */
 		// create a new questionaire id
 		$id = self::getCurrentMaxId() + 1;
-		// generate data
-		$data = [
-			'id' => $id,
-			'name' => $name,
-			'shownTalentCount' => 5,
-			'showMoreTalents' => true,
-		];
 		// reserver the generated questionaire id
 		$idList = self::getQuestionaireIdList();
 		$idList[] = $id;
 		if ( ! self::updateQuestionaireIdList( $idList ) ) return false;
 		// create settings instance
-		return new Settings( $data );
+		return new Settings( [ 'id' => $id, 'name' => $name ] );
 	}
 
 	public static function get( int $id ) {
@@ -146,16 +149,25 @@ class Settings implements \JsonSerializable {
 		return $highestId;
 	}
 
+	private function sanitizeData() {
+		/*
+		 * Sanitize this settings data
+		 */
+		foreach ( $this->settings as &$setting ) {
+			$setting = sanitize_text_field( $setting );
+		}
+		// handle int values
+		foreach ( self::intVals as $key ) {
+			if ( isset ( $this->settings[ $key ] ) ) $this->settings[ $key ] = (int) $this->settings[ $key ];
+		}
+	}
+
 	public function jsonSerialize() {
 		/*
 		 * Return a json serializeable representation of the questionaires' settings
 		 * @return array
 		 */
-		foreach ( $this->settings as &$setting ) {
-			$setting = esc_attr( $setting );
-		}
-		$this->settings['id'] = (int) $this->settings['id'];
-		$this->settings['shownTalentCount'] = (int) $this->settings['shownTalentCount'];
+		$this->sanitizeData();
 		return $this->settings;
 	}
 

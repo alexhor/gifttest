@@ -19,7 +19,7 @@ class Content extends Element {
 		$data = wp_parse_args( $data, [
 			'text' => '',
 		]);
-		$this->sanitizeData();
+
 		parent::__construct( $id, $data );
 	}
 
@@ -28,6 +28,10 @@ class Content extends Element {
 		 * Sanitize this elements data
 		 */
 		$this->data['text'] = wp_kses_post( $this->data['text'] );
+		foreach ( $this->data as $key => &$data ) {
+			if ( $key === 'text' ) continue;
+			$data = sanitize_text_field( $data );
+		}
 	}
 
 	public function jsonSerialize() {
@@ -37,8 +41,8 @@ class Content extends Element {
 		 */
 		$this->sanitizeData();
 		return [
-			'id' => (int) esc_attr( $this->getId() ),
-			'type' => (int) esc_attr( $this->getType() ),
+			'id' => (int) $this->getId(),
+			'type' => (int) $this->getType(),
 			'data' => $this->data,
 		];
 	}

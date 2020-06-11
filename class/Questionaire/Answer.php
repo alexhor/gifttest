@@ -5,6 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 class Answer implements \JsonSerializable {
+	const intVals = [ 'value' ];
+
 	function __construct( int $id, array $data ) {
 		/*
 		 * @param int $id: The answers id
@@ -16,6 +18,10 @@ class Answer implements \JsonSerializable {
 			'value' => 0,
 			'content' => '',
 		]);
+
+		foreach ( self::intVals as $key ) {
+			if ( isset ( $this->data[ $key ] ) ) $this->data[ $key ] = (int) $this->data[ $key ];
+		}
 	}
 
 	public function getId() {
@@ -36,7 +42,7 @@ class Answer implements \JsonSerializable {
 		 * @return Answer: An answer instance
 		 */
 		// get answer data
-		$data = get_option( 'gifttest_questionaire_' . $questionaireId . '_answer_' . $id, [] );
+		$data = get_option( 'gifttest_questionaire_' . (string) $questionaireId . '_answer_' . (string) $id, [] );
 		return new Answer( $id, $data );
 	}
 
@@ -47,11 +53,32 @@ class Answer implements \JsonSerializable {
 		 * @param int $questionaireId: The questionaires id to save this answer for
 		 * @return bool: success or failure
 		 */
+		// sanitize data
+		$this->sanitizeData();
+
 		// check if the answer has changed
 		$currentAnswer = $this::get( $questionaireId, $this->getId() );
 		$isSame = $this->jsonSerialize() === $currentAnswer->jsonSerialize();
+
 		// save answer
 		return update_option( 'gifttest_questionaire_' . (string) $questionaireId . '_answer_' . (string) $this->getId(), $this->data, false ) || $isSame;
+	}
+
+	private function sanitizeData() {
+		/*
+		 * Sanitize this answers data
+		 */
+		// sanitize data
+		$this->id = sanitize_text_field( $this->id );
+		foreach ( $this->data as &$data ) {
+			$data = sanitize_text_field( $data );
+		}
+
+		// handle int values
+		$this->id = (int) $this->id;
+		foreach ( self::intVals as $key ) {
+			if ( isset ( $this->data[ $key ] ) ) $this->data[ $key ] = (int) $this->data[ $key ];
+		}
 	}
 
 	public function jsonSerialize() {
@@ -59,11 +86,11 @@ class Answer implements \JsonSerializable {
 		 * Return a json serializeable representation of the answer
 		 * @return array
 		 */
-		$this->data['value'] = esc_attr( $this->data['value'] );
-		$this->data['content'] = esc_html( $this->data['content'] );
+		// sanitize data
+		$this->sanitizeData();
 
 		return [
-			'id' => (int) esc_attr( $this->getId() ),
+			'id' => $this->getId(),
 			'data' => $this->data,
 		];
 	}
