@@ -2,19 +2,19 @@
 	<div class="element content-element">
 		<div class="content-wrapper">
 			<h4 class="question">
-				{{ element.data.questionText }}
+				{{ element.data.question_text }}
 			</h4>
 
-			<div class="answerWrapper">
+			<div class="answer-wrapper">
 				<span v-for="answer in answersList" :key="answer.id" class="answer">
-					<label :for="'answer_' + answer.id" class="answerInner">
+					<label :for="'answer_' + answer.id" class="answer-inner">
 						<input
 							:id="'answer_' + answer.id"
 							v-model="resultAnswerId"
 							type="radio"
 							:value="answer.id"
 							@click="answerSelected(answer)">
-						<span class="customCheckbox" />
+						<span class="custom-checkbox" />
 						<p>{{ answer.text }}</p>
 					</label>
 				</span>
@@ -55,7 +55,7 @@ export default {
 	data: function() {
 		return {
 			element: this.value,
-			answersList: this.value.data.answersList,
+			answersList: this.value.data.answers_list,
 			resultAnswerId: this.result,
 			latestRequestId: '',
 		}

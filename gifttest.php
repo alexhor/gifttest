@@ -1,16 +1,17 @@
 <?php
-
 /**
  * Plugin Name: Gift Test
  * Plugin URI: https://github.com/alexhor/GiftTest
  * Description: Online Gift Test
- * Version: 0.0.1
+ * Version: 1.0.0
  * Author: Alexander Hornig
  * Author uri: https://h-software.de
- * License: GPL v3 or later
+ * License: GPLv3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: gifttest
  * Domain Path: /lang
+ *
+ * @package gifttest
  */
 
 /*
@@ -30,11 +31,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace GiftTest;
+namespace Gift_Test;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-require_once( plugin_dir_path( __FILE__ ) . 'class/PluginLoader.php' );
-$loader = new PluginLoader();
-
-// TODO: implement display message function in Utilities.js
+require_once plugin_dir_path( __FILE__ ) . 'class/class-plugin-loader.php';
+$loader = new Plugin_Loader();

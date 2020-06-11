@@ -1,45 +1,48 @@
 /* end of general */
 .gifttest .loading {
-	width: 90px;
 	display: block;
 	margin: auto;
+	width: 90px;
 }
 /* general */
 
+
 /* colors */
 :root {
-	--gifttest-progress-bar-color: #fff;
 	--gifttest-progress-bar-bg-color: #bbb;
+	--gifttest-progress-bar-color: #fff;
 	--gifttest-progress-bar-progress-color: green;
 }
 /* end of colors */
 
+
 /* progress bar */
-.progressbarWrapper {
+.progressbar-wrapper {
 	padding-bottom: 20px;
 }
 
-.progressbarWrapper .bar {
-	position: relative;
-	overflow: hidden;
+.progressbar-wrapper .bar {
 	background-color: var(--gifttest-progress-bar-bg-color);
 	border-radius: 4px;
-}
-
-.progressbarWrapper .bar .progress {
-	position: absolute;
-	width: 0%;
-	height: 100%;
-	background-color: var(--gifttest-progress-bar-progress-color);
-}
-
-.progressbarWrapper .bar .progress-number {
-	color: var(--gifttest-progress-bar-color);
-	text-align: center;
-	z-index: 1;
+	overflow: hidden;
 	position: relative;
 }
+
+.progressbar-wrapper .bar .progress {
+	background-color: var(--gifttest-progress-bar-progress-color);
+	height: 100%;
+	position: absolute;
+	width: 0%;
+}
+
+.progressbar-wrapper .bar .progress-number {
+	color: var(--gifttest-progress-bar-color);
+	position: relative;
+	text-align: center;
+	z-index: 1;
+}
 /* end of progress bar */
+
 
 /* question */
 .question {
@@ -47,28 +50,30 @@
 }
 /* end of question */
 
+
 /* answer */
-.answerWrapper {
+.answer-wrapper {
 	display: table-row;
 	margin-bottom: 40px;
 }
 
-.answerWrapper .answer {
+.answer-wrapper .answer {
 	display: inline;
 }
 
-.answerWrapper .answer .answerInner {
-	display: inline-block;
-	margin-bottom: 12px;
+.answer-wrapper .answer .answer-inner {
 	cursor: pointer;
+	display: inline-block;
 	font-size: 22px;
+	margin-bottom: 12px;
 	padding: 10px 10px 10px 35px;
 }
 
-.answerWrapper .answer .answerInner > * {
+.answer-wrapper .answer .answer-inner > * {
 	display: inline-block;
 }
 /* end of answer */
+
 
 /* scoreboard */
 .scoreboard  .score {
@@ -80,26 +85,26 @@
 	padding: 5px 8%;
 }
 
-.scoreboard  .showMoreTalentsToggle {
+.scoreboard  .show-more-talents-toggle {
 	margin-top: 30px;
 	margin-bottom: 40px;
 }
 
 @media print {
 	.gifttest-print {
-		border: none !important;
-		padding: 0 !important;
-		margin: 0 !important;
+		border: none !important; /* Has to be important to work with printing */
+		margin: 0 !important; /* Has to be important to work with printing */
+		padding: 0 !important; /* Has to be important to work with printing */
 	}
 
 	.scoreboard  .score {
-		padding: 70px 50px 10px 20px !important;
+		padding: 70px 50px 10px 20px !important; /* Has to be important to work with printing */
 		text-align: justify;
 	}
 
 	.scoreboard  .score > h3 {
+		padding-bottom: 20px !important; /* Has to be important to work with printing */
 		text-align: center;
-		padding-bottom: 20px !important;
 	}
 }
 /* end of scoreboard */
