@@ -268,3 +268,51 @@ button.button-copy {
 	display: none;
 }
 /* end of tooltip */
+
+/* message container */
+#gifttest-message-container {
+	position: fixed;
+	top: 50px;
+	right: 10px;
+}
+
+#gifttest-message-container .message {
+	padding: 10px 32px 10px 20px;
+	width: 200px;
+	position: relative;
+	border-radius: 4px;
+	border: 1px solid gray;
+	margin: 10px 0px;
+}
+
+#gifttest-message-container .message-success {
+	color: #155724;
+	background-color: #d4edda;
+	border-color: #c3e6cb;
+}
+
+#gifttest-message-container .message-warning {
+	color: #856404;
+	background-color: #fff3cd;
+	border-color: #ffeeba;
+}
+
+#gifttest-message-container .message-error {
+	color: #721c24;
+	background-color: #f8d7da;
+	border-color: #f5c6cb;
+}
+
+#gifttest-message-container .message .message-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	background-color: transparent;
+	border: none;
+	color: inherit;
+	font-size: 22px;
+	font-weight: 700;
+	cursor: pointer;
+}
+/* end of message container */

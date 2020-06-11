@@ -1,11 +1,32 @@
 export default {
-	displayMessage(message, messageType) {
+	displayMessage(messageText, messageType) {
 		/*
 		 * Display the given message
 		 * @param string message: The message content
 		 * @param string messageType: Type of message [success, warning, error]
 		 */
-		console.debug(messageType + ' - ' + message)
+		let messageContainer = document.getElementById('gifttest-message-container')
+		if (typeof messageContainer === 'undefined' || messageContainer === null) {
+			messageContainer = document.createElement('div')
+			messageContainer.id = 'gifttest-message-container'
+			document.getElementById('wpbody-content').appendChild(messageContainer)
+		}
+		const message = document.createElement('div')
+		message.classList.add('message')
+		message.classList.add('message-' + messageType)
+		message.innerHTML = messageText
+
+		const closeButton = document.createElement('button')
+		closeButton.classList.add('message-close-button')
+		closeButton.innerHTML = '×'
+		closeButton.onclick = function() {
+			messageContainer.removeChild(message)
+		}
+		message.appendChild(closeButton)
+
+		messageContainer.appendChild(message)
+
+		// window.setTimeout(function() { closeButton.click() }, 5000)
 	},
 	copyToClipboard(valueToCopy) {
 		/*
