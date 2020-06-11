@@ -9,7 +9,7 @@
 			class="element-contents-counterpart"
 			@click="toggleElementContents">
 			<i class="icon icon-edit" />
-			{{ text.editElements }}
+			{{ text.edit_elements }}
 		</div>
 
 		<div ref="elementContents" class="element-contents">
@@ -67,7 +67,7 @@
 								<th colspan="2">
 									<i class="icon icon-align-justify drag-handle" />
 									<p class="open-panel">
-										{{ text.customQuestion }} {{ excerpt(element.data.questionText) }}
+										{{ text.custom_question }} {{ excerpt(element.data.question_text) }}
 									</p>
 								</th>
 							</tr>
@@ -82,7 +82,7 @@
 								<td>
 									<textarea
 										:id="'questionText_' + element.id"
-										v-model="element.data.questionText"
+										v-model="element.data.question_text"
 										:placeholder="text.question"
 										@input="emitElementListUpdate" />
 								</td>
@@ -94,27 +94,27 @@
 									</label>
 								</td>
 								<td>
-									<draggable v-model="element.data.answersList" draggable=".answer" handle=".answer-drag-handle">
-										<div v-for="answer in element.data.answersList" :key="answer.id" class="answer">
+									<draggable v-model="element.data.answers_list" draggable=".answer" handle=".answer-drag-handle">
+										<div v-for="answer in element.data.answers_list" :key="answer.id" class="answer">
 											<i class="icon icon-align-justify answer-drag-handle" />
 											<label :for="'answerText_' + answer.id">
-												{{ text.answerText }}
+												{{ text.answer_text }}
 											</label>
 											<input
 												:id="'answerText_' + answer.id"
 												v-model="answer.text"
 												type="text"
-												:placeholder="text.answerText"
+												:placeholder="text.answer_text"
 												@input="emitElementListUpdate">
 
 											<label :for="'answerValue_' + answer.id">
-												{{ text.answerValue }}
+												{{ text.answer_value }}
 											</label>
 											<input
 												:id="'answerValue_' + answer.id"
 												v-model="answer.value"
 												type="number"
-												:placeholder="text.answerValue"
+												:placeholder="text.answer_value"
 												@input="emitElementListUpdate">
 											<button class="button button-danger" @click="deleteAnswer(element.id, answer.id)">
 												{{ text.delete }}
@@ -127,7 +127,7 @@
 												:disabled="addingAnswerInProgress"
 												class="button button-primary"
 												@click="customQuestionAddAnswer(element.id)">
-												{{ text.addAnswer }}
+												{{ text.add_answer }}
 											</button>
 										</div>
 									</draggable>
@@ -193,7 +193,7 @@
 					<!-- Invalid Element -->
 					<div v-else>
 						<h3 class="alert alert-warning">
-							{{ text.invalidElement }}
+							{{ text.invalid_element }}
 						</h3>
 
 						<button class="button button-danger" @click="deleteElement(element.id)">
@@ -209,7 +209,7 @@
 						:disabled="creatingInProgress"
 						class="button button-primary"
 						@click="showAddElementSelector = !showAddElementSelector">
-						{{ text.addElement }}
+						{{ text.add_element }}
 					</button>
 					<div v-if="showAddElementSelector" class="quick-menu">
 						<button
@@ -299,11 +299,11 @@ export default {
 		deleteAnswer(elementId, answerId) {
 			const element = this.getElementById(elementId)
 			if (element.type !== this.elementTypes.customQuestion.id) return
-			if (typeof element.data === 'undefined' || typeof element.data.answersList === 'undefined') return
+			if (typeof element.data === 'undefined' || typeof element.data.answers_list === 'undefined') return
 
-			$.each(element.data.answersList, function(i, answer) {
+			$.each(element.data.answers_list, function(i, answer) {
 				if (answer.id === answerId) {
-					Vue.delete(element.data.answersList, i)
+					Vue.delete(element.data.answers_list, i)
 					return false
 				}
 			})
@@ -330,7 +330,7 @@ export default {
 		highestCustomQuestionAnswerId(elementId) {
 			let highestId = 0
 			const element = this.getElementById(elementId)
-			$.each(element.data.answersList, function(i, answer) {
+			$.each(element.data.answers_list, function(i, answer) {
 				if (answer.id > highestId) highestId = answer.id
 			})
 			return highestId
@@ -347,16 +347,16 @@ export default {
 			const requestData = {
 				_ajax_nonce: gifttest._ajax_nonce.create_custom_question_answer,
 				action: 'gifttest_create_questionaire_custom_question_answer',
-				answerId: self.highestCustomQuestionAnswerId(elementId) + 1,
-				questionId: self.highestElementId() + 1,
-				questionaireId: self.questionaireId,
+				answer_id: self.highestCustomQuestionAnswerId(elementId) + 1,
+				question_id: self.highestElementId() + 1,
+				questionaire_id: self.questionaireId,
 			}
 
 			// do request
 			$.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					const element = self.getElementById(elementId)
-					if (element !== false) element.data.answersList.push(response.data)
+					if (element !== false) element.data.answers_list.push(response.data)
 				} else {
 					self.displayMessage(response.message, response.status)
 				}
@@ -406,7 +406,7 @@ export default {
 				action: 'gifttest_create_questionaire_element',
 				type: type,
 				id: self.highestElementId() + 1,
-				questionaireId: self.questionaireId,
+				questionaire_id: self.questionaireId,
 			}
 
 			// do request

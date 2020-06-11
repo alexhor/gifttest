@@ -9,7 +9,7 @@
 			class="contentsCounterpart"
 			@click="toggleContents">
 			<i class="icon icon-edit" />
-			{{ text.editAnswers }}
+			{{ text.edit_answers }}
 		</div>
 
 		<div ref="contents" class="contents hidden">
@@ -37,7 +37,7 @@
 							<tr>
 								<td>
 									<label :for="'answerContent_' + answer.id">
-										{{ text.answerContent }}
+										{{ text.answer_content }}
 									</label>
 								</td>
 								<td>
@@ -45,14 +45,14 @@
 										:id="'answerContent_' + answer.id"
 										v-model="answer.data.content"
 										type="text"
-										:placeholder="text.answerContent"
+										:placeholder="text.answer_content"
 										@input="emitAnswerListUpdate">
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<label :for="'answerValue_' + answer.id">
-										{{ text.answerValue }}
+										{{ text.answer_value }}
 									</label>
 								</td>
 								<td>
@@ -60,7 +60,7 @@
 										:id="'answerValue_' + answer.id"
 										v-model="answer.data.value"
 										type="number"
-										:placeholder="text.answerValue"
+										:placeholder="text.answer_value"
 										@input="emitAnswerListUpdate">
 								</td>
 							</tr>
@@ -81,7 +81,7 @@
 						:disabled="addingAnswerInProgress"
 						class="button button-primary"
 						@click="addAnswer">
-						{{ text.addAnswer }}
+						{{ text.add_answer }}
 					</button>
 				</div>
 			</draggable>
@@ -161,7 +161,7 @@ export default {
 				_ajax_nonce: gifttest._ajax_nonce.create_answer,
 				action: 'gifttest_create_questionaire_answer',
 				id: self.highestAnswerId() + 1,
-				questionaireId: self.questionaireId,
+				questionaire_id: self.questionaireId,
 			}
 
 			// do request

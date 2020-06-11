@@ -14,7 +14,7 @@
 							type="radio"
 							:value="answer.id"
 							@click="answerSelected(answer)">
-						<span class="customCheckbox" />
+						<span class="custom-checkbox" />
 						<p>{{ answer.data.content }}</p>
 					</label>
 				</span>

@@ -23,7 +23,7 @@ tr > td:first-child {
 
 
 /* buttons */
-.wp-core-ui  button.button {
+.wp-core-ui  button.button:not(.button-secondary) {
 	color: #fff;
 	margin-right: 40px;
 }

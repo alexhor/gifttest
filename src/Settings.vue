@@ -6,7 +6,7 @@
 			</div>
 
 			<div v-else>
-				<h2>{{ text.loadQuestionaire }}</h2>
+				<h2>{{ text.load_questionaire }}</h2>
 				<div class="questionaire-selector-wrapper">
 					<button
 						v-for="(questionaire, i) in availabeQuestionaireList"
@@ -20,17 +20,17 @@
 				</div>
 
 				<p v-if="availabeQuestionaireList.length < 1">
-					{{ text.noQuestionaireExistsYes }}
+					{{ text.no_questionaire_exists_yet }}
 				</p>
 
 				<div>
-					<input v-model="newQuestionaireName" :placeholder="text.questionaireName" type="text">
+					<input v-model="newQuestionaireName" :placeholder="text.questionaire_name" type="text">
 					<button
 						:class="{ loading: creatingNewQuestionaire }"
 						:disabled="creatingNewQuestionaire"
 						class="button button-primary"
 						@click="createQuestionaire">
-						{{ text.addQuestionaire }}
+						{{ text.add_questionaire }}
 					</button>
 				</div>
 
@@ -40,14 +40,14 @@
 						:disabled="importingQuestionaire"
 						class="button button-secondary"
 						@click="importQuestionaire">
-						{{ text.importQuestionaire }}
+						{{ text.import_questionaire }}
 					</button>
 				</div>
 			</div>
 
 			<div v-if="loadedQuestionaire">
 				<br><hr>
-				<h2>{{ text.editQuestionaire }}</h2>
+				<h2>{{ text.edit_questionaire }}</h2>
 
 				<div class="controls">
 					<button
@@ -81,7 +81,7 @@
 						class="icon icon-copy button-copy has-tooltip"
 						@click="copyToClipboard('[gifttest test-id=\'' + loadedQuestionaire.settings.id + '\']')">
 						<p class="tooltip hover">
-							{{ text.copyToClipboard }}
+							{{ text.copy_to_clipboard }}
 						</p>
 						<p class="tooltip focus">
 							{{ text.copied }}
@@ -94,7 +94,7 @@
 						<tr>
 							<td>
 								<label for="questionaireName">
-									{{ text.questionaireName }}
+									{{ text.questionaire_name }}
 								</label>
 							</td>
 							<td>
@@ -107,27 +107,27 @@
 						</tr>
 						<tr>
 							<td>
-								<label for="shownTalentCount">
-									{{ text.numberOfTalentsShown }}
+								<label for="shownGiftCount">
+									{{ text.number_of_gifts_shown }}
 								</label>
 							</td>
 							<td>
 								<input
-									id="shownTalentCount"
-									v-model="loadedQuestionaire.settings.shownTalentCount"
+									id="shownGiftCount"
+									v-model="loadedQuestionaire.settings.shown_gift_count"
 									type="number">
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="showMoreTalents">
-									{{ text.enableShowMoreTalentsButton }}
+								<label for="showMoreGifts">
+									{{ text.enable_show_more_gifts_button }}
 								</label>
 							</td>
 							<td>
 								<select
-									id="showMoreTalents"
-									v-model="loadedQuestionaire.settings.showMoreTalents"
+									id="showMoreGifts"
+									v-model="loadedQuestionaire.settings.show_more_gifts"
 									:placeholder="text.name"
 									type="text">
 									<option value="true">
@@ -143,17 +143,17 @@
 				</table>
 
 				<ElementSettings
-					v-model="loadedQuestionaire.elementList"
+					v-model="loadedQuestionaire.element_list"
 					:text="text"
 					:questionaire-id="loadedQuestionaire.settings.id" />
 
 				<AnswerSettings
-					v-model="loadedQuestionaire.answerList"
+					v-model="loadedQuestionaire.answer_list"
 					:text="text"
 					:questionaire-id="loadedQuestionaire.settings.id" />
 
-				<TalentSettings
-					v-model="loadedQuestionaire.talentList"
+				<GiftSettings
+					v-model="loadedQuestionaire.gift_list"
 					:available-question-list="questionList"
 					:text="text"
 					:questionaire-id="loadedQuestionaire.settings.id" />
@@ -167,7 +167,7 @@ import $ from 'jquery'
 
 import ElementSettings from './Components/Settings/ElementSettings.vue'
 import AnswerSettings from './Components/Settings/AnswerSettings.vue'
-import TalentSettings from './Components/Settings/TalentSettings.vue'
+import GiftSettings from './Components/Settings/GiftSettings.vue'
 
 import utilities from './Components/Utilities.js'
 const displayMessage = utilities.displayMessage
@@ -180,7 +180,7 @@ export default {
 	components: {
 		ElementSettings,
 		AnswerSettings,
-		TalentSettings,
+		GiftSettings,
 	},
 	data: function() {
 		return {
@@ -219,9 +219,9 @@ export default {
 		questionList: function() {
 			const self = this
 			const questionList = []
-			if (self.loadedQuestionaire === 'undefined' || self.loadedQuestionaire === false || self.loadedQuestionaire.elementList === 'undefined') return questionList
+			if (self.loadedQuestionaire === 'undefined' || self.loadedQuestionaire === false || self.loadedQuestionaire.element_list === 'undefined') return questionList
 
-			$.each(self.loadedQuestionaire.elementList, function(i, element) {
+			$.each(self.loadedQuestionaire.element_list, function(i, element) {
 				if (element.type === self.elementTypes.question.id || element.type === self.elementTypes.customQuestion.id) {
 					questionList.push(element)
 				}
@@ -273,10 +273,10 @@ export default {
 						const json = JSON.parse(fileContent)
 						json.settings.id = self.highestQuestionaireId() + 1
 						self.loadedQuestionaire = json
-						self.displayMessage(self.text.importSuccessful_saveTheQuestionaireIfYouWantToKeepIt, 'success')
+						self.displayMessage(self.text.import_successful_save_the_questionaire_if_you_want_to_keep_it, 'success')
 					} catch (e) {
 						console.debug(e)
-						self.displayMessage(self.text.importFailed_invalidFileContent, 'error')
+						self.displayMessage(self.text.import_failed_invalid_file_content, 'error')
 					}
 
 					// cleanup
@@ -300,7 +300,7 @@ export default {
 			const requestData = {
 				_ajax_nonce: gifttest._ajax_nonce.update,
 				action: 'gifttest_update_questionaire',
-				questionaireAsJson: this.getQuestionaireAsJson(),
+				questionaire_as_json: this.getQuestionaireAsJson(),
 			}
 
 			// do request
@@ -313,7 +313,7 @@ export default {
 			}, 'json')
 		},
 		deleteQuestionaire() {
-			if (confirm(this.text.reallyDeleteQuestionaire)) this.reallyDeleteQuestionaire()
+			if (confirm(this.text.really_delete_questionaire)) this.reallyDeleteQuestionaire()
 		},
 		reallyDeleteQuestionaire() {
 			const self = this
@@ -326,7 +326,7 @@ export default {
 			const requestData = {
 				_ajax_nonce: gifttest._ajax_nonce.delete,
 				action: 'gifttest_delete_questionaire',
-				questionaireId: this.loadedQuestionaire.settings.id,
+				questionaire_id: this.loadedQuestionaire.settings.id,
 			}
 
 			// do request
@@ -420,8 +420,8 @@ export default {
 					self.newQuestionaireName = ''
 					// add the new questionaire to the list
 					self.availabeQuestionaireList.push({
-						id: response.questionaireId,
-						name: response.questionaireName,
+						id: response.questionaire_id,
+						name: response.questionaire_name,
 					})
 				} else {
 					self.displayMessage(response.message, response.status)

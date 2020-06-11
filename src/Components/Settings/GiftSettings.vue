@@ -1,7 +1,7 @@
 <template>
-	<div class="talents elements">
+	<div class="gifts elements">
 		<h3 class="toggle-contents" @click="toggleContents">
-			{{ text.talents }}
+			{{ text.gifts }}
 		</h3>
 
 		<div
@@ -9,60 +9,60 @@
 			class="contentsCounterpart"
 			@click="toggleContents">
 			<i class="icon icon-edit" />
-			{{ text.editTalents }}
+			{{ text.edit_gifts }}
 		</div>
 
 		<div ref="contents" class="contents hidden">
 			<draggable
-				v-model="talentList"
+				v-model="giftList"
 				handle=".drag-handle"
-				draggable=".talent"
-				@input="emitTalentListUpdate">
+				draggable=".gift"
+				@input="emitGiftListUpdate">
 				<div
-					v-for="(talent, i) in talentList"
+					v-for="(gift, i) in giftList"
 					:key="i"
-					class="talent element">
+					class="gift element">
 					<table>
-						<thead @click="toggleBody(talent.id)">
+						<thead @click="toggleBody(gift.id)">
 							<tr>
 								<th colspan="2">
 									<i class="icon icon-align-justify drag-handle" />
 									<p class="open-panel">
-										<span v-if="!talent.data.title">
-											[{{ text.talent }}]
+										<span v-if="!gift.data.title">
+											[{{ text.gift }}]
 										</span>
-										{{ talent.data.title }}
+										{{ gift.data.title }}
 									</p>
 								</th>
 							</tr>
 						</thead>
-						<tbody :ref="'body_' + talent.id" class="table-body-hidden">
+						<tbody :ref="'body_' + gift.id" class="table-body-hidden">
 							<tr>
 								<td>
-									<label :for="'talentTitle_' + talent.id">
-										{{ text.talentTitle }}
+									<label :for="'giftTitle_' + gift.id">
+										{{ text.gift_title }}
 									</label>
 								</td>
 								<td>
 									<input
-										:id="'talentTitle_' + talent.id"
-										v-model="talent.data.title"
+										:id="'giftTitle_' + gift.id"
+										v-model="gift.data.title"
 										type="text"
-										:placeholder="text.talentTitle"
-										@input="emitTalentListUpdate">
+										:placeholder="text.gift_title"
+										@input="emitGiftListUpdate">
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<label :for="'talentText_' + talent.id">
-										{{ text.talentText }}
+									<label :for="'giftText_' + gift.id">
+										{{ text.gift_text }}
 									</label>
 								</td>
 								<td>
 									<editor
-										:id="'talentText_' + talent.id"
-										v-model="talent.data.text"
-										:placeholder="text.talentText"
+										:id="'giftText_' + gift.id"
+										v-model="gift.data.text"
+										:placeholder="text.gift_text"
 										:init="{
 											height: 200,
 											menu: {},
@@ -71,27 +71,27 @@
 												'casechange | bold italic underline strikethrough | bullist numlist outdent indent | blockquote hr link unlink',
 											],
 										}"
-										@input="emitTalentListUpdate" />
+										@input="emitGiftListUpdate" />
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<label>
-										{{ text.questionList }}
+										{{ text.question_list }}
 									</label>
 								</td>
 								<td>
 									<span
-										v-for="questionId in talent.data.questionList"
+										v-for="questionId in gift.data.question_list"
 										:key="questionId"
-										class="talent-question">
+										class="gift-question">
 										[{{ questionIndex(questionId) + 1 }}] {{ questionTextById(questionId) }}
-										<i class="icon icon-trash action" @click="deleteTalentQuestion(talent, questionId)" />
+										<i class="icon icon-trash action" @click="deleteGiftQuestion(gift, questionId)" />
 									</span>
 
 									<br>
 
-									<select :ref="'talent_' + talent.id + '_questionSelection'">
+									<select :ref="'gift_' + gift.id + '_questionSelection'">
 										<option
 											v-for="(question, j) in availableQuestionList"
 											:key="j"
@@ -99,14 +99,14 @@
 											[{{ j + 1 }}] {{ questionText(question) }}
 										</option>
 									</select>
-									<button class="button button-primary" @click="addTalentQuestion(talent)">
-										{{ text.addQuestion }}
+									<button class="button button-primary" @click="addGiftQuestion(gift)">
+										{{ text.add_question }}
 									</button>
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
-									<button class="button button-danger" @click="deleteTalent(talent.id)">
+									<button class="button button-danger" @click="deleteGift(gift.id)">
 										{{ text.delete }}
 									</button>
 								</td>
@@ -117,11 +117,11 @@
 
 				<div slot="footer">
 					<button
-						:class="{ loading: addingTalentInProgress }"
-						:disabled="addingTalentInProgress"
+						:class="{ loading: addingGiftInProgress }"
+						:disabled="addingGiftInProgress"
 						class="button button-primary"
-						@click="addTalent">
-						{{ text.addTalent }}
+						@click="addGift">
+						{{ text.add_gift }}
 					</button>
 				</div>
 			</draggable>
@@ -140,7 +140,7 @@ const displayMessage = utilities.displayMessage
 /* global gifttest */
 
 export default {
-	name: 'TalentSettings',
+	name: 'GiftSettings',
 	components: {
 		draggable,
 		editor: Editor,
@@ -167,13 +167,13 @@ export default {
 	},
 	data: function() {
 		return {
-			talentList: this.value,
-			addingTalentInProgress: false,
+			giftList: this.value,
+			addingGiftInProgress: false,
 		}
 	},
 	watch: {
 		value: function(newValue, oldValue) {
-			this.talentList = newValue
+			this.giftList = newValue
 		},
 	},
 	methods: {
@@ -205,7 +205,7 @@ export default {
 		questionText(question) {
 			if (question === false || typeof question.data === 'undefined') return ''
 			else if (typeof question.data.text !== 'undefined') return this.excerpt(question.data.text)
-			else if (typeof question.data.questionText !== 'undefined') return this.excerpt(question.data.questionText)
+			else if (typeof question.data.question_text !== 'undefined') return this.excerpt(question.data.question_text)
 			else return ''
 		},
 		excerpt(text, length = 20) {
@@ -215,70 +215,70 @@ export default {
 			if (text.length > length) excerpt += ' ...'
 			return excerpt
 		},
-		deleteTalentQuestion(talent, questionId) {
-			const index = talent.data.questionList.indexOf(questionId)
-			if (index > -1) talent.data.questionList.splice(index, 1)
+		deleteGiftQuestion(gift, questionId) {
+			const index = gift.data.question_list.indexOf(questionId)
+			if (index > -1) gift.data.question_list.splice(index, 1)
 		},
-		deleteTalent(talentId) {
+		deleteGift(giftId) {
 			const self = this
 
-			$.each(self.talentList, function(i, talent) {
-				if (talent.id === talentId) {
-					Vue.delete(self.talentList, i)
+			$.each(self.giftList, function(i, gift) {
+				if (gift.id === giftId) {
+					Vue.delete(self.giftList, i)
 					return false
 				}
 			})
 		},
-		highestTalentId() {
+		highestGiftId() {
 			let highestId = 0
-			$.each(this.talentList, function(i, talent) {
-				if (talent.id > highestId) highestId = talent.id
+			$.each(this.giftList, function(i, gift) {
+				if (gift.id > highestId) highestId = gift.id
 			})
 			return highestId
 		},
-		addTalentQuestion(talent, question) {
-			const questionId = $(this.$refs['talent_' + talent.id + '_questionSelection']).val()
-			if (!talent.data.questionList.includes(questionId)) talent.data.questionList.push(questionId)
+		addGiftQuestion(gift, question) {
+			const questionId = $(this.$refs['gift_' + gift.id + '_questionSelection']).val()
+			if (!gift.data.question_list.includes(questionId)) gift.data.question_list.push(questionId)
 		},
-		addTalent() {
+		addGift() {
 			const self = this
 
 			// only one request allowed at a time
-			if (self.addingTalentInProgress) return
-			else self.addingTalentInProgress = true
+			if (self.addingGiftInProgress) return
+			else self.addingGiftInProgress = true
 
-			/* create new talent */
+			/* create new gift */
 			// collect data
 			const requestData = {
-				_ajax_nonce: gifttest._ajax_nonce.create_talent,
-				action: 'gifttest_create_questionaire_talent',
-				id: self.highestTalentId() + 1,
-				questionaireId: self.questionaireId,
+				_ajax_nonce: gifttest._ajax_nonce.create_gift,
+				action: 'gifttest_create_questionaire_gift',
+				id: self.highestGiftId() + 1,
+				questionaire_id: self.questionaireId,
 			}
 
 			// do request
 			$.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
-					self.talentList.push(response.data)
+					self.giftList.push(response.data)
 				} else {
 					self.displayMessage(response.message, response.status)
 				}
 				// loading done
-				self.addingTalentInProgress = false
+				self.addingGiftInProgress = false
 			}, 'json')
 		},
 		toggleContents() {
 			$(this.$refs.contents).toggle()
 			$(this.$refs.contentsCounterpart).toggle()
 		},
-		toggleBody(talentId) {
-			if (typeof talentId === 'undefined' || talentId === null) return
-			const body = $(this.$refs['body_' + talentId])
+		toggleBody(giftId) {
+			if (typeof giftId === 'undefined' || giftId === null) return
+			const body = $(this.$refs['body_' + giftId])
 			if (body.hasClass('table-body-hidden')) body.removeClass('table-body-hidden')
 			else body.addClass('table-body-hidden')
 		},
-		emitTalentListUpdate() {
-			this.$emit('input', this.talentList)
+		emitGiftListUpdate() {
+			this.$emit('input', this.giftList)
 		},
 	},
 }

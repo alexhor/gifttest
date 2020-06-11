@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once plugin_dir_path( __FILE__ ) . 'IElement.php';
+require_once plugin_dir_path( __FILE__ ) . 'ielement.php';
 require_once plugin_dir_path( __FILE__ ) . 'class-element-factory.php';
 
 

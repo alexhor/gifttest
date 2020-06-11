@@ -9,13 +9,13 @@
 				:result-list="resultList"
 				:element-list="elementList"
 				:answer-list="answerList"
-				:talent-list="talentList"
-				:show-more-talents="settings.showMoreTalents"
-				:shown-talent-count="settings.shownTalentCount"
+				:gift-list="giftList"
+				:show-more-gifts="settings.show_more_gifts"
+				:shown-gift-count="settings.shown_gift_count"
 				:text="text" />
 		</div>
 
-		<div v-else class="questionaireWrapper">
+		<div v-else class="questionaire-wrapper">
 			<div class="progressbar-wrapper">
 				<div class="bar">
 					<div class="progress" :style="'width: ' + questionaireProgressAccurate + '%'" />
@@ -82,7 +82,7 @@ export default {
 			settings: {},
 			answerList: [],
 			elementList: [],
-			talentList: [],
+			giftList: [],
 			currentElementIndex: 0,
 			resultList: {},
 			elementTypes: {
@@ -148,9 +148,9 @@ export default {
 			$.post(gifttest.ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					self.settings = response.data.settings
-					self.answerList = response.data.answerList
-					self.elementList = response.data.elementList
-					self.talentList = response.data.talentList
+					self.answerList = response.data.answer_list
+					self.elementList = response.data.element_list
+					self.giftList = response.data.gift_list
 
 					$(document.body).trigger('post-load')
 				}

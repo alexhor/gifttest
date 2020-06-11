@@ -2,27 +2,27 @@
 	<div class="element content-element">
 		<h2>{{ text.scoreboard }}</h2>
 
-		<button class="printTalentListButton" @click="printTalentList">
-			{{ text.printTalentList }}
+		<button class="print-gift-list-button" @click="printGiftList">
+			{{ text.print_gift_list }}
 		</button>
 
 		<div ref="scoreboard" class="scoreboard">
-			<div v-for="talent in shownOrderedTalentList" :key="talent.id" class="score">
-				<h3>{{ talent.data.title }} ({{ scoreText(talentScores[talent.id]) }})</h3>
+			<div v-for="gift in shownOrderedGiftList" :key="gift.id" class="score">
+				<h3>{{ gift.data.title }} ({{ scoreText(giftScores[gift.id]) }})</h3>
 				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="talent.data.text" />
+				<div v-html="gift.data.text" />
 			</div>
 
-			<div v-if="showMoreTalents && moreOrderedTalentList.length > 0">
-				<button class="show-more-talents-toggle" @click="showMoreTalentsToggle">
-					{{ text.showMoreTalents }}
+			<div v-if="showMoreGifts && moreOrderedGiftList.length > 0">
+				<button class="show-more-gifts-toggle" @click="showMoreGiftsToggle">
+					{{ text.show_more_gifts }}
 				</button>
 
-				<div ref="moreTalents" style="display: none;">
-					<div v-for="talent in moreOrderedTalentList" :key="talent.id" class="score">
-						<h3>{{ talent.data.title }} ({{ scoreText(talentScores[talent.id]) }})</h3>
+				<div ref="moreGifts" style="display: none;">
+					<div v-for="gift in moreOrderedGiftList" :key="gift.id" class="score">
+						<h3>{{ gift.data.title }} ({{ scoreText(giftScores[gift.id]) }})</h3>
 						<!-- eslint-disable-next-line vue/no-v-html -->
-						<div v-html="talent.data.text" />
+						<div v-html="gift.data.text" />
 					</div>
 				</div>
 			</div>
@@ -51,17 +51,17 @@ export default {
 			required: true,
 			default: function() { return [] },
 		},
-		talentList: {
+		giftList: {
 			type: Array,
 			required: true,
 			default: function() { return [] },
 		},
-		showMoreTalents: {
+		showMoreGifts: {
 			type: String,
 			required: false,
 			default: function() { return 'true' },
 		},
-		shownTalentCount: {
+		shownGiftCount: {
 			type: Number,
 			required: false,
 			default: function() { return 5 },
@@ -74,46 +74,46 @@ export default {
 	},
 	data: function() {
 		return {
-			moreTalentsShown: this.showMoreTalents === 'false',
-			orderedTalentList: [],
-			talentScores: {},
+			moreGiftsShown: this.showMoreGifts === 'false',
+			orderedGiftList: [],
+			giftScores: {},
 			elementByIdList: {},
 		}
 	},
 	computed: {
-		shownOrderedTalentList: function() {
+		shownOrderedGiftList: function() {
 			const self = this
 			let count = 0
 			const outputList = []
 
-			$.each(self.orderedTalentList, function(i, talentList) {
-				if (talentList === 'undefined' || talentList == null) return
+			$.each(self.orderedGiftList, function(i, giftList) {
+				if (giftList === 'undefined' || giftList == null) return
 
-				$.each(talentList, function(j, talent) {
-					outputList.push(talent)
+				$.each(giftList, function(j, gift) {
+					outputList.push(gift)
 				})
 
-				count += talentList.length
-				if (count >= self.shownTalentCount) return false
+				count += giftList.length
+				if (count >= self.shownGiftCount) return false
 			})
 
 			return outputList
 		},
-		moreOrderedTalentList: function() {
+		moreOrderedGiftList: function() {
 			const self = this
 			let count = 0
 			const outputList = []
 
-			$.each(self.orderedTalentList, function(i, talentList) {
-				if (talentList === 'undefined' || talentList == null) return
+			$.each(self.orderedGiftList, function(i, giftList) {
+				if (giftList === 'undefined' || giftList == null) return
 
-				if (count < self.shownTalentCount) {
-					count += talentList.length
+				if (count < self.shownGiftCount) {
+					count += giftList.length
 					return
 				}
 
-				$.each(talentList, function(j, talent) {
-					outputList.push(talent)
+				$.each(giftList, function(j, gift) {
+					outputList.push(gift)
 				})
 			})
 
@@ -124,7 +124,7 @@ export default {
 		this.calcScores()
 	},
 	methods: {
-		printTalentList() {
+		printGiftList() {
 			// collect elements
 			const scoreboard = $(this.$refs.scoreboard)
 			let displayElements = scoreboard.parents().toArray()
@@ -150,36 +150,36 @@ export default {
 		calcScores() {
 			const self = this
 
-			$.each(self.talentList, function(i, talent) {
-				self.talentScores[talent.id] = 0
-				$.each(talent.data.questionList, function(j, questionId) {
-					self.talentScores[talent.id] += self.resultList[questionId]
+			$.each(self.giftList, function(i, gift) {
+				self.giftScores[gift.id] = 0
+				$.each(gift.data.question_list, function(j, questionId) {
+					self.giftScores[gift.id] += self.resultList[questionId]
 				})
 			})
 
-			self.orderTalents()
+			self.orderGifts()
 		},
-		orderTalents() {
+		orderGifts() {
 			const self = this
-			self.orderedTalentList = []
+			self.orderedGiftList = []
 
-			// order talents
-			$.each(self.talentList, function(i, talent) {
-				if (!(self.talentScores[talent.id] in self.orderedTalentList)) {
-					self.orderedTalentList[self.talentScores[talent.id]] = []
+			// order gifts
+			$.each(self.giftList, function(i, gift) {
+				if (!(self.giftScores[gift.id] in self.orderedGiftList)) {
+					self.orderedGiftList[self.giftScores[gift.id]] = []
 				}
-				self.orderedTalentList[self.talentScores[talent.id]].push(talent)
+				self.orderedGiftList[self.giftScores[gift.id]].push(gift)
 			})
 
-			self.orderedTalentList.reverse()
+			self.orderedGiftList.reverse()
 		},
-		showMoreTalentsToggle() {
-			$(this.$refs.moreTalents).toggle()
-			this.moreTalentsShown = !this.moreTalentsShown
+		showMoreGiftsToggle() {
+			$(this.$refs.moreGifts).toggle()
+			this.moreGiftsShown = !this.moreGiftsShown
 		},
 		scoreText(score) {
-			if (score === 1) return score + ' ' + this.text.pointSingular
-			else return score + ' ' + this.text.pointsPlural
+			if (score === 1) return score + ' ' + this.text.point_singular
+			else return score + ' ' + this.text.points_plural
 		},
 	},
 }
