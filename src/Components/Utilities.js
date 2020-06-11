@@ -15,12 +15,17 @@ export default {
 		message.classList.add('message')
 		message.classList.add('message-' + messageType)
 		message.innerHTML = messageText
+		let removed = false
 
 		const closeButton = document.createElement('button')
 		closeButton.classList.add('message-close-button')
 		closeButton.innerHTML = '×'
 		closeButton.onclick = function() {
-			messageContainer.removeChild(message)
+			// only remove once
+			if (removed === false) {
+				messageContainer.removeChild(message)
+			}
+			removed = true
 		}
 		message.appendChild(closeButton)
 
