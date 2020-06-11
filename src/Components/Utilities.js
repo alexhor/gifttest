@@ -26,7 +26,7 @@ export default {
 
 		messageContainer.appendChild(message)
 
-		// window.setTimeout(function() { closeButton.click() }, 5000)
+		window.setTimeout(function() { closeButton.click() }, 5000)
 	},
 	copyToClipboard(valueToCopy) {
 		/*
