@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gifttest\n"
-"POT-Creation-Date: 2020-06-01 19:09+0200\n"
+"POT-Creation-Date: 2020-06-11 22:02+0200\n"
 "PO-Revision-Date: 2020-06-01 18:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,276 +20,276 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 "X-Poedit-SearchPathExcluded-2: js\n"
 
-#: class/PluginLoader.php:72
+#: class/class-plugin-loader.php:97
 msgid "Load Questionaire"
 msgstr ""
 
-#: class/PluginLoader.php:73
+#: class/class-plugin-loader.php:98
 msgid "No questionaire exists yet"
 msgstr ""
 
-#: class/PluginLoader.php:74
+#: class/class-plugin-loader.php:99
 msgid "Add Questionaire"
 msgstr ""
 
-#: class/PluginLoader.php:75
+#: class/class-plugin-loader.php:100
 msgid "Questionaire Name"
 msgstr ""
 
-#: class/PluginLoader.php:76
+#: class/class-plugin-loader.php:101
 msgid "Edit Questionaire"
 msgstr ""
 
-#: class/PluginLoader.php:77
+#: class/class-plugin-loader.php:102
 msgid "Name"
 msgstr ""
 
-#: class/PluginLoader.php:78
-msgid "Number of talents shown"
+#: class/class-plugin-loader.php:103
+msgid "Number of gifts shown"
 msgstr ""
 
-#: class/PluginLoader.php:79
-msgid "Enabel show more talents button"
+#: class/class-plugin-loader.php:104
+msgid "Enabel show more gifts button"
 msgstr ""
 
-#: class/PluginLoader.php:80
+#: class/class-plugin-loader.php:105
 msgid "Yes"
 msgstr ""
 
-#: class/PluginLoader.php:81
+#: class/class-plugin-loader.php:106
 msgid "No"
 msgstr ""
 
-#: class/PluginLoader.php:82
+#: class/class-plugin-loader.php:107
 msgid "Elements"
 msgstr ""
 
-#: class/PluginLoader.php:83
+#: class/class-plugin-loader.php:108
 msgid "Add Element"
 msgstr ""
 
-#: class/PluginLoader.php:84
+#: class/class-plugin-loader.php:109
 msgid "Text"
 msgstr ""
 
-#: class/PluginLoader.php:85
+#: class/class-plugin-loader.php:110
 msgid "Question"
 msgstr ""
 
-#: class/PluginLoader.php:86
+#: class/class-plugin-loader.php:111
 msgid "Delete Element"
 msgstr ""
 
-#: class/PluginLoader.php:87
+#: class/class-plugin-loader.php:112
 msgid "Custom Question"
 msgstr ""
 
-#: class/PluginLoader.php:88
+#: class/class-plugin-loader.php:113
 msgid "Answers"
 msgstr ""
 
-#: class/PluginLoader.php:89
+#: class/class-plugin-loader.php:114
 msgid "Answer"
 msgstr ""
 
-#: class/PluginLoader.php:90
+#: class/class-plugin-loader.php:115
 msgid "Answer Content"
 msgstr ""
 
-#: class/PluginLoader.php:91
+#: class/class-plugin-loader.php:116
 msgid "Answer Value"
 msgstr ""
 
-#: class/PluginLoader.php:92
+#: class/class-plugin-loader.php:117
 msgid "Add Answer"
 msgstr ""
 
-#: class/PluginLoader.php:93
+#: class/class-plugin-loader.php:118
 msgid "Edit Answers"
 msgstr ""
 
-#: class/PluginLoader.php:94
-msgid "Talents"
+#: class/class-plugin-loader.php:119
+msgid "Gifts"
 msgstr ""
 
-#: class/PluginLoader.php:95
-msgid "Talent"
+#: class/class-plugin-loader.php:120
+msgid "Gift"
 msgstr ""
 
-#: class/PluginLoader.php:96
-msgid "Edit Talents"
+#: class/class-plugin-loader.php:121
+msgid "Edit Gifts"
 msgstr ""
 
-#: class/PluginLoader.php:97
-msgid "Talent Title"
+#: class/class-plugin-loader.php:122
+msgid "Gift Title"
 msgstr ""
 
-#: class/PluginLoader.php:98
-msgid "Talent Text"
+#: class/class-plugin-loader.php:123
+msgid "Gift Text"
 msgstr ""
 
-#: class/PluginLoader.php:99
-msgid "Add Talent"
+#: class/class-plugin-loader.php:124
+msgid "Add Gift"
 msgstr ""
 
-#: class/PluginLoader.php:100
+#: class/class-plugin-loader.php:125
 msgid "Question List"
 msgstr ""
 
-#: class/PluginLoader.php:101
+#: class/class-plugin-loader.php:126
 msgid "Add Question"
 msgstr ""
 
-#: class/PluginLoader.php:102
+#: class/class-plugin-loader.php:127
 msgid "Content"
 msgstr ""
 
-#: class/PluginLoader.php:103
+#: class/class-plugin-loader.php:128
 msgid "Invalid Element"
 msgstr ""
 
-#: class/PluginLoader.php:104
+#: class/class-plugin-loader.php:129
 msgid "Save"
 msgstr ""
 
-#: class/PluginLoader.php:105
+#: class/class-plugin-loader.php:130
 msgid "Delete"
 msgstr ""
 
-#: class/PluginLoader.php:106
+#: class/class-plugin-loader.php:131
 msgid "Export"
 msgstr ""
 
-#: class/PluginLoader.php:107
+#: class/class-plugin-loader.php:132
 msgid "Import Questionaire"
 msgstr ""
 
-#: class/PluginLoader.php:108
+#: class/class-plugin-loader.php:133
 msgid "Import Failed - Invalid File Content"
 msgstr ""
 
-#: class/PluginLoader.php:109
+#: class/class-plugin-loader.php:134
 msgid "Import Successful - Save the questionaire if you want to keep it"
 msgstr ""
 
-#: class/PluginLoader.php:110
+#: class/class-plugin-loader.php:135
 msgid "Shortcode"
 msgstr ""
 
-#: class/PluginLoader.php:111
+#: class/class-plugin-loader.php:136
 msgid "Copy"
 msgstr ""
 
-#: class/PluginLoader.php:112
+#: class/class-plugin-loader.php:137
 msgid "Copy to clipboard"
 msgstr ""
 
-#: class/PluginLoader.php:113
+#: class/class-plugin-loader.php:138
 msgid "Copied!"
 msgstr ""
 
-#: class/PluginLoader.php:114
+#: class/class-plugin-loader.php:139
 msgid "Edit Elements"
 msgstr ""
 
-#: class/PluginLoader.php:115
+#: class/class-plugin-loader.php:140
 msgid "Do you really want to delete this questionaire?"
 msgstr ""
 
-#: class/SettingsPage.php:43 class/SettingsPage.php:44
-#: class/SettingsPage.php:58
+#: class/class-settings-page.php:65 class/class-settings-page.php:66
+#: class/class-settings-page.php:82
 msgid "Gift Test"
 msgstr ""
 
-#: class/SettingsPage.php:101
+#: class/class-settings-page.php:138
 #, php-format
 msgid "Questionaire \"%s\" created"
 msgstr ""
 
-#: class/SettingsPage.php:117
+#: class/class-settings-page.php:161
 msgid "Invalid data"
 msgstr ""
 
-#: class/SettingsPage.php:123
+#: class/class-settings-page.php:169
 msgid "Questionaire saved"
 msgstr ""
 
-#: class/SettingsPage.php:124
+#: class/class-settings-page.php:171
 msgid "Saving questionaire failed"
 msgstr ""
 
-#: class/SettingsPage.php:159
+#: class/class-settings-page.php:223
 msgid "Questionaires successfully loaded"
 msgstr ""
 
-#: class/SettingsPage.php:171
+#: class/class-settings-page.php:244
 msgid "Questionaire details loading failed"
 msgstr ""
 
-#: class/SettingsPage.php:172
+#: class/class-settings-page.php:251
 msgid "Questionaire details successfully loaded"
 msgstr ""
 
-#: class/SettingsPage.php:188
+#: class/class-settings-page.php:281
 msgid "Creating element failed"
 msgstr ""
 
-#: class/SettingsPage.php:189
+#: class/class-settings-page.php:288
 msgid "Element created"
 msgstr ""
 
-#: class/SettingsPage.php:206 class/SettingsPage.php:225
+#: class/class-settings-page.php:321 class/class-settings-page.php:358
 msgid "Creating answer failed"
 msgstr ""
 
-#: class/SettingsPage.php:210 class/SettingsPage.php:226
+#: class/class-settings-page.php:331 class/class-settings-page.php:365
 msgid "Answer created"
 msgstr ""
 
-#: class/SettingsPage.php:241
-msgid "Creating talent failed"
+#: class/class-settings-page.php:393
+msgid "Creating gift failed"
 msgstr ""
 
-#: class/SettingsPage.php:242
-msgid "Talent created"
+#: class/class-settings-page.php:400
+msgid "Gift created"
 msgstr ""
 
-#: class/SettingsPage.php:251
+#: class/class-settings-page.php:421
 msgid "Permission denied"
 msgstr ""
 
-#: class/SettingsPage.php:255
+#: class/class-settings-page.php:427
 msgid "Questionaire deleted"
 msgstr ""
 
-#: class/SettingsPage.php:256
+#: class/class-settings-page.php:429
 msgid "Deleting questionaire failed"
 msgstr ""
 
-#: class/Shortcode.php:28
+#: class/class-shortcode.php:55
 msgid "Continue"
 msgstr ""
 
-#: class/Shortcode.php:29
+#: class/class-shortcode.php:56
 msgid "Back"
 msgstr ""
 
-#: class/Shortcode.php:30
+#: class/class-shortcode.php:57
 msgid "Scoreboard"
 msgstr ""
 
-#: class/Shortcode.php:31
-msgid "Print talent list"
+#: class/class-shortcode.php:58
+msgid "Print gift list"
 msgstr ""
 
-#: class/Shortcode.php:32
+#: class/class-shortcode.php:59
 msgid "Point"
 msgstr ""
 
-#: class/Shortcode.php:33
+#: class/class-shortcode.php:60
 msgid "Points"
 msgstr ""
 
-#: class/Shortcode.php:34
-msgid "Show more talents"
+#: class/class-shortcode.php:61
+msgid "Show more gifts"
 msgstr ""
