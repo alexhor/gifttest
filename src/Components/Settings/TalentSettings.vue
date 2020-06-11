@@ -65,7 +65,6 @@
 										:placeholder="text.talentText"
 										:init="{
 											height: 200,
-											width: 800,
 											menu: {},
 											toolbar: [
 												'undo redo | fontselect fontsizeselect formatselect | forecolor backcolor | removeformat | fullscreen',
