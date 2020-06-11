@@ -49,79 +49,25 @@
 
 /* answer */
 .answerWrapper {
-	display: table;
+	display: table-row;
 	margin-bottom: 40px;
 }
 
 .answerWrapper .answer {
-	display: table-row;
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none; /* Safari */
-	-khtml-user-select: none; /* Konqueror HTML */
-	-moz-user-select: none; /* Firefox */
-	-ms-user-select: none; /* Internet Explorer/Edge */
-	user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+	display: inline;
 }
 
 .answerWrapper .answer .answerInner {
-	display: table-cell;
-	position: relative;
+	display: inline-block;
 	margin-bottom: 12px;
 	cursor: pointer;
 	font-size: 22px;
 	padding: 10px 10px 10px 35px;
 }
-/*
-.answerWrapper .answer .answerInner:hover input[type='radio'] + .customCheckbox {
-	background-color: #ccc;
-}
 
-.answerWrapper .answer .answerInner input[type='radio'] {
-	position: absolute;
-	opacity: 0;
-	cursor: pointer;
-	height: 0;
-	width: 0;
+.answerWrapper .answer .answerInner > * {
+	display: inline-block;
 }
-
-.answerWrapper .answer .answerInner input[type='radio'] + .customCheckbox {
-	position: absolute;
-	top: 14px;
-	left: 0;
-	height: 25px;
-	width: 25px;
-	background-color: #eee;
-	border-radius: 50%;
-}
-
-.answerWrapper .answer .answerInner input[type='radio'] + .customCheckbox:after {
-	content: '';
-	position: absolute;
-	display: none;
-
-	top: 9px;
-	left: 9px;
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background: white;
-}
-
-.answerWrapper .answer .answerInner input[type='radio']:checked + .customCheckbox {
-	background-color: var(--gifttest-progress-bar-progress-color);
-}
-
-.answerWrapper .answer .answerInner input[type='radio']:checked + .customCheckbox:after {
-	display: block;
-}
-
-@media all and (min-width: 768px) {
-	.answerWrapper .answer {
-		display: inline-block;
-		padding: 0px 30px;
-	}
-}
-*/
 /* end of answer */
 
 /* scoreboard */

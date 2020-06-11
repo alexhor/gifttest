@@ -164,6 +164,16 @@ button.button-copy {
 	margin-top: 2px;
 }
 
+.elements .element > table {
+	width: 100%;
+}
+
+.elements .element textarea {
+	resize: both;
+	width: 100%;
+	min-height: 90px;
+}
+
 .talents .talentQuestion {
 	margin: 5px 10px 5px 0px;
 	display: inline-block;
