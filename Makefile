@@ -112,5 +112,4 @@ appstore:
 		-exec echo {} \; \
 		-exec npm run uglifycss -- --output {} {} \;
 	# zip everything
-	tar -czf $(build_dir)/$(app_name)-$(version).tar.gz \
-		-C $(build_dir) $(app_name)
+	cd $(build_dir)/$(app_name) && zip -r ../$(app_name)-$(version).zip *
