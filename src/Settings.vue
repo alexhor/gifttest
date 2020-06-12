@@ -163,24 +163,22 @@
 </template>
 
 <script>
-import $ from 'jquery'
-
-import ElementSettings from './Components/Settings/ElementSettings.vue'
-import AnswerSettings from './Components/Settings/AnswerSettings.vue'
-import GiftSettings from './Components/Settings/GiftSettings.vue'
-
-import utilities from './Components/Utilities.js'
-const displayMessage = utilities.displayMessage
-const copyToClipboard = utilities.copyToClipboard
 /* global ajaxurl */
+/* global jQuery */
 /* global gifttest */
+__webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
+
+const ElementSettings = () => import(/* webpackChunkName: "ElementSettings" *//* webpackPrefetch: true */'./Components/Settings/ElementSettings.vue')
+const AnswerSettings = () => import(/* webpackChunkName: "AnswerSettings" *//* webpackPrefetch: true */'./Components/Settings/AnswerSettings.vue')
+const GiftSettings = () => import(/* webpackChunkName: "GiftSettings" *//* webpackPrefetch: true */'./Components/Settings/GiftSettings.vue')
+const Utilities = () => import(/* webpackChunkName: "Utilities" *//* webpackPrefetch: true */'./Components/Utilities.js')
 
 export default {
 	name: 'Settings',
 	components: {
-		ElementSettings,
-		AnswerSettings,
-		GiftSettings,
+		ElementSettings: ElementSettings,
+		AnswerSettings: AnswerSettings,
+		GiftSettings: GiftSettings,
 	},
 	data: function() {
 		return {
@@ -221,7 +219,7 @@ export default {
 			const questionList = []
 			if (self.loadedQuestionaire === 'undefined' || self.loadedQuestionaire === false || self.loadedQuestionaire.element_list === 'undefined') return questionList
 
-			$.each(self.loadedQuestionaire.element_list, function(i, element) {
+			jQuery.each(self.loadedQuestionaire.element_list, function(i, element) {
 				if (element.type === self.elementTypes.question.id || element.type === self.elementTypes.customQuestion.id) {
 					questionList.push(element)
 				}
@@ -231,17 +229,36 @@ export default {
 		},
 	},
 	beforeMount: function() {
-		this.pluginDirUrl = gifttest.plugin_dir_url
-		this.loadQuestionaireList()
+		const self = this
+
+		self.pluginDirUrl = gifttest.plugin_dir_url
+		self.loadQuestionaireList()
+
+		// load requried modules
+		ElementSettings()
+		AnswerSettings()
+		GiftSettings()
+
+		// load utility functions
+		Utilities().then(utilities => {
+			self.displayMessage = utilities.default.displayMessage
+			self.copyToClipboard = utilities.default.copyToClipboard
+		})
 	},
 	methods: {
-		displayMessage,
-		copyToClipboard,
+		/**
+		 * This is a dummy function that will be replace asynchronous
+		 */
+		displayMessage() {},
+		/**
+		 * This is a dummy function that will be replace asynchronous
+		 */
+		copyToClipboard() {},
 		highestQuestionaireId() {
 			let highestId = 0
-			if (this.availabeQuestionaireList === 'undefined' || !$.isArray(this.availabeQuestionaireList)) return highestId
+			if (this.availabeQuestionaireList === 'undefined' || !jQuery.isArray(this.availabeQuestionaireList)) return highestId
 			// check each questionaire
-			$.each(this.availabeQuestionaireList, function(i, questionaire) {
+			jQuery.each(this.availabeQuestionaireList, function(i, questionaire) {
 				if (questionaire.id > highestId) highestId = questionaire.id
 			})
 			return highestId
@@ -304,7 +321,7 @@ export default {
 			}
 
 			// do request
-			$.post(ajaxurl, requestData, function(response) {
+			jQuery.post(ajaxurl, requestData, function(response) {
 				if (typeof response.message !== 'undefined' && response.message !== null) {
 					self.displayMessage(response.message, response.status)
 				}
@@ -335,7 +352,7 @@ export default {
 			}
 
 			// do request
-			$.post(ajaxurl, requestData, function(response) {
+			jQuery.post(ajaxurl, requestData, function(response) {
 				if (typeof response.message !== 'undefined' && response.message !== null) {
 					self.displayMessage(response.message, response.status)
 				}
@@ -377,7 +394,7 @@ export default {
 			}
 
 			// do request
-			$.post(ajaxurl, requestData, function(response) {
+			jQuery.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					self.availabeQuestionaireList = response.data
 				} else if (typeof response.message !== 'undefined' && response.message !== null) {
@@ -405,7 +422,7 @@ export default {
 			}
 
 			// do request
-			$.post(ajaxurl, requestData, function(response) {
+			jQuery.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					self.loadedQuestionaire = response.data
 				} else if (typeof response.message !== 'undefined' && response.message !== null) {
@@ -433,7 +450,7 @@ export default {
 			}
 
 			// do request
-			$.post(ajaxurl, requestData, function(response) {
+			jQuery.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					// reset questionaire name
 					self.newQuestionaireName = ''

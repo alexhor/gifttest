@@ -60,6 +60,7 @@ if ( ! class_exists( 'Shortcode' ) ) :
 						'points_plural'   => esc_html__( 'Points', 'gifttest' ),
 						'show_more_gifts' => esc_html__( 'Show more gifts', 'gifttest' ),
 					),
+					'vue_components_path' => plugin_dir_url( __FILE__ ) . '../js/',
 				)
 			);
 			wp_enqueue_script( 'gifttest-questionaire' );

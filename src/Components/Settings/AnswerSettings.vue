@@ -90,18 +90,19 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import $ from 'jquery'
-import draggable from 'vuedraggable'
-import utilities from '../Utilities.js'
-const displayMessage = utilities.displayMessage
 /* global ajaxurl */
+/* global jQuery */
+/* global Vue */
 /* global gifttest */
+__webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
+
+const Vuedraggable = () => import(/* webpackChunkName: "Vuedraggable" *//* webpackPrefetch: true */'vuedraggable')
+const Utilities = () => import(/* webpackChunkName: "Utilities" */'../Utilities.js')
 
 export default {
 	name: 'AnswerSettings',
 	components: {
-		draggable,
+		draggable: Vuedraggable,
 	},
 	props: {
 		value: {
@@ -129,12 +130,24 @@ export default {
 			this.answerList = newValue
 		},
 	},
+	beforeMount: function() {
+		const self = this
+		// load requried modules
+		Vuedraggable()
+		// load displayMessage function
+		Utilities().then(utilities => {
+			self.displayMessage = utilities.default.displayMessage
+		})
+	},
 	methods: {
-		displayMessage,
+		/**
+		 * This is a dummy function that will be replace asynchronous
+		 */
+		displayMessage() {},
 		deleteAnswer(answerId) {
 			const self = this
 
-			$.each(self.answerList, function(i, answer) {
+			jQuery.each(self.answerList, function(i, answer) {
 				if (answer.id === answerId) {
 					Vue.delete(self.answerList, i)
 					return false
@@ -143,7 +156,7 @@ export default {
 		},
 		highestAnswerId() {
 			let highestId = 0
-			$.each(this.answerList, function(i, answer) {
+			jQuery.each(this.answerList, function(i, answer) {
 				if (answer.id > highestId) highestId = answer.id
 			})
 			return highestId
@@ -165,7 +178,7 @@ export default {
 			}
 
 			// do request
-			$.post(ajaxurl, requestData, function(response) {
+			jQuery.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					self.answerList.push(response.data)
 				} else {
@@ -176,8 +189,8 @@ export default {
 			}, 'json')
 		},
 		toggleContents() {
-			$(this.$refs.contents).toggle()
-			$(this.$refs.contentsCounterpart).toggle()
+			jQuery(this.$refs.contents).toggle()
+			jQuery(this.$refs.contentsCounterpart).toggle()
 		},
 		emitAnswerListUpdate() {
 			this.$emit('input', this.answerList)

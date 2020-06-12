@@ -227,20 +227,21 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import $ from 'jquery'
-import Editor from '@tinymce/tinymce-vue'
-import draggable from 'vuedraggable'
-import utilities from '../Utilities.js'
-const displayMessage = utilities.displayMessage
 /* global ajaxurl */
+/* global jQuery */
+/* global Vue */
 /* global gifttest */
+__webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
+
+const Tinymce = () => import(/* webpackChunkName: "Tinymce" *//* webpackPrefetch: true */'@tinymce/tinymce-vue')
+const Vuedraggable = () => import(/* webpackChunkName: "Vuedraggable" *//* webpackPrefetch: true */'vuedraggable')
+const Utilities = () => import(/* webpackChunkName: "Utilities" */'../Utilities.js')
 
 export default {
 	name: 'ElementSettings',
 	components: {
-		draggable,
-		editor: Editor,
+		draggable: Vuedraggable,
+		editor: Tinymce,
 	},
 	props: {
 		value: {
@@ -284,12 +285,25 @@ export default {
 			this.elementList = newValue
 		},
 	},
+	beforeMount: function() {
+		const self = this
+		// load requried modules
+		Vuedraggable()
+		Tinymce()
+		// load displayMessage function
+		Utilities().then(utilities => {
+			self.displayMessage = utilities.default.displayMessage
+		})
+	},
 	methods: {
-		displayMessage,
+		/**
+		 * This is a dummy function that will be replace asynchronous
+		 */
+		displayMessage() {},
 		deleteElement(elementId) {
 			const self = this
 
-			$.each(self.elementList, function(i, element) {
+			jQuery.each(self.elementList, function(i, element) {
 				if (element.id === elementId) {
 					Vue.delete(self.elementList, i)
 					return false
@@ -301,7 +315,7 @@ export default {
 			if (element.type !== this.elementTypes.customQuestion.id) return
 			if (typeof element.data === 'undefined' || typeof element.data.answers_list === 'undefined') return
 
-			$.each(element.data.answers_list, function(i, answer) {
+			jQuery.each(element.data.answers_list, function(i, answer) {
 				if (answer.id === answerId) {
 					Vue.delete(element.data.answers_list, i)
 					return false
@@ -309,7 +323,7 @@ export default {
 			})
 		},
 		excerpt(text, length = 20) {
-			text = $('<div/>').html(text).text()
+			text = jQuery('<div/>').html(text).text()
 			if (text.length < 1) return ''
 			let excerpt = '[' + text.substring(0, length)
 			if (text.length > length) excerpt += ' ...'
@@ -319,7 +333,7 @@ export default {
 		getElementById(elementId) {
 			const self = this
 			let requestedElement = false
-			$.each(self.elementList, function(i, element) {
+			jQuery.each(self.elementList, function(i, element) {
 				if (element.id === elementId) {
 					requestedElement = element
 					return false
@@ -330,7 +344,7 @@ export default {
 		highestCustomQuestionAnswerId(elementId) {
 			let highestId = 0
 			const element = this.getElementById(elementId)
-			$.each(element.data.answers_list, function(i, answer) {
+			jQuery.each(element.data.answers_list, function(i, answer) {
 				if (answer.id > highestId) highestId = answer.id
 			})
 			return highestId
@@ -353,7 +367,7 @@ export default {
 			}
 
 			// do request
-			$.post(ajaxurl, requestData, function(response) {
+			jQuery.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					const element = self.getElementById(elementId)
 					if (element !== false) element.data.answers_list.push(response.data)
@@ -366,22 +380,22 @@ export default {
 		},
 		toggleBody(elementId) {
 			if (typeof elementId === 'undefined' || elementId === null) return
-			const body = $(this.$refs['body_' + elementId])
+			const body = jQuery(this.$refs['body_' + elementId])
 			if (body.hasClass('table-body-hidden')) body.removeClass('table-body-hidden')
 			else body.addClass('table-body-hidden')
 		},
 		toggleElementContents() {
-			$(this.$refs.elementContents).toggle()
-			$(this.$refs.elementContentsCounterpart).toggle()
+			jQuery(this.$refs.elementContents).toggle()
+			jQuery(this.$refs.elementContentsCounterpart).toggle()
 		},
 		emitElementListUpdate() {
 			this.$emit('input', this.elementList)
 		},
 		highestElementId() {
 			let highestId = 0
-			if (this.elementList === 'undefined' || !$.isArray(this.elementList)) return highestId
+			if (this.elementList === 'undefined' || !jQuery.isArray(this.elementList)) return highestId
 			// check each element
-			$.each(this.elementList, function(i, element) {
+			jQuery.each(this.elementList, function(i, element) {
 				if (element.id > highestId) highestId = element.id
 			})
 			return highestId
@@ -410,7 +424,7 @@ export default {
 			}
 
 			// do request
-			$.post(ajaxurl, requestData, function(response) {
+			jQuery.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					self.elementList.push(response.data)
 				} else {

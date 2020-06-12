@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import $ from 'jquery'
+/* global jQuery */
 
 export default {
 	name: 'ScoreBoard',
@@ -74,7 +74,6 @@ export default {
 	},
 	data: function() {
 		return {
-			moreGiftsShown: this.showMoreGifts === 'false',
 			orderedGiftList: [],
 			giftScores: {},
 			elementByIdList: {},
@@ -86,10 +85,10 @@ export default {
 			let count = 0
 			const outputList = []
 
-			$.each(self.orderedGiftList, function(i, giftList) {
+			jQuery.each(self.orderedGiftList, function(i, giftList) {
 				if (giftList === 'undefined' || giftList == null) return
 
-				$.each(giftList, function(j, gift) {
+				jQuery.each(giftList, function(j, gift) {
 					outputList.push(gift)
 				})
 
@@ -104,7 +103,7 @@ export default {
 			let count = 0
 			const outputList = []
 
-			$.each(self.orderedGiftList, function(i, giftList) {
+			jQuery.each(self.orderedGiftList, function(i, giftList) {
 				if (giftList === 'undefined' || giftList == null) return
 
 				if (count < self.shownGiftCount) {
@@ -112,7 +111,7 @@ export default {
 					return
 				}
 
-				$.each(giftList, function(j, gift) {
+				jQuery.each(giftList, function(j, gift) {
 					outputList.push(gift)
 				})
 			})
@@ -126,23 +125,26 @@ export default {
 	methods: {
 		printGiftList() {
 			// collect elements
-			const scoreboard = $(this.$refs.scoreboard)
+			const scoreboard = jQuery(this.$refs.scoreboard)
 			let displayElements = scoreboard.parents().toArray()
 			displayElements = displayElements.concat(scoreboard.find('*:not(button)').toArray())
 			displayElements.push(scoreboard[0])
 
 			// apply print displaying
-			$.each(displayElements, function(i, element) {
+			jQuery.each(displayElements, function(i, element) {
 				element.classList.add('gifttest-print')
 			})
-			const style = $($.parseHTML('<style type="text/css" media="print">body *:not(.gifttest-print) { display: none !important; } @page { margin: 0; }</style>'))
-			$('body').append(style)
+			const styleElement = document.createElement('style')
+			styleElement.media = 'print'
+			styleElement.textContent = 'body *:not(.gifttest-print) { display: none !important; } @page { margin: 0; }'
+			const style = jQuery(styleElement)
+			jQuery('body').append(style)
 
 			// the actual printing
 			window.print()
 
 			// reset
-			$.each(displayElements, function(i, element) {
+			jQuery.each(displayElements, function(i, element) {
 				element.classList.add('gifttest-print')
 			})
 			style.remove()
@@ -150,9 +152,9 @@ export default {
 		calcScores() {
 			const self = this
 
-			$.each(self.giftList, function(i, gift) {
+			jQuery.each(self.giftList, function(i, gift) {
 				self.giftScores[gift.id] = 0
-				$.each(gift.data.question_list, function(j, questionId) {
+				jQuery.each(gift.data.question_list, function(j, questionId) {
 					self.giftScores[gift.id] += self.resultList[questionId]
 				})
 			})
@@ -164,7 +166,7 @@ export default {
 			self.orderedGiftList = []
 
 			// order gifts
-			$.each(self.giftList, function(i, gift) {
+			jQuery.each(self.giftList, function(i, gift) {
 				if (!(self.giftScores[gift.id] in self.orderedGiftList)) {
 					self.orderedGiftList[self.giftScores[gift.id]] = []
 				}
@@ -174,8 +176,7 @@ export default {
 			self.orderedGiftList.reverse()
 		},
 		showMoreGiftsToggle() {
-			$(this.$refs.moreGifts).toggle()
-			this.moreGiftsShown = !this.moreGiftsShown
+			jQuery(this.$refs.moreGifts).toggle()
 		},
 		scoreText(score) {
 			if (score === 1) return score + ' ' + this.text.point_singular

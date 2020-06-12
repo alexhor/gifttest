@@ -130,20 +130,21 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import $ from 'jquery'
-import Editor from '@tinymce/tinymce-vue'
-import draggable from 'vuedraggable'
-import utilities from '../Utilities.js'
-const displayMessage = utilities.displayMessage
 /* global ajaxurl */
+/* global jQuery */
+/* global Vue */
 /* global gifttest */
+__webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
+
+const Tinymce = () => import(/* webpackChunkName: "Tinymce" *//* webpackPrefetch: true */'@tinymce/tinymce-vue')
+const Vuedraggable = () => import(/* webpackChunkName: "Vuedraggable" *//* webpackPrefetch: true */'vuedraggable')
+const Utilities = () => import(/* webpackChunkName: "Utilities" */'../Utilities.js')
 
 export default {
 	name: 'GiftSettings',
 	components: {
-		draggable,
-		editor: Editor,
+		draggable: Vuedraggable,
+		editor: Tinymce,
 	},
 	props: {
 		value: {
@@ -176,11 +177,24 @@ export default {
 			this.giftList = newValue
 		},
 	},
+	beforeMount: function() {
+		const self = this
+		// load requried modules
+		Vuedraggable()
+		Tinymce()
+		// load displayMessage function
+		Utilities().then(utilities => {
+			self.displayMessage = utilities.default.displayMessage
+		})
+	},
 	methods: {
-		displayMessage,
+		/**
+		 * This is a dummy function that will be replace asynchronous
+		 */
+		displayMessage() {},
 		questionIndex(questionId) {
 			let questionIndex = false
-			$.each(this.availableQuestionList, function(i, tmpQuestion) {
+			jQuery.each(this.availableQuestionList, function(i, tmpQuestion) {
 				if (tmpQuestion.id.toString() === questionId) {
 					questionIndex = i
 					return false
@@ -190,7 +204,7 @@ export default {
 		},
 		getQuestionById(questionId) {
 			let question = false
-			$.each(this.availableQuestionList, function(i, tmpQuestion) {
+			jQuery.each(this.availableQuestionList, function(i, tmpQuestion) {
 				if (tmpQuestion.id.toString() === questionId) {
 					question = tmpQuestion
 					return false
@@ -209,7 +223,7 @@ export default {
 			else return ''
 		},
 		excerpt(text, length = 20) {
-			text = $('<div/>').html(text).text()
+			text = jQuery('<div/>').html(text).text()
 			if (text.length < 1) return ''
 			let excerpt = text.substring(0, length)
 			if (text.length > length) excerpt += ' ...'
@@ -222,7 +236,7 @@ export default {
 		deleteGift(giftId) {
 			const self = this
 
-			$.each(self.giftList, function(i, gift) {
+			jQuery.each(self.giftList, function(i, gift) {
 				if (gift.id === giftId) {
 					Vue.delete(self.giftList, i)
 					return false
@@ -231,13 +245,13 @@ export default {
 		},
 		highestGiftId() {
 			let highestId = 0
-			$.each(this.giftList, function(i, gift) {
+			jQuery.each(this.giftList, function(i, gift) {
 				if (gift.id > highestId) highestId = gift.id
 			})
 			return highestId
 		},
 		addGiftQuestion(gift, question) {
-			const questionId = $(this.$refs['gift_' + gift.id + '_questionSelection']).val()
+			const questionId = jQuery(this.$refs['gift_' + gift.id + '_questionSelection']).val()
 			if (!gift.data.question_list.includes(questionId)) gift.data.question_list.push(questionId)
 		},
 		addGift() {
@@ -257,7 +271,7 @@ export default {
 			}
 
 			// do request
-			$.post(ajaxurl, requestData, function(response) {
+			jQuery.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					self.giftList.push(response.data)
 				} else {
@@ -268,12 +282,12 @@ export default {
 			}, 'json')
 		},
 		toggleContents() {
-			$(this.$refs.contents).toggle()
-			$(this.$refs.contentsCounterpart).toggle()
+			jQuery(this.$refs.contents).toggle()
+			jQuery(this.$refs.contentsCounterpart).toggle()
 		},
 		toggleBody(giftId) {
 			if (typeof giftId === 'undefined' || giftId === null) return
-			const body = $(this.$refs['body_' + giftId])
+			const body = jQuery(this.$refs['body_' + giftId])
 			if (body.hasClass('table-body-hidden')) body.removeClass('table-body-hidden')
 			else body.addClass('table-body-hidden')
 		},

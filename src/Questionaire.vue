@@ -59,20 +59,22 @@
 </template>
 
 <script>
-import $ from 'jquery'
-import ContentElement from './Components/Elements/ContentElement.vue'
-import QuestionElement from './Components/Elements/QuestionElement.vue'
-import CustomQuestionElement from './Components/Elements/CustomQuestionElement.vue'
-import ScoreBoard from './Components/ScoreBoard.vue'
+/* global jQuery */
 /* global gifttest */
+__webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
+
+const ScoreBoard = () => import(/* webpackChunkName: "ScoreBoard" */'./Components/ScoreBoard.vue')
+const ContentElement = () => import(/* webpackChunkName: "ContentElement" *//* webpackPrefetch: true */'./Components/Elements/ContentElement.vue')
+const QuestionElement = () => import(/* webpackChunkName: "QuestionElement" *//* webpackPrefetch: true */'./Components/Elements/QuestionElement.vue')
+const CustomQuestionElement = () => import(/* webpackChunkName: "CustomQuestionElement" *//* webpackPrefetch: true */'./Components/Elements/CustomQuestionElement.vue')
 
 export default {
 	name: 'Questionaire',
 	components: {
-		ContentElement,
-		QuestionElement,
-		CustomQuestionElement,
-		ScoreBoard,
+		ContentElement: ContentElement,
+		QuestionElement: QuestionElement,
+		CustomQuestionElement: CustomQuestionElement,
+		ScoreBoard: ScoreBoard,
 	},
 	data: function() {
 		return {
@@ -116,6 +118,10 @@ export default {
 	beforeMount: function() {
 		this.pluginDirUrl = gifttest.plugin_dir_url
 		this.loadQuestionaire()
+		// load components needed right away
+		ContentElement()
+		QuestionElement()
+		CustomQuestionElement()
 	},
 	methods: {
 		nextElement(result) {
@@ -145,14 +151,17 @@ export default {
 			}
 
 			// do request
-			$.post(gifttest.ajaxurl, requestData, function(response) {
+			jQuery.post(gifttest.ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
 					self.settings = response.data.settings
 					self.answerList = response.data.answer_list
 					self.elementList = response.data.element_list
 					self.giftList = response.data.gift_list
 
-					$(document.body).trigger('post-load')
+					jQuery(document.body).trigger('post-load')
+
+					// load additional components needed later
+					ScoreBoard()
 				}
 			}, 'json').fail(function() {
 				console.debug('Loading Questionaire failed')
