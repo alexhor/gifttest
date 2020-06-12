@@ -45,13 +45,13 @@ if ( ! class_exists( 'Shortcode' ) ) :
 				'gifttest-questionaire',
 				'gifttest',
 				array(
-					'test-id'        => $attributes['test-id'],
-					'plugin_dir_url' => plugin_dir_url( __DIR__ . '..' ),
-					'ajaxurl'        => admin_url( 'admin-ajax.php' ),
-					'_ajax_nonce'    => array(
+					'test-id'             => $attributes['test-id'],
+					'plugin_dir_url'      => plugin_dir_url( __DIR__ . '..' ),
+					'ajaxurl'             => admin_url( 'admin-ajax.php' ),
+					'_ajax_nonce'         => array(
 						'get_details' => wp_create_nonce( 'gifttest_get_questionaire_details' ),
 					),
-					'text'           => array(
+					'text'                => array(
 						'continue'        => esc_html__( 'Continue', 'gifttest' ),
 						'back'            => esc_html__( 'Back', 'gifttest' ),
 						'scoreboard'      => esc_html__( 'Scoreboard', 'gifttest' ),
