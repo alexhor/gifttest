@@ -73,6 +73,7 @@ stylelint-fix:
 clean:
 	rm -f js/$(app_name)_*.js
 	rm -f js/$(app_name)_*.js.map
+	rm -rf js/chunks/
 
 clean-dev:
 	rm -rf node_modules wpcs build
