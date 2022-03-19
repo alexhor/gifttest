@@ -40,7 +40,7 @@ if ( ! class_exists( 'Plugin_Loader' ) ) :
 		 * @since 1.0.0
 		 */
 		public function init() {
-			$plugin_dir = dirname( plugin_basename( __DIR__ ) ) . '/lang';
+			$plugin_dir = plugin_dir_path( __FILE__ ) . '../lang';
 			load_plugin_textdomain( 'gifttest', false, $plugin_dir );
 			Shortcode::register();
 		}

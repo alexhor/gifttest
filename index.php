@@ -30,12 +30,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-
 namespace Gift_Test;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
+// Load giftest
+define( 'ABSPATH',  __DIR__ );
+require_once ABSPATH . '/functions.php';
 require_once plugin_dir_path( __FILE__ ) . 'class/class-plugin-loader.php';
 $loader = new Plugin_Loader();
+
+// Show gifttest
+do_action('init');
+require_once plugin_dir_path( __FILE__ ) . 'parts/header.php';

@@ -1,4 +1,4 @@
 # Gifttest
-Gifttest plugin for wordpress
+Standalone version of the Gifttest plugin for wordpress
 
-Create questionaires and coresponding scoreboards in wordpress.
+Create questionaires and coresponding scoreboards
