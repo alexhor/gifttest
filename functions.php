@@ -549,11 +549,120 @@ function get_option( string $option, $default = false ) {
 	if( 1 !== $result->num_rows ) {
 		return $default;
 	}
-	# TODO: finish implementing
-	echo '<pre>'; var_export($result);exit;
 	$request->close();
 	$rawResult = $result->fetch_assoc();
 	return unserialize( trim( $rawResult[ 'data' ] ) );
+}
+
+/**
+ * Updates the value of an option that was already added.
+ *
+ * You do not need to serialize values. If the value needs to be serialized,
+ * then it will be serialized before it is inserted into the database.
+ * Remember, resources cannot be serialized or added as an option.
+ *
+ * If the option does not exist, it will be created.
+ * This function is designed to work with or without a logged-in user. In terms of security,
+ * plugin developers should check the current user's capabilities before updating any options.
+ *
+ * @since 1.0.0
+ * @since 4.2.0 The `$autoload` parameter was added.
+ *
+ * @global wpdb $wpdb WordPress database abstraction object.
+ *
+ * @param string      $option   Name of the option to update. Expected to not be SQL-escaped.
+ * @param mixed       $value    Option value. Must be serializable if non-scalar. Expected to not be SQL-escaped.
+ * @param string|bool $autoload Optional. Whether to load the option when WordPress starts up. For existing options,
+ *                              `$autoload` can only be updated using `update_option()` if `$value` is also changed.
+ *                              Accepts 'yes'|true to enable or 'no'|false to disable. For non-existent options,
+ *                              the default value is 'yes'. Default null.
+ * @return bool True if the value was updated, false otherwise.
+ */
+function update_option( string $option, mixed $value, string|bool $autoload = null ) {
+	global $db;
+	// Check the option already exists
+	$request = $db->prepare("SELECT name FROM options WHERE name = ?");
+	$request->bind_param('s', $option);
+	$request->execute();
+	$result = $request->get_result();
+	$request->close();
+
+	// Add an new option if none exists
+	if( 0 === $result->num_rows ) {
+		return add_option( $option, $value, '', $autoload );
+	}
+
+	$request = $db->prepare("UPDATE options SET data = ? WHERE name = ?");
+	$serializedValue = serialize( $value );
+	$request->bind_param('ss', $serializedValue, $option );
+	$request->execute();
+	$request->close();
+	return true;
+}
+
+/**
+ * Adds a new option.
+ *
+ * You do not need to serialize values. If the value needs to be serialized,
+ * then it will be serialized before it is inserted into the database.
+ * Remember, resources cannot be serialized or added as an option.
+ *
+ * You can create options without values and then update the values later.
+ * Existing options will not be updated and checks are performed to ensure that you
+ * aren't adding a protected WordPress option. Care should be taken to not name
+ * options the same as the ones which are protected.
+ *
+ * @since 1.0.0
+ *
+ * @global wpdb $wpdb WordPress database abstraction object.
+ *
+ * @param string      $option     Name of the option to add. Expected to not be SQL-escaped.
+ * @param mixed       $value      Optional. Option value. Must be serializable if non-scalar.
+ *                                Expected to not be SQL-escaped.
+ * @param string      $deprecated Optional. Description. Not used anymore.
+ * @param string|bool $autoload   Optional. Whether to load the option when WordPress starts up.
+ *                                Default is enabled. Accepts 'no' to disable for legacy reasons.
+ * @return bool True if the option was added, false otherwise.
+ */
+function add_option( string $option, mixed $value = '', string $deprecated = '', string|bool $autoload = 'yes' ) {
+	global $db;
+	// Check the option doesn't already exists
+	$request = $db->prepare("SELECT name FROM options WHERE name = ?");
+	$request->bind_param('s', $option);
+	$request->execute();
+	$result = $request->get_result();
+	$request->close();
+
+	// Only add a new option if it doesn't exist yet
+	if( 0 !== $result->num_rows ) {
+		return false;
+	}
+
+	$request = $db->prepare("INSERT INTO options ( name, data ) VALUES ( ?, ? )");
+	$serializedValue = serialize( $value );
+	$request->bind_param('ss', $option, $serializedValue );
+	$request->execute();
+	$request->close();
+	return true;
+}
+
+/**
+ * Removes option by name. Prevents removal of protected WordPress options.
+ *
+ * @since 1.2.0
+ *
+ * @global wpdb $wpdb WordPress database abstraction object.
+ *
+ * @param string $option Name of the option to delete. Expected to not be SQL-escaped.
+ * @return bool True if the option was deleted, false otherwise.
+ */
+function delete_option( string $option ) {
+	global $db;
+	$request = $db->prepare("DELTE FROM options WHERE name = ?");
+	$request->bind_param('s', $option);
+	$request->execute();
+	$request->close();
+	return true;
 }
 
 /**
@@ -572,4 +681,200 @@ function wp_send_json( mixed $response, int $status_code = null, int $options = 
 	header( 'Content-Type: application/json; charset=utf-8' );
 	echo json_encode( $response );
 	die();
+}
+
+
+/**
+ * Sanitizes a string from user input or from the database.
+ *
+ * - Checks for invalid UTF-8,
+ * - Converts single `<` characters to entities
+ * - Strips all tags
+ * - Removes line breaks, tabs, and extra whitespace
+ * - Strips octets
+ *
+ * @since 2.9.0
+ *
+ * @see sanitize_textarea_field()
+ * @see wp_check_invalid_utf8()
+ * @see wp_strip_all_tags()
+ *
+ * @param string $str String to sanitize.
+ * @return string Sanitized string.
+ */
+function sanitize_text_field( string $str ) {
+	$keep_newlines = true;
+	if ( is_object( $str ) || is_array( $str ) ) {
+		return '';
+	}
+
+	$str = (string) $str;
+
+	$filtered = wp_check_invalid_utf8( $str );
+
+	if ( strpos( $filtered, '<' ) !== false ) {
+		$filtered = wp_pre_kses_less_than( $filtered );
+		// This will strip extra whitespace for us.
+		$filtered = wp_strip_all_tags( $filtered, false );
+
+		// Use HTML entities in a special case to make sure no later
+		// newline stripping stage could lead to a functional tag.
+		$filtered = str_replace( "<\n", "&lt;\n", $filtered );
+	}
+
+	if ( ! $keep_newlines ) {
+		$filtered = preg_replace( '/[\r\n\t ]+/', ' ', $filtered );
+	}
+	$filtered = trim( $filtered );
+
+	$found = false;
+	while ( preg_match( '/%[a-f0-9]{2}/i', $filtered, $match ) ) {
+		$filtered = str_replace( $match[0], '', $filtered );
+		$found    = true;
+	}
+
+	if ( $found ) {
+		// Strip out the whitespace that may now exist after removing the octets.
+		$filtered = trim( preg_replace( '/ +/', ' ', $filtered ) );
+	}
+
+	return $filtered;
+}
+
+/**
+ * Checks for invalid UTF8 in a string.
+ *
+ * @since 2.8.0
+ *
+ * @param string $string The text which is to be checked.
+ * @param bool   $strip  Optional. Whether to attempt to strip out invalid UTF8. Default false.
+ * @return string The checked text.
+ */
+function wp_check_invalid_utf8( $string, $strip = false ) {
+	$string = (string) $string;
+
+	if ( 0 === strlen( $string ) ) {
+		return '';
+	}
+
+	// Store the site charset as a static to avoid multiple calls to get_option().
+	static $is_utf8 = null;
+	if ( ! isset( $is_utf8 ) ) {
+		$is_utf8 = in_array( get_option( 'blog_charset' ), array( 'utf8', 'utf-8', 'UTF8', 'UTF-8' ), true );
+	}
+	if ( ! $is_utf8 ) {
+		return $string;
+	}
+
+	// Check for support for utf8 in the installed PCRE library once and store the result in a static.
+	static $utf8_pcre = null;
+	if ( ! isset( $utf8_pcre ) ) {
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		$utf8_pcre = @preg_match( '/^./u', 'a' );
+	}
+	// We can't demand utf8 in the PCRE installation, so just return the string in those cases.
+	if ( ! $utf8_pcre ) {
+		return $string;
+	}
+
+	// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- preg_match fails when it encounters invalid UTF8 in $string.
+	if ( 1 === @preg_match( '/^./us', $string ) ) {
+		return $string;
+	}
+
+	// Attempt to strip the bad chars if requested (not recommended).
+	if ( $strip && function_exists( 'iconv' ) ) {
+		return iconv( 'utf-8', 'utf-8', $string );
+	}
+
+	return '';
+}
+
+/**
+ * Convert lone less than signs.
+ *
+ * KSES already converts lone greater than signs.
+ *
+ * @since 2.3.0
+ *
+ * @param string $text Text to be converted.
+ * @return string Converted text.
+ */
+function wp_pre_kses_less_than( $text ) {
+	return preg_replace_callback( '%<[^>]*?((?=<)|>|$)%', 'wp_pre_kses_less_than_callback', $text );
+}
+
+/**
+ * Callback function used by preg_replace.
+ *
+ * @since 2.3.0
+ *
+ * @param string[] $matches Populated by matches to preg_replace.
+ * @return string The text returned after esc_html if needed.
+ */
+function wp_pre_kses_less_than_callback( $matches ) {
+	if ( false === strpos( $matches[0], '>' ) ) {
+		return esc_html( $matches[0] );
+	}
+	return $matches[0];
+}
+
+/**
+ * Properly strip all HTML tags including script and style
+ *
+ * This differs from strip_tags() because it removes the contents of
+ * the `<script>` and `<style>` tags. E.g. `strip_tags( '<script>something</script>' )`
+ * will return 'something'. wp_strip_all_tags will return ''
+ *
+ * @since 2.9.0
+ *
+ * @param string $string        String containing HTML tags
+ * @param bool   $remove_breaks Optional. Whether to remove left over line breaks and white space chars
+ * @return string The processed string.
+ */
+function wp_strip_all_tags( $string, $remove_breaks = false ) {
+	$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
+	$string = strip_tags( $string );
+
+	if ( $remove_breaks ) {
+		$string = preg_replace( '/[\r\n\t ]+/', ' ', $string );
+	}
+
+	return trim( $string );
+}
+
+/**
+ * Removes slashes from a string
+ */
+function wp_unslash( string $value ) {
+	return stripslashes( $value );
+}
+
+/**
+ * Merges user defined arguments into defaults array.
+ *
+ * This function is used throughout WordPress to allow for both string or array
+ * to be merged into another array.
+ *
+ * @since 2.2.0
+ * @since 2.3.0 `$args` can now also be an object.
+ *
+ * @param string|array|object $args     Value to merge with $defaults.
+ * @param array               $defaults Optional. Array that serves as the defaults.
+ *                                      Default empty array.
+ * @return array Merged user defined values with defaults.
+ */
+function wp_parse_args( $args, $defaults = array() ) {
+	if ( is_object( $args ) ) {
+		$parsed_args = get_object_vars( $args );
+	} elseif ( is_array( $args ) ) {
+		$parsed_args =& $args;
+	} else {
+		parse_str( $args, $parsed_args );
+	}
+
+	if ( is_array( $defaults ) && $defaults ) {
+		return array_merge( $defaults, $parsed_args );
+	}
+	return $parsed_args;
 }

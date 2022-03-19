@@ -10,7 +10,7 @@ $loader = new Plugin_Loader();
 // Make sure everything is setup
 $db->query("CREATE TABLE IF NOT EXISTS options (
   name varchar(256),
-  data mediumtext
+  data mediumblob
 )");
 
 // Show gifttest settings

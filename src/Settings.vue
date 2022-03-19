@@ -379,7 +379,7 @@ export default {
 				_ajax_nonce: gifttest._ajax_nonce.get_list,
 				action: 'gifttest_get_questionaire_list',
 			}
- 
+
 			// do request
 			jQuery.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
@@ -387,8 +387,7 @@ export default {
 				} else if (typeof response.message !== 'undefined' && response.message !== null) {
 					self.displayMessage(response.message, response.status)
 				}
-			}, 'json').fail(function(e) {
-				console.debug(e);
+			}, 'json').fail(function() {
 				console.debug('Loading Questionaire list failed')
 			}).always(function() {
 				// loading done
@@ -450,9 +449,13 @@ export default {
 				} else if (typeof response.message !== 'undefined' && response.message !== null) {
 					self.displayMessage(response.message, response.status)
 				}
-				// reactivate button
+			}, 'json').fail(function(e) {
+				console.debug(e)
+				console.debug('Creating Questionaire failed')
+			}).always(function() {
+			// reactivate button
 				self.creatingNewQuestionaire = false
-			}, 'json')
+			})
 		},
 	},
 }
