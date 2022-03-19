@@ -1,7 +1,5 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import Settings from './Settings.vue'
 
-export default new Vue({
-	el: '#gifttest',
-	render: h => h(Settings),
-})
+const app = createApp(Settings)
+app.mount('#gifttest')

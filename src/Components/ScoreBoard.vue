@@ -39,40 +39,40 @@ export default {
 		resultList: {
 			type: Object,
 			required: true,
-			default: function() { return [] },
+			default() { return {} },
 		},
 		elementList: {
 			type: Array,
 			required: true,
-			default: function() { return [] },
+			default() { return [] },
 		},
 		answerList: {
 			type: Array,
 			required: true,
-			default: function() { return [] },
+			default() { return [] },
 		},
 		giftList: {
 			type: Array,
 			required: true,
-			default: function() { return [] },
+			default() { return [] },
 		},
 		showMoreGifts: {
 			type: String,
 			required: false,
-			default: function() { return 'true' },
+			default() { return 'true' },
 		},
 		shownGiftCount: {
 			type: Number,
 			required: false,
-			default: function() { return 5 },
+			default() { return 5 },
 		},
 		text: {
 			type: Object,
 			required: true,
-			default: function() { return {} },
+			default() { return {} },
 		},
 	},
-	data: function() {
+	data() {
 		return {
 			orderedGiftList: [],
 			giftScores: {},
@@ -80,7 +80,7 @@ export default {
 		}
 	},
 	computed: {
-		shownOrderedGiftList: function() {
+		shownOrderedGiftList() {
 			const self = this
 			let count = 0
 			const outputList = []
@@ -98,7 +98,7 @@ export default {
 
 			return outputList
 		},
-		moreOrderedGiftList: function() {
+		moreOrderedGiftList() {
 			const self = this
 			let count = 0
 			const outputList = []
@@ -119,7 +119,7 @@ export default {
 			return outputList
 		},
 	},
-	beforeMount: function() {
+	beforeMount() {
 		this.calcScores()
 	},
 	methods: {

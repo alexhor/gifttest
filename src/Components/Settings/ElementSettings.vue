@@ -4,8 +4,7 @@
 			{{ text.elements }}
 		</h3>
 
-		<div
-			ref="elementContentsCounterpart"
+		<div ref="elementContentsCounterpart"
 			class="element-contents-counterpart"
 			@click="toggleElementContents">
 			<i class="icon icon-edit" />
@@ -13,13 +12,11 @@
 		</div>
 
 		<div ref="elementContents" class="element-contents">
-			<draggable
-				v-model="elementList"
+			<draggable v-model="elementList"
 				handle=".drag-handle"
 				draggable=".element"
 				@input="emitElementListUpdate">
-				<div
-					v-for="(element, i) in elementList"
+				<div v-for="(element, i) in elementList"
 					:key="i"
 					class="element">
 					<!-- Question Element -->
@@ -42,8 +39,7 @@
 									</label>
 								</td>
 								<td>
-									<textarea
-										:id="'questionText_' + element.id"
+									<textarea :id="'questionText_' + element.id"
 										v-model="element.data.text"
 										:placeholder="text.question"
 										@input="emitElementListUpdate" />
@@ -80,8 +76,7 @@
 									</label>
 								</td>
 								<td>
-									<textarea
-										:id="'questionText_' + element.id"
+									<textarea :id="'questionText_' + element.id"
 										v-model="element.data.question_text"
 										:placeholder="text.question"
 										@input="emitElementListUpdate" />
@@ -100,8 +95,7 @@
 											<label :for="'answerText_' + answer.id">
 												{{ text.answer_text }}
 											</label>
-											<input
-												:id="'answerText_' + answer.id"
+											<input :id="'answerText_' + answer.id"
 												v-model="answer.text"
 												type="text"
 												:placeholder="text.answer_text"
@@ -110,8 +104,7 @@
 											<label :for="'answerValue_' + answer.id">
 												{{ text.answer_value }}
 											</label>
-											<input
-												:id="'answerValue_' + answer.id"
+											<input :id="'answerValue_' + answer.id"
 												v-model="answer.value"
 												type="number"
 												:placeholder="text.answer_value"
@@ -122,8 +115,7 @@
 										</div>
 
 										<div slot="footer">
-											<button
-												:class="{ loading: addingAnswerInProgress }"
+											<button :class="{ loading: addingAnswerInProgress }"
 												:disabled="addingAnswerInProgress"
 												class="button button-primary"
 												@click="customQuestionAddAnswer(element.id)">
@@ -164,8 +156,7 @@
 									</label>
 								</td>
 								<td>
-									<editor
-										:id="'content_' + element.id"
+									<editor :id="'content_' + element.id"
 										v-model="element.data.text"
 										:placeholder="text.content"
 										:init="{
@@ -204,16 +195,14 @@
 				</div>
 
 				<div slot="footer" class="quick-menu-wrapper">
-					<button
-						:class="{ loading: creatingInProgress }"
+					<button :class="{ loading: creatingInProgress }"
 						:disabled="creatingInProgress"
 						class="button button-primary"
 						@click="showAddElementSelector = !showAddElementSelector">
 						{{ text.add_element }}
 					</button>
 					<div v-if="showAddElementSelector" class="quick-menu">
-						<button
-							v-for="type in elementTypes"
+						<button v-for="type in elementTypes"
 							:key="type.id"
 							class="button button-secondary"
 							@click="addElement(type.id)">
@@ -247,7 +236,7 @@ export default {
 		value: {
 			type: Array,
 			required: true,
-			default: function() { return [] },
+			default() { return [] },
 		},
 		questionaireId: {
 			type: Number,
@@ -258,7 +247,7 @@ export default {
 			required: true,
 		},
 	},
-	data: function() {
+	data() {
 		return {
 			elementList: this.value,
 			creatingInProgress: false,
@@ -281,11 +270,11 @@ export default {
 		}
 	},
 	watch: {
-		value: function(newValue, oldValue) {
+		value(newValue, oldValue) {
 			this.elementList = newValue
 		},
 	},
-	beforeMount: function() {
+	beforeMount() {
 		const self = this
 		// load requried modules
 		Vuedraggable()
@@ -418,7 +407,7 @@ export default {
 			const requestData = {
 				_ajax_nonce: gifttest._ajax_nonce.create_element,
 				action: 'gifttest_create_questionaire_element',
-				type: type,
+				type,
 				id: self.highestElementId() + 1,
 				questionaire_id: self.questionaireId,
 			}

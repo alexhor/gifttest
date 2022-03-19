@@ -41,3 +41,5 @@ $loader = new Plugin_Loader();
 // Show gifttest
 do_action('init');
 require_once plugin_dir_path( __FILE__ ) . 'parts/header.php';
+echo '<div id="gifttest"></div>';
+require_once plugin_dir_path( __FILE__ ) . 'parts/footer.php';

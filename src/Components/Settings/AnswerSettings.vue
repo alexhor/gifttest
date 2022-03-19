@@ -4,8 +4,7 @@
 			{{ text.answers }}
 		</h3>
 
-		<div
-			ref="contentsCounterpart"
+		<div ref="contentsCounterpart"
 			class="contentsCounterpart"
 			@click="toggleContents">
 			<i class="icon icon-edit" />
@@ -13,13 +12,11 @@
 		</div>
 
 		<div ref="contents" class="contents hidden">
-			<draggable
-				v-model="answerList"
+			<draggable v-model="answerList"
 				handle=".drag-handle"
 				draggable=".answer"
 				@input="emitAnswerListUpdate">
-				<div
-					v-for="(answer, i) in answerList"
+				<div v-for="(answer, i) in answerList"
 					:key="i"
 					class="answer element">
 					<table>
@@ -41,8 +38,7 @@
 									</label>
 								</td>
 								<td>
-									<input
-										:id="'answerContent_' + answer.id"
+									<input :id="'answerContent_' + answer.id"
 										v-model="answer.data.content"
 										type="text"
 										:placeholder="text.answer_content"
@@ -56,8 +52,7 @@
 									</label>
 								</td>
 								<td>
-									<input
-										:id="'answerValue_' + answer.id"
+									<input :id="'answerValue_' + answer.id"
 										v-model="answer.data.value"
 										type="number"
 										:placeholder="text.answer_value"
@@ -76,8 +71,7 @@
 				</div>
 
 				<div slot="footer">
-					<button
-						:class="{ loading: addingAnswerInProgress }"
+					<button :class="{ loading: addingAnswerInProgress }"
 						:disabled="addingAnswerInProgress"
 						class="button button-primary"
 						@click="addAnswer">
@@ -108,7 +102,7 @@ export default {
 		value: {
 			type: Array,
 			required: true,
-			default: function() { return [] },
+			default() { return [] },
 		},
 		questionaireId: {
 			type: Number,
@@ -119,18 +113,18 @@ export default {
 			required: true,
 		},
 	},
-	data: function() {
+	data() {
 		return {
 			answerList: this.value,
 			addingAnswerInProgress: false,
 		}
 	},
 	watch: {
-		value: function(newValue, oldValue) {
+		value(newValue, oldValue) {
 			this.answerList = newValue
 		},
 	},
-	beforeMount: function() {
+	beforeMount() {
 		const self = this
 		// load requried modules
 		Vuedraggable()

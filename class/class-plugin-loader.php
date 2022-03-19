@@ -51,7 +51,7 @@ if ( ! class_exists( 'Plugin_Loader' ) ) :
 		 * @since 1.0.0
 		 */
 		public function admin_scripts() {
-			wp_register_script( 'vuejs', plugin_dir_url( __FILE__ ) . '../js/vue.min.js', array(), '2.6.11', false );
+			//wp_register_script( 'vuejs', plugin_dir_url( __FILE__ ) . '../js/vue.min.js', array(), '2.6.11', false );
 			// Settings entry point.
 			wp_register_script( 'gifttest-settings', plugin_dir_url( __FILE__ ) . '../js/gifttest_Settings.js', array( 'jquery', 'vuejs' ), '1.0.0', true );
 			wp_localize_script(
@@ -84,7 +84,7 @@ if ( ! class_exists( 'Plugin_Loader' ) ) :
 		 * @since 1.0.0
 		 */
 		public function scripts() {
-			wp_register_script( 'vuejs', plugin_dir_url( __FILE__ ) . '../js/vue.min.js', array(), '2.6.11', false );
+			//wp_register_script( 'vuejs', plugin_dir_url( __FILE__ ) . '../js/vue.min.js', array(), '2.6.11', false );
 			wp_register_script( 'gifttest-questionaire', plugin_dir_url( __FILE__ ) . '../js/gifttest_Questionaire.js', array( 'jquery', 'vuejs' ), '1.0.0', false );
 			wp_register_style( 'gifttest-style', plugin_dir_url( __FILE__ ) . '../css/style.css', array(), '1.0.0' );
 		}

@@ -106,7 +106,7 @@ if ( ! class_exists( 'Gift' ) ) :
 		 *
 		 * @since 1.0.0
 		 */
-		public function jsonSerialize() {
+		public function jsonSerialize() : mixed {
 			$this->sanitize_data();
 
 			return array(

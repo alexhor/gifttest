@@ -245,7 +245,7 @@ if ( ! class_exists( 'Settings' ) ) :
 		 *
 		 * @since 1.0.0
 		 */
-		public function jsonSerialize() {
+		public function jsonSerialize() : mixed {
 			$this->sanitize_data();
 			return $this->settings;
 		}

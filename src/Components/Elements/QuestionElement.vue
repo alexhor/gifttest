@@ -8,8 +8,7 @@
 			<div class="answer-wrapper">
 				<span v-for="answer in answerList" :key="answer.id" class="answer">
 					<label :for="'answer_' + answer.id" class="answer-inner">
-						<input
-							:id="'answer_' + answer.id"
+						<input :id="'answer_' + answer.id"
 							v-model="resultAnswerId"
 							type="radio"
 							:value="answer.id"
@@ -34,30 +33,30 @@ export default {
 		value: {
 			type: Object,
 			required: true,
-			default: function() { return {} },
+			default() { return {} },
 		},
 		answerList: {
 			type: Array,
 			required: true,
-			default: function() { return [] },
+			default() { return [] },
 		},
 		result: {
 			type: Number,
 			required: false,
-			default: function() { return -1 },
+			default() { return -1 },
 		},
 		prevElementExists: {
 			type: Boolean,
 			required: false,
-			default: function() { return true },
+			default() { return true },
 		},
 		text: {
 			type: Object,
 			required: true,
-			default: function() { return {} },
+			default() { return {} },
 		},
 	},
-	data: function() {
+	data() {
 		return {
 			element: this.value,
 			resultAnswerId: this.result,

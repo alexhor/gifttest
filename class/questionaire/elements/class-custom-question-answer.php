@@ -72,7 +72,7 @@ if ( ! class_exists( 'Custom_Question_Answer' ) ) :
 		 *
 		 * @since 1.0.0
 		 */
-		public function jsonSerialize() {
+		public function jsonSerialize() : mixed {
 			return array(
 				'id'    => (int) sanitize_text_field( $this->get_id() ),
 				'text'  => sanitize_text_field( $this->data['text'] ),

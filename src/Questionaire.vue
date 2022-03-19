@@ -5,8 +5,7 @@
 		</div>
 
 		<div v-else-if="scoreboardShown">
-			<ScoreBoard
-				:result-list="resultList"
+			<ScoreBoard :result-list="resultList"
 				:element-list="elementList"
 				:answer-list="answerList"
 				:gift-list="giftList"
@@ -25,8 +24,7 @@
 				</div>
 			</div>
 
-			<CustomQuestionElement
-				v-if="currentElement.type === elementTypes.customQuestion"
+			<CustomQuestionElement v-if="currentElement.type === elementTypes.customQuestion"
 				:key="currentElement.id"
 				v-model="currentElement"
 				:result="currentElementResult"
@@ -35,8 +33,7 @@
 				@next="nextElement"
 				@prev="prevElement" />
 
-			<QuestionElement
-				v-else-if="currentElement.type === elementTypes.question"
+			<QuestionElement v-else-if="currentElement.type === elementTypes.question"
 				:key="currentElement.id"
 				v-model="currentElement"
 				:answer-list="answerList"
@@ -46,8 +43,7 @@
 				@next="nextElement"
 				@prev="prevElement" />
 
-			<ContentElement
-				v-else-if="currentElement.type === elementTypes.content"
+			<ContentElement v-else-if="currentElement.type === elementTypes.content"
 				:key="currentElement.id"
 				v-model="currentElement"
 				:text="text"
@@ -61,7 +57,7 @@
 <script>
 /* global jQuery */
 /* global gifttest */
-__webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
+// __webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
 
 const ScoreBoard = () => import(/* webpackChunkName: "ScoreBoard" */'./Components/ScoreBoard.vue')
 const ContentElement = () => import(/* webpackChunkName: "ContentElement" *//* webpackPrefetch: true */'./Components/Elements/ContentElement.vue')
@@ -71,12 +67,12 @@ const CustomQuestionElement = () => import(/* webpackChunkName: "CustomQuestionE
 export default {
 	name: 'Questionaire',
 	components: {
-		ContentElement: ContentElement,
-		QuestionElement: QuestionElement,
-		CustomQuestionElement: CustomQuestionElement,
-		ScoreBoard: ScoreBoard,
+		ContentElement,
+		QuestionElement,
+		CustomQuestionElement,
+		ScoreBoard,
 	},
-	data: function() {
+	data() {
 		return {
 			loading: true,
 			scoreboardShown: false,
@@ -97,25 +93,25 @@ export default {
 		}
 	},
 	computed: {
-		currentElement: function() {
+		currentElement() {
 			if (typeof this.elementList[this.currentElementIndex] === 'undefined') return { type: -1 }
 			else return this.elementList[this.currentElementIndex]
 		},
-		currentElementResult: function() {
+		currentElementResult() {
 			return this.resultList[this.currentElement.id]
 		},
-		questionaireProgress: function() {
+		questionaireProgress() {
 			return Math.floor(this.questionaireProgressAccurate)
 		},
-		questionaireProgressAccurate: function() {
+		questionaireProgressAccurate() {
 			return (this.currentElementIndex) / this.elementList.length * 100
 		},
-		prevElementExists: function() {
+		prevElementExists() {
 			if (typeof this.elementList[this.currentElementIndex - 1] === 'undefined') return false
 			else return true
 		},
 	},
-	beforeMount: function() {
+	beforeMount() {
 		this.pluginDirUrl = gifttest.plugin_dir_url
 		this.loadQuestionaire()
 		// load components needed right away

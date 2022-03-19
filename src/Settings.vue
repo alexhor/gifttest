@@ -8,8 +8,7 @@
 			<div v-else>
 				<h2>{{ text.load_questionaire }}</h2>
 				<div class="questionaire-selector-wrapper">
-					<button
-						v-for="(questionaire, i) in availabeQuestionaireList"
+					<button v-for="(questionaire, i) in availabeQuestionaireList"
 						:key="i"
 						:class="{ loading: loadingQuestionaireDetails }"
 						:disabled="loadingQuestionaireDetails"
@@ -25,8 +24,7 @@
 
 				<div>
 					<input v-model="newQuestionaireName" :placeholder="text.questionaire_name" type="text">
-					<button
-						:class="{ loading: creatingNewQuestionaire }"
+					<button :class="{ loading: creatingNewQuestionaire }"
 						:disabled="creatingNewQuestionaire"
 						class="button button-primary"
 						@click="createQuestionaire">
@@ -35,8 +33,7 @@
 				</div>
 
 				<div>
-					<button
-						:class="{ loading: importingQuestionaire }"
+					<button :class="{ loading: importingQuestionaire }"
 						:disabled="importingQuestionaire"
 						class="button button-secondary"
 						@click="importQuestionaire">
@@ -50,23 +47,20 @@
 				<h2>{{ text.edit_questionaire }}</h2>
 
 				<div class="controls">
-					<button
-						:class="{ loading: savingQuestionaire }"
+					<button :class="{ loading: savingQuestionaire }"
 						:disabled="savingQuestionaire"
 						class="button button-success"
 						@click="saveQuestionaire">
 						{{ text.save }}
 					</button>
-					<button
-						v-if="gifttest.user_can_delete"
+					<button v-if="gifttest.user_can_delete"
 						:class="{ loading: deletingQuestionaire }"
 						:disabled="deletingQuestionaire"
 						class="button button-danger"
 						@click="deleteQuestionaire">
 						{{ text.delete }}
 					</button>
-					<button
-						:class="{ loading: exportingQuestionaire }"
+					<button :class="{ loading: exportingQuestionaire }"
 						:disabled="exportingQuestionaire"
 						class="button button-info"
 						@click="exportQuestionaire">
@@ -77,8 +71,7 @@
 				<div class="shortcode">
 					<h3>{{ text.shortcode }}</h3>
 					<code>[gifttest test-id="{{ loadedQuestionaire.settings.id }}"]</code>
-					<button
-						class="icon icon-copy button-copy has-tooltip"
+					<button class="icon icon-copy button-copy has-tooltip"
 						@click="copyToClipboard('[gifttest test-id=\'' + loadedQuestionaire.settings.id + '\']')">
 						<p class="tooltip hover">
 							{{ text.copy_to_clipboard }}
@@ -98,8 +91,7 @@
 								</label>
 							</td>
 							<td>
-								<input
-									id="questionaireName"
+								<input id="questionaireName"
 									v-model="loadedQuestionaire.settings.name"
 									:placeholder="text.name"
 									type="text">
@@ -112,8 +104,7 @@
 								</label>
 							</td>
 							<td>
-								<input
-									id="shownGiftCount"
+								<input id="shownGiftCount"
 									v-model="loadedQuestionaire.settings.shown_gift_count"
 									type="number">
 							</td>
@@ -125,8 +116,7 @@
 								</label>
 							</td>
 							<td>
-								<select
-									id="showMoreGifts"
+								<select id="showMoreGifts"
 									v-model="loadedQuestionaire.settings.show_more_gifts"
 									:placeholder="text.name"
 									type="text">
@@ -142,18 +132,15 @@
 					</tbody>
 				</table>
 
-				<ElementSettings
-					v-model="loadedQuestionaire.element_list"
+				<ElementSettings v-model="loadedQuestionaire.element_list"
 					:text="text"
 					:questionaire-id="loadedQuestionaire.settings.id" />
 
-				<AnswerSettings
-					v-model="loadedQuestionaire.answer_list"
+				<AnswerSettings v-model="loadedQuestionaire.answer_list"
 					:text="text"
 					:questionaire-id="loadedQuestionaire.settings.id" />
 
-				<GiftSettings
-					v-model="loadedQuestionaire.gift_list"
+				<GiftSettings v-model="loadedQuestionaire.gift_list"
 					:available-question-list="questionList"
 					:text="text"
 					:questionaire-id="loadedQuestionaire.settings.id" />
@@ -176,11 +163,11 @@ const Utilities = () => import(/* webpackChunkName: "Utilities" *//* webpackPref
 export default {
 	name: 'Settings',
 	components: {
-		ElementSettings: ElementSettings,
-		AnswerSettings: AnswerSettings,
-		GiftSettings: GiftSettings,
+		ElementSettings,
+		AnswerSettings,
+		GiftSettings,
 	},
-	data: function() {
+	data() {
 		return {
 			loading: true,
 			creatingNewQuestionaire: false,
@@ -195,7 +182,7 @@ export default {
 			loadedQuestionaire: false,
 			availabeQuestionaireList: [],
 			newQuestionaireName: '',
-			gifttest: gifttest,
+			gifttest,
 			text: gifttest.text,
 			elementTypes: {
 				question: {
@@ -214,7 +201,7 @@ export default {
 		}
 	},
 	computed: {
-		questionList: function() {
+		questionList() {
 			const self = this
 			const questionList = []
 			if (self.loadedQuestionaire === 'undefined' || self.loadedQuestionaire === false || self.loadedQuestionaire.element_list === 'undefined') return questionList
@@ -228,7 +215,7 @@ export default {
 			return questionList
 		},
 	},
-	beforeMount: function() {
+	beforeMount() {
 		const self = this
 
 		self.pluginDirUrl = gifttest.plugin_dir_url
@@ -392,7 +379,7 @@ export default {
 				_ajax_nonce: gifttest._ajax_nonce.get_list,
 				action: 'gifttest_get_questionaire_list',
 			}
-
+ 
 			// do request
 			jQuery.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
@@ -400,7 +387,8 @@ export default {
 				} else if (typeof response.message !== 'undefined' && response.message !== null) {
 					self.displayMessage(response.message, response.status)
 				}
-			}, 'json').fail(function() {
+			}, 'json').fail(function(e) {
+				console.debug(e);
 				console.debug('Loading Questionaire list failed')
 			}).always(function() {
 				// loading done
@@ -418,7 +406,7 @@ export default {
 			const requestData = {
 				_ajax_nonce: gifttest._ajax_nonce.get_details,
 				action: 'gifttest_get_questionaire_details',
-				id: id,
+				id,
 			}
 
 			// do request

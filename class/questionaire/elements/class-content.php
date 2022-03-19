@@ -72,7 +72,7 @@ if ( ! class_exists( 'Content' ) ) :
 		 *
 		 * @since 1.0.0
 		 */
-		public function jsonSerialize() {
+		public function jsonSerialize() : mixed {
 			$this->sanitize_data();
 			return array(
 				'id'   => (int) $this->get_id(),

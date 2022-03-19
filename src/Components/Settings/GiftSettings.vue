@@ -4,8 +4,7 @@
 			{{ text.gifts }}
 		</h3>
 
-		<div
-			ref="contentsCounterpart"
+		<div ref="contentsCounterpart"
 			class="contentsCounterpart"
 			@click="toggleContents">
 			<i class="icon icon-edit" />
@@ -13,13 +12,11 @@
 		</div>
 
 		<div ref="contents" class="contents hidden">
-			<draggable
-				v-model="giftList"
+			<draggable v-model="giftList"
 				handle=".drag-handle"
 				draggable=".gift"
 				@input="emitGiftListUpdate">
-				<div
-					v-for="(gift, i) in giftList"
+				<div v-for="(gift, i) in giftList"
 					:key="i"
 					class="gift element">
 					<table>
@@ -44,8 +41,7 @@
 									</label>
 								</td>
 								<td>
-									<input
-										:id="'giftTitle_' + gift.id"
+									<input :id="'giftTitle_' + gift.id"
 										v-model="gift.data.title"
 										type="text"
 										:placeholder="text.gift_title"
@@ -59,8 +55,7 @@
 									</label>
 								</td>
 								<td>
-									<editor
-										:id="'giftText_' + gift.id"
+									<editor :id="'giftText_' + gift.id"
 										v-model="gift.data.text"
 										:placeholder="text.gift_text"
 										:init="{
@@ -81,8 +76,7 @@
 									</label>
 								</td>
 								<td>
-									<span
-										v-for="questionId in gift.data.question_list"
+									<span v-for="questionId in gift.data.question_list"
 										:key="questionId"
 										class="gift-question">
 										[{{ questionIndex(questionId) + 1 }}] {{ questionTextById(questionId) }}
@@ -92,8 +86,7 @@
 									<br>
 
 									<select :ref="'gift_' + gift.id + '_questionSelection'">
-										<option
-											v-for="(question, j) in availableQuestionList"
+										<option v-for="(question, j) in availableQuestionList"
 											:key="j"
 											:value="question.id">
 											[{{ j + 1 }}] {{ questionText(question) }}
@@ -116,8 +109,7 @@
 				</div>
 
 				<div slot="footer">
-					<button
-						:class="{ loading: addingGiftInProgress }"
+					<button :class="{ loading: addingGiftInProgress }"
 						:disabled="addingGiftInProgress"
 						class="button button-primary"
 						@click="addGift">
@@ -150,12 +142,12 @@ export default {
 		value: {
 			type: Array,
 			required: true,
-			default: function() { return [] },
+			default() { return [] },
 		},
 		availableQuestionList: {
 			type: Array,
 			required: true,
-			default: function() { return [] },
+			default() { return [] },
 		},
 		questionaireId: {
 			type: Number,
@@ -166,18 +158,18 @@ export default {
 			required: true,
 		},
 	},
-	data: function() {
+	data() {
 		return {
 			giftList: this.value,
 			addingGiftInProgress: false,
 		}
 	},
 	watch: {
-		value: function(newValue, oldValue) {
+		value(newValue, oldValue) {
 			this.giftList = newValue
 		},
 	},
-	beforeMount: function() {
+	beforeMount() {
 		const self = this
 		// load requried modules
 		Vuedraggable()

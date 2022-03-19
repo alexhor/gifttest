@@ -125,7 +125,7 @@ if ( ! class_exists( 'Answer' ) ) :
 		 *
 		 * @since 1.0.0
 		 */
-		public function jsonSerialize() {
+		public function jsonSerialize() : mixed {
 			// Sanitize data.
 			$this->sanitize_data();
 

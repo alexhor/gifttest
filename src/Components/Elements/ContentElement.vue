@@ -20,26 +20,26 @@ export default {
 		value: {
 			type: Object,
 			required: true,
-			default: function() { return {} },
+			default() { return {} },
 		},
 		prevElementExists: {
 			type: Boolean,
 			required: false,
-			default: function() { return true },
+			default() { return true },
 		},
 		text: {
 			type: Object,
 			required: true,
-			default: function() { return {} },
+			default() { return {} },
 		},
 	},
-	data: function() {
+	data() {
 		return {
 			element: this.value,
 		}
 	},
 	watch: {
-		value: function(newValue, oldValue) {
+		value(newValue, oldValue) {
 			this.element = newValue
 		},
 	},

@@ -226,7 +226,7 @@ if ( ! class_exists( 'Questionaire' ) ) :
 		 *
 		 * @since 1.0.0
 		 */
-		public function jsonSerialize() {
+		public function jsonSerialize() : mixed {
 			return array(
 				'settings'     => $this->settings,
 				'element_list' => $this->element_list,

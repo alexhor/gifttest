@@ -102,7 +102,7 @@ if ( ! class_exists( 'Custom_Question' ) ) :
 		 *
 		 * @since 1.0.0
 		 */
-		public function jsonSerialize() {
+		public function jsonSerialize() : mixed {
 			$data = $this->data;
 			// Serialize answers list.
 			foreach ( $data['answers_list'] as &$answer ) {
