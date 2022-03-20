@@ -15,9 +15,7 @@ $db->query("CREATE TABLE IF NOT EXISTS options (
 
 // Show gifttest settings
 do_action('init');
-add_action( 'wp_enqueue_scripts', function() {
-  do_action( 'admin_enqueue_scripts' );
-});
+do_action('admin_enqueue_scripts');
 require_once plugin_dir_path( __FILE__ ) . 'parts/header.php';
 echo '<div id="gifttest"></div>';
 require_once plugin_dir_path( __FILE__ ) . 'parts/footer.php';

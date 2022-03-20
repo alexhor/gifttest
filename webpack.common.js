@@ -5,6 +5,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const packageJson = require('./package.json')
 const webpack = require('webpack');
 const appName = packageJson.name
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 
 module.exports = {
 	entry: {
@@ -47,9 +48,13 @@ module.exports = {
 		new ESLintPlugin({ extensions : ['js', 'vue'], exclude: [ 'node_modules', 'wpcs', '*.min.js'] }),
 		new webpack.ProvidePlugin({
 			jQuery: require.resolve('jquery'),
-		})
+		}),
+		new DuplicatePackageCheckerPlugin()
 	],
 	resolve: {
-		extensions: ['*', '.js', '.vue']
+		extensions: ['*', '.js', '.vue'],
+    alias: {
+      vue: path.resolve('./node_modules/vue')
+    }
 	}
 }

@@ -13,71 +13,72 @@
 
 		<div ref="contents" class="contents hidden">
 			<draggable v-model="answerList"
+				item-key="id"
 				handle=".drag-handle"
 				draggable=".answer"
 				@input="emitAnswerListUpdate">
-				<div v-for="(answer, i) in answerList"
-					:key="i"
-					class="answer element">
-					<table>
-						<thead>
-							<tr>
-								<th colspan="2">
-									<i class="icon icon-align-justify drag-handle" />
-									<p class="open-panel">
-										{{ answer.data.content }}
-									</p>
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<label :for="'answerContent_' + answer.id">
-										{{ text.answer_content }}
-									</label>
-								</td>
-								<td>
-									<input :id="'answerContent_' + answer.id"
-										v-model="answer.data.content"
-										type="text"
-										:placeholder="text.answer_content"
-										@input="emitAnswerListUpdate">
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label :for="'answerValue_' + answer.id">
-										{{ text.answer_value }}
-									</label>
-								</td>
-								<td>
-									<input :id="'answerValue_' + answer.id"
-										v-model="answer.data.value"
-										type="number"
-										:placeholder="text.answer_value"
-										@input="emitAnswerListUpdate">
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<button class="button button-danger" @click="deleteAnswer(answer.id)">
-										{{ text.delete }}
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+				<template #item="answer">
+					<div class="answer element">
+						<table>
+							<thead>
+								<tr>
+									<th colspan="2">
+										<i class="icon icon-align-justify drag-handle" />
+										<p class="open-panel">
+											{{ answer.element.data.content }}
+										</p>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<label :for="'answerContent_' + answer.element.id">
+											{{ text.answer_content }}
+										</label>
+									</td>
+									<td>
+										<input :id="'answerContent_' + answer.element.id"
+											v-model="answer.element.data.content"
+											type="text"
+											:placeholder="text.answer_content"
+											@input="emitAnswerListUpdate">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label :for="'answerValue_' + answer.element.id">
+											{{ text.answer_value }}
+										</label>
+									</td>
+									<td>
+										<input :id="'answerValue_' + answer.element.id"
+											v-model="answer.element.data.value"
+											type="number"
+											:placeholder="text.answer_value"
+											@input="emitAnswerListUpdate">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<button class="button button-danger" @click="deleteAnswer(answer.element.id)">
+											{{ text.delete }}
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</template>
 
-				<div slot="footer">
+				<template #footer>
 					<button :class="{ loading: addingAnswerInProgress }"
 						:disabled="addingAnswerInProgress"
 						class="button button-primary"
 						@click="addAnswer">
 						{{ text.add_answer }}
 					</button>
-				</div>
+				</template>
 			</draggable>
 		</div>
 	</div>
@@ -88,18 +89,18 @@
 /* global jQuery */
 /* global Vue */
 /* global gifttest */
+import draggable from 'vuedraggable'
 __webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
 
-const Vuedraggable = () => import(/* webpackChunkName: "Vuedraggable" *//* webpackPrefetch: true */'vuedraggable')
 const Utilities = () => import(/* webpackChunkName: "Utilities" */'../Utilities.js')
 
 export default {
 	name: 'AnswerSettings',
 	components: {
-		draggable: Vuedraggable,
+		draggable,
 	},
 	props: {
-		value: {
+		modelValue: {
 			type: Array,
 			required: true,
 			default() { return [] },
@@ -115,19 +116,17 @@ export default {
 	},
 	data() {
 		return {
-			answerList: this.value,
+			answerList: this.modelValue,
 			addingAnswerInProgress: false,
 		}
 	},
 	watch: {
-		value(newValue, oldValue) {
+		modelValue(newValue, oldValue) {
 			this.answerList = newValue
 		},
 	},
 	beforeMount() {
 		const self = this
-		// load requried modules
-		Vuedraggable()
 		// load displayMessage function
 		Utilities().then(utilities => {
 			self.displayMessage = utilities.default.displayMessage

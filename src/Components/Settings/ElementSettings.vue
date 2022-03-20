@@ -13,203 +13,211 @@
 
 		<div ref="elementContents" class="element-contents">
 			<draggable v-model="elementList"
+				item-key="id"
 				handle=".drag-handle"
 				draggable=".element"
 				@input="emitElementListUpdate">
-				<div v-for="(element, i) in elementList"
-					:key="i"
-					class="element">
-					<!-- Question Element -->
-					<table v-if="element.type === elementTypes.question.id">
-						<thead @click="toggleBody(element.id)">
-							<tr>
-								<th colspan="2">
-									<i class="icon icon-align-justify drag-handle" />
-									<p class="open-panel">
-										{{ text.question }} {{ excerpt(element.data.text) }}
-									</p>
-								</th>
-							</tr>
-						</thead>
-						<tbody :ref="'body_' + element.id" class="table-body-hidden">
-							<tr>
-								<td>
-									<label :for="'questionText_' + element.id">
-										{{ text.text }}
-									</label>
-								</td>
-								<td>
-									<textarea :id="'questionText_' + element.id"
-										v-model="element.data.text"
-										:placeholder="text.question"
-										@input="emitElementListUpdate" />
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<button class="button button-danger" @click="deleteElement(element.id)">
-										{{ text.delete }}
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<!-- End of Question Element -->
+				<template #item="{element}">
+					<div class="element">
+						<!-- Question Element -->
+						<table v-if="element.type === elementTypes.question.id">
+							<thead @click="toggleBody(element.id)">
+								<tr>
+									<th colspan="2">
+										<i class="icon icon-align-justify drag-handle" />
+										<p class="open-panel">
+											{{ text.question }} {{ excerpt(element.data.text) }}
+										</p>
+									</th>
+								</tr>
+							</thead>
+							<tbody :ref="'body_' + element.id" class="table-body-hidden">
+								<tr>
+									<td>
+										<label :for="'questionText_' + element.id">
+											{{ text.text }}
+										</label>
+									</td>
+									<td>
+										<textarea :id="'questionText_' + element.id"
+											v-model="element.data.text"
+											:placeholder="text.question"
+											@input="emitElementListUpdate" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<button class="button button-danger" @click="deleteElement(element.id)">
+											{{ text.delete }}
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End of Question Element -->
 
-					<!-- Custom Question Element -->
-					<table v-else-if="element.type === elementTypes.customQuestion.id">
-						<thead @click="toggleBody(element.id)">
-							<tr>
-								<th colspan="2">
-									<i class="icon icon-align-justify drag-handle" />
-									<p class="open-panel">
-										{{ text.custom_question }} {{ excerpt(element.data.question_text) }}
-									</p>
-								</th>
-							</tr>
-						</thead>
-						<tbody :ref="'body_' + element.id" class="table-body-hidden">
-							<tr>
-								<td>
-									<label :for="'questionText_' + element.id">
-										{{ text.text }}
-									</label>
-								</td>
-								<td>
-									<textarea :id="'questionText_' + element.id"
-										v-model="element.data.question_text"
-										:placeholder="text.question"
-										@input="emitElementListUpdate" />
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label>
-										{{ text.answers }}
-									</label>
-								</td>
-								<td>
-									<draggable v-model="element.data.answers_list" draggable=".answer" handle=".answer-drag-handle">
-										<div v-for="answer in element.data.answers_list" :key="answer.id" class="answer">
-											<i class="icon icon-align-justify answer-drag-handle" />
-											<label :for="'answerText_' + answer.id">
-												{{ text.answer_text }}
-											</label>
-											<input :id="'answerText_' + answer.id"
-												v-model="answer.text"
-												type="text"
-												:placeholder="text.answer_text"
-												@input="emitElementListUpdate">
+						<!-- Custom Question Element -->
+						<table v-else-if="element.type === elementTypes.customQuestion.id">
+							<thead @click="toggleBody(element.id)">
+								<tr>
+									<th colspan="2">
+										<i class="icon icon-align-justify drag-handle" />
+										<p class="open-panel">
+											{{ text.custom_question }} {{ excerpt(element.data.question_text) }}
+										</p>
+									</th>
+								</tr>
+							</thead>
+							<tbody :ref="'body_' + element.id" class="table-body-hidden">
+								<tr>
+									<td>
+										<label :for="'questionText_' + element.id">
+											{{ text.text }}
+										</label>
+									</td>
+									<td>
+										<textarea :id="'questionText_' + element.id"
+											v-model="element.data.question_text"
+											:placeholder="text.question"
+											@input="emitElementListUpdate" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>
+											{{ text.answers }}
+										</label>
+									</td>
+									<td>
+										<draggable v-model="element.data.answers_list"
+											item-key="id"
+											draggable=".answer"
+											handle=".answer-drag-handle">
+											<template #item="answer">
+												<div class="answer">
+													<i class="icon icon-align-justify answer-drag-handle" />
+													<label :for="'answerText_' + answer.element.id">
+														{{ text.answer_text }}
+													</label>
+													<input :id="'answerText_' + answer.element.id"
+														v-model="answer.element.text"
+														type="text"
+														:placeholder="text.answer_text"
+														@input="emitElementListUpdate">
 
-											<label :for="'answerValue_' + answer.id">
-												{{ text.answer_value }}
-											</label>
-											<input :id="'answerValue_' + answer.id"
-												v-model="answer.value"
-												type="number"
-												:placeholder="text.answer_value"
-												@input="emitElementListUpdate">
-											<button class="button button-danger" @click="deleteAnswer(element.id, answer.id)">
-												{{ text.delete }}
-											</button>
-										</div>
+													<label :for="'answerValue_' + answer.element.id">
+														{{ text.answer_value }}
+													</label>
+													<input :id="'answerValue_' + answer.element.id"
+														v-model="answer.element.value"
+														type="number"
+														:placeholder="text.answer_value"
+														@input="emitElementListUpdate">
+													<button class="button button-danger" @click="deleteAnswer(element.id, answer.element.id)">
+														{{ text.delete }}
+													</button>
+												</div>
+											</template>
 
-										<div slot="footer">
-											<button :class="{ loading: addingAnswerInProgress }"
-												:disabled="addingAnswerInProgress"
-												class="button button-primary"
-												@click="customQuestionAddAnswer(element.id)">
-												{{ text.add_answer }}
-											</button>
-										</div>
-									</draggable>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<button class="button button-danger" @click="deleteElement(element.id)">
-										{{ text.delete }}
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<!-- End of Custom Question Element -->
+											<template #footer>
+												<button :class="{ loading: addingAnswerInProgress }"
+													:disabled="addingAnswerInProgress"
+													class="button button-primary"
+													@click="customQuestionAddAnswer(element.id)">
+													{{ text.add_answer }}
+												</button>
+											</template>
+										</draggable>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<button class="button button-danger" @click="deleteElement(element.id)">
+											{{ text.delete }}
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End of Custom Question Element -->
 
-					<!-- Content Element -->
-					<table v-else-if="element.type === elementTypes.content.id">
-						<thead @click="toggleBody(element.id)">
-							<tr>
-								<th colspan="2">
-									<i class="icon icon-align-justify drag-handle" />
-									<p class="open-panel">
-										{{ text.content }} {{ excerpt(element.data.text) }}
-									</p>
-								</th>
-							</tr>
-						</thead>
-						<tbody :ref="'body_' + element.id" class="table-body-hidden">
-							<tr>
-								<td>
-									<label for="content">
-										{{ text.text }}
-									</label>
-								</td>
-								<td>
-									<editor :id="'content_' + element.id"
-										v-model="element.data.text"
-										:placeholder="text.content"
-										:init="{
-											height: 200,
-											menu: {},
-											toolbar: [
-												'undo redo | fontselect fontsizeselect formatselect | forecolor backcolor | removeformat | fullscreen',
-												'casechange | bold italic underline strikethrough | bullist numlist outdent indent | blockquote hr link unlink',
-											],
-										}"
-										@input="emitElementListUpdate" />
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<button class="button button-danger" @click="deleteElement(element.id)">
-										{{ text.delete }}
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<!-- End of Content Element -->
+						<!-- Content Element -->
+						<table v-else-if="element.type === elementTypes.content.id">
+							<thead @click="toggleBody(element.id)">
+								<tr>
+									<th colspan="2">
+										<i class="icon icon-align-justify drag-handle" />
+										<p class="open-panel">
+											{{ text.content }} {{ excerpt(element.data.text) }}
+										</p>
+									</th>
+								</tr>
+							</thead>
+							<tbody :ref="'body_' + element.id" class="table-body-hidden">
+								<tr>
+									<td>
+										<label for="content">
+											{{ text.text }}
+										</label>
+									</td>
+									<td>
+										<editor :id="'content_' + element.id"
+											v-model="element.data.text"
+											:placeholder="text.content"
+											:init="{
+												height: 200,
+												menu: {},
+												toolbar: [
+													'undo redo | fontselect fontsizeselect formatselect | forecolor backcolor | removeformat | fullscreen',
+													'casechange | bold italic underline strikethrough | bullist numlist outdent indent | blockquote hr link unlink',
+												],
+											}"
+											@input="emitElementListUpdate" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<button class="button button-danger" @click="deleteElement(element.id)">
+											{{ text.delete }}
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End of Content Element -->
 
-					<!-- Invalid Element -->
-					<div v-else>
-						<h3 class="alert alert-warning">
-							{{ text.invalid_element }}
-						</h3>
+						<!-- Invalid Element -->
+						<div v-else>
+							<h3 class="alert alert-warning">
+								{{ text.invalid_element }}
+							</h3>
 
-						<button class="button button-danger" @click="deleteElement(element.id)">
-							{{ text.delete }}
-						</button>
+							<button class="button button-danger" @click="deleteElement(element.id)">
+								{{ text.delete }}
+							</button>
+						</div>
+						<!-- End of Invalid Element -->
 					</div>
-					<!-- End of Invalid Element -->
-				</div>
+				</template>
 
-				<div slot="footer" class="quick-menu-wrapper">
-					<button :class="{ loading: creatingInProgress }"
-						:disabled="creatingInProgress"
-						class="button button-primary"
-						@click="showAddElementSelector = !showAddElementSelector">
-						{{ text.add_element }}
-					</button>
-					<div v-if="showAddElementSelector" class="quick-menu">
-						<button v-for="type in elementTypes"
-							:key="type.id"
-							class="button button-secondary"
-							@click="addElement(type.id)">
-							{{ type.name }}
+				<template #footer>
+					<div class="quick-menu-wrapper">
+						<button :class="{ loading: creatingInProgress }"
+							:disabled="creatingInProgress"
+							class="button button-primary"
+							@click="showAddElementSelector = !showAddElementSelector">
+							{{ text.add_element }}
 						</button>
+						<div v-if="showAddElementSelector" class="quick-menu">
+							<button v-for="type in elementTypes"
+								:key="type.id"
+								class="button button-secondary"
+								@click="addElement(type.id)">
+								{{ type.name }}
+							</button>
+						</div>
 					</div>
-				</div>
+				</template>
 			</draggable>
 		</div>
 	</div>
@@ -220,20 +228,20 @@
 /* global jQuery */
 /* global Vue */
 /* global gifttest */
+import Editor from '@tinymce/tinymce-vue'
+import draggable from 'vuedraggable'
 __webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
 
-const Tinymce = () => import(/* webpackChunkName: "Tinymce" *//* webpackPrefetch: true */'@tinymce/tinymce-vue')
-const Vuedraggable = () => import(/* webpackChunkName: "Vuedraggable" *//* webpackPrefetch: true */'vuedraggable')
 const Utilities = () => import(/* webpackChunkName: "Utilities" */'../Utilities.js')
 
 export default {
 	name: 'ElementSettings',
 	components: {
-		draggable: Vuedraggable,
-		editor: Tinymce,
+		draggable,
+		editor: Editor,
 	},
 	props: {
-		value: {
+		modelValue: {
 			type: Array,
 			required: true,
 			default() { return [] },
@@ -249,7 +257,7 @@ export default {
 	},
 	data() {
 		return {
-			elementList: this.value,
+			elementList: this.modelValue,
 			creatingInProgress: false,
 			addingAnswerInProgress: false,
 			showAddElementSelector: false,
@@ -270,15 +278,12 @@ export default {
 		}
 	},
 	watch: {
-		value(newValue, oldValue) {
+		modelValue(newValue, oldValue) {
 			this.elementList = newValue
 		},
 	},
 	beforeMount() {
 		const self = this
-		// load requried modules
-		Vuedraggable()
-		Tinymce()
 		// load displayMessage function
 		Utilities().then(utilities => {
 			self.displayMessage = utilities.default.displayMessage
@@ -395,6 +400,7 @@ export default {
 			// open up element menu if no element was specified
 			if (typeof type === 'undefined' || type === null) {
 				self.showAddElementSelector = true
+				return
 			}
 			// only one request allowed at a time
 			if (self.creatingInProgress) return
@@ -419,9 +425,12 @@ export default {
 				} else {
 					self.displayMessage(response.message, response.status)
 				}
+			}, 'json').fail(function(e) {
+				console.debug('Adding element failed')
+			}).always(function() {
 				// loading done
 				self.creatingInProgress = false
-			}, 'json')
+			})
 		},
 	},
 }

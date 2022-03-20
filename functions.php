@@ -342,7 +342,7 @@ $styleFileList = [];
  */
 function wp_register_style( $handle, $src, $deps = array(), $ver = false, $in_footer = false, $media = 'all' ) {
 	global $styleFileList;
-	$scriptFileList[ $handle ] = [
+	$styleFileList[ $handle ] = [
 		'src' => $src,
 		'version' => $ver,
 		'in_footer' => $in_footer,
@@ -878,3 +878,31 @@ function wp_parse_args( $args, $defaults = array() ) {
 	}
 	return $parsed_args;
 }
+
+function apply_filters( string $filter, mixed $data, mixed $context ) {
+	return $data;
+}
+
+/**
+ * Retrieve a list of protocols to allow in HTML attributes.
+ *
+ * @since 3.3.0
+ * @since 4.3.0 Added 'webcal' to the protocols array.
+ * @since 4.7.0 Added 'urn' to the protocols array.
+ * @since 5.3.0 Added 'sms' to the protocols array.
+ * @since 5.6.0 Added 'irc6' and 'ircs' to the protocols array.
+ *
+ * @see wp_kses()
+ * @see esc_url()
+ *
+ * @return string[] Array of allowed protocols. Defaults to an array containing 'http', 'https',
+ *                  'ftp', 'ftps', 'mailto', 'news', 'irc', 'irc6', 'ircs', 'gopher', 'nntp', 'feed',
+ *                  'telnet', 'mms', 'rtsp', 'sms', 'svn', 'tel', 'fax', 'xmpp', 'webcal', and 'urn'.
+ *                  This covers all common link protocols, except for 'javascript' which should not
+ *                  be allowed for untrusted users.
+ */
+function wp_allowed_protocols() {
+	return array( 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'irc6', 'ircs', 'gopher', 'nntp', 'feed', 'telnet', 'mms', 'rtsp', 'sms', 'svn', 'tel', 'fax', 'xmpp', 'webcal', 'urn' );
+}
+
+require_once plugin_dir_path( __FILE__ ) . 'class/kses.php';

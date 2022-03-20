@@ -42,7 +42,7 @@
 				</div>
 			</div>
 
-			<div v-if="loadedQuestionaire">
+			<div v-if="Object.entries(loadedQuestionaire).length">
 				<br><hr>
 				<h2>{{ text.edit_questionaire }}</h2>
 
@@ -118,8 +118,7 @@
 							<td>
 								<select id="showMoreGifts"
 									v-model="loadedQuestionaire.settings.show_more_gifts"
-									:placeholder="text.name"
-									type="text">
+									:placeholder="text.name">
 									<option value="true">
 										{{ text.yes }}
 									</option>
@@ -153,14 +152,15 @@
 /* global ajaxurl */
 /* global jQuery */
 /* global gifttest */
+import { defineComponent, defineAsyncComponent } from 'vue'
 __webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
 
-const ElementSettings = () => import(/* webpackChunkName: "ElementSettings" *//* webpackPrefetch: true */'./Components/Settings/ElementSettings.vue')
-const AnswerSettings = () => import(/* webpackChunkName: "AnswerSettings" *//* webpackPrefetch: true */'./Components/Settings/AnswerSettings.vue')
-const GiftSettings = () => import(/* webpackChunkName: "GiftSettings" *//* webpackPrefetch: true */'./Components/Settings/GiftSettings.vue')
+const ElementSettings = defineAsyncComponent(() => import(/* webpackChunkName: "ElementSettings" *//* webpackPrefetch: true */'./Components/Settings/ElementSettings.vue'))
+const AnswerSettings = defineAsyncComponent(() => import(/* webpackChunkName: "AnswerSettings" *//* webpackPrefetch: true */'./Components/Settings/AnswerSettings.vue'))
+const GiftSettings = defineAsyncComponent(() => import(/* webpackChunkName: "GiftSettings" *//* webpackPrefetch: true */'./Components/Settings/GiftSettings.vue'))
 const Utilities = () => import(/* webpackChunkName: "Utilities" *//* webpackPrefetch: true */'./Components/Utilities.js')
 
-export default {
+export default defineComponent({
 	name: 'Settings',
 	components: {
 		ElementSettings,
@@ -179,7 +179,7 @@ export default {
 			exportingQuestionaire: false,
 			importingQuestionaire: false,
 			pluginDirUrl: '',
-			loadedQuestionaire: false,
+			loadedQuestionaire: {},
 			availabeQuestionaireList: [],
 			newQuestionaireName: '',
 			gifttest,
@@ -204,7 +204,7 @@ export default {
 		questionList() {
 			const self = this
 			const questionList = []
-			if (self.loadedQuestionaire === 'undefined' || self.loadedQuestionaire === false || self.loadedQuestionaire.element_list === 'undefined') return questionList
+			if (self.loadedQuestionaire === 'undefined' || self.loadedQuestionaire === {} || self.loadedQuestionaire.element_list === 'undefined') return questionList
 
 			jQuery.each(self.loadedQuestionaire.element_list, function(i, element) {
 				if (element.type === self.elementTypes.question.id || element.type === self.elementTypes.customQuestion.id) {
@@ -220,11 +220,6 @@ export default {
 
 		self.pluginDirUrl = gifttest.plugin_dir_url
 		self.loadQuestionaireList()
-
-		// load requried modules
-		ElementSettings()
-		AnswerSettings()
-		GiftSettings()
 
 		// load utility functions
 		Utilities().then(utilities => {
@@ -345,7 +340,7 @@ export default {
 				}
 				// loading done
 				self.deletingQuestionaire = false
-				self.loadedQuestionaire = false
+				self.loadedQuestionaire = {}
 				// reload questionaire list
 				self.loadQuestionaireList()
 			}, 'json').fail(function() {
@@ -353,7 +348,7 @@ export default {
 			}).always(function() {
 				// loading done
 				self.deletingQuestionaire = false
-				self.loadedQuestionaire = false
+				self.loadedQuestionaire = {}
 			})
 		},
 		exportQuestionaire() {
@@ -411,6 +406,7 @@ export default {
 			// do request
 			jQuery.post(ajaxurl, requestData, function(response) {
 				if (response.status === 'success') {
+					console.debug(response.data)
 					self.loadedQuestionaire = response.data
 				} else if (typeof response.message !== 'undefined' && response.message !== null) {
 					self.displayMessage(response.message, response.status)
@@ -458,5 +454,5 @@ export default {
 			})
 		},
 	},
-}
+})
 </script>

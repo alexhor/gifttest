@@ -13,109 +13,110 @@
 
 		<div ref="contents" class="contents hidden">
 			<draggable v-model="giftList"
+				item-key="id"
 				handle=".drag-handle"
 				draggable=".gift"
 				@input="emitGiftListUpdate">
-				<div v-for="(gift, i) in giftList"
-					:key="i"
-					class="gift element">
-					<table>
-						<thead @click="toggleBody(gift.id)">
-							<tr>
-								<th colspan="2">
-									<i class="icon icon-align-justify drag-handle" />
-									<p class="open-panel">
-										<span v-if="!gift.data.title">
-											[{{ text.gift }}]
+				<template #item="gift">
+					<div class="gift element">
+						<table>
+							<thead @click="toggleBody(gift.element.id)">
+								<tr>
+									<th colspan="2">
+										<i class="icon icon-align-justify drag-handle" />
+										<p class="open-panel">
+											<span v-if="!gift.element.data.title">
+												[{{ text.gift }}]
+											</span>
+											{{ gift.element.data.title }}
+										</p>
+									</th>
+								</tr>
+							</thead>
+							<tbody :ref="'body_' + gift.element.id" class="table-body-hidden">
+								<tr>
+									<td>
+										<label :for="'giftTitle_' + gift.element.id">
+											{{ text.gift_title }}
+										</label>
+									</td>
+									<td>
+										<input :id="'giftTitle_' + gift.element.id"
+											v-model="gift.element.data.title"
+											type="text"
+											:placeholder="text.gift_title"
+											@input="emitGiftListUpdate">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label :for="'giftText_' + gift.element.id">
+											{{ text.gift_text }}
+										</label>
+									</td>
+									<td>
+										<editor :id="'giftText_' + gift.element.id"
+											v-model="gift.element.data.text"
+											:placeholder="text.gift_text"
+											:init="{
+												height: 200,
+												menu: {},
+												toolbar: [
+													'undo redo | fontselect fontsizeselect formatselect | forecolor backcolor | removeformat | fullscreen',
+													'casechange | bold italic underline strikethrough | bullist numlist outdent indent | blockquote hr link unlink',
+												],
+											}"
+											@input="emitGiftListUpdate" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>
+											{{ text.question_list }}
+										</label>
+									</td>
+									<td>
+										<span v-for="questionId in gift.element.data.question_list"
+											:key="questionId"
+											class="gift-question">
+											[{{ questionIndex(questionId) + 1 }}] {{ questionTextById(questionId) }}
+											<i class="icon icon-trash action" @click="deleteGiftQuestion(gift.element, questionId)" />
 										</span>
-										{{ gift.data.title }}
-									</p>
-								</th>
-							</tr>
-						</thead>
-						<tbody :ref="'body_' + gift.id" class="table-body-hidden">
-							<tr>
-								<td>
-									<label :for="'giftTitle_' + gift.id">
-										{{ text.gift_title }}
-									</label>
-								</td>
-								<td>
-									<input :id="'giftTitle_' + gift.id"
-										v-model="gift.data.title"
-										type="text"
-										:placeholder="text.gift_title"
-										@input="emitGiftListUpdate">
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label :for="'giftText_' + gift.id">
-										{{ text.gift_text }}
-									</label>
-								</td>
-								<td>
-									<editor :id="'giftText_' + gift.id"
-										v-model="gift.data.text"
-										:placeholder="text.gift_text"
-										:init="{
-											height: 200,
-											menu: {},
-											toolbar: [
-												'undo redo | fontselect fontsizeselect formatselect | forecolor backcolor | removeformat | fullscreen',
-												'casechange | bold italic underline strikethrough | bullist numlist outdent indent | blockquote hr link unlink',
-											],
-										}"
-										@input="emitGiftListUpdate" />
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label>
-										{{ text.question_list }}
-									</label>
-								</td>
-								<td>
-									<span v-for="questionId in gift.data.question_list"
-										:key="questionId"
-										class="gift-question">
-										[{{ questionIndex(questionId) + 1 }}] {{ questionTextById(questionId) }}
-										<i class="icon icon-trash action" @click="deleteGiftQuestion(gift, questionId)" />
-									</span>
 
-									<br>
+										<br>
 
-									<select :ref="'gift_' + gift.id + '_questionSelection'">
-										<option v-for="(question, j) in availableQuestionList"
-											:key="j"
-											:value="question.id">
-											[{{ j + 1 }}] {{ questionText(question) }}
-										</option>
-									</select>
-									<button class="button button-primary" @click="addGiftQuestion(gift)">
-										{{ text.add_question }}
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<button class="button button-danger" @click="deleteGift(gift.id)">
-										{{ text.delete }}
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+										<select :ref="'gift_' + gift.element.id + '_questionSelection'">
+											<option v-for="(question, j) in availableQuestionList"
+												:key="j"
+												:value="question.id">
+												[{{ j + 1 }}] {{ questionText(question) }}
+											</option>
+										</select>
+										<button class="button button-primary" @click="addGiftQuestion(gift.element)">
+											{{ text.add_question }}
+										</button>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<button class="button button-danger" @click="deleteGift(gift.element.id)">
+											{{ text.delete }}
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</template>
 
-				<div slot="footer">
+				<template #footer>
 					<button :class="{ loading: addingGiftInProgress }"
 						:disabled="addingGiftInProgress"
 						class="button button-primary"
 						@click="addGift">
 						{{ text.add_gift }}
 					</button>
-				</div>
+				</template>
 			</draggable>
 		</div>
 	</div>
@@ -126,20 +127,20 @@
 /* global jQuery */
 /* global Vue */
 /* global gifttest */
+import draggable from 'vuedraggable'
+import Editor from '@tinymce/tinymce-vue'
 __webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
 
-const Tinymce = () => import(/* webpackChunkName: "Tinymce" *//* webpackPrefetch: true */'@tinymce/tinymce-vue')
-const Vuedraggable = () => import(/* webpackChunkName: "Vuedraggable" *//* webpackPrefetch: true */'vuedraggable')
 const Utilities = () => import(/* webpackChunkName: "Utilities" */'../Utilities.js')
 
 export default {
 	name: 'GiftSettings',
 	components: {
-		draggable: Vuedraggable,
-		editor: Tinymce,
+		draggable,
+		editor: Editor,
 	},
 	props: {
-		value: {
+		modelValue: {
 			type: Array,
 			required: true,
 			default() { return [] },
@@ -160,20 +161,17 @@ export default {
 	},
 	data() {
 		return {
-			giftList: this.value,
+			giftList: this.modelValue,
 			addingGiftInProgress: false,
 		}
 	},
 	watch: {
-		value(newValue, oldValue) {
+		modelValue(newValue, oldValue) {
 			this.giftList = newValue
 		},
 	},
 	beforeMount() {
 		const self = this
-		// load requried modules
-		Vuedraggable()
-		Tinymce()
 		// load displayMessage function
 		Utilities().then(utilities => {
 			self.displayMessage = utilities.default.displayMessage

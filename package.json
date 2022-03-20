@@ -35,7 +35,7 @@
 		"@tinymce/tinymce-vue": "^4.0.7",
 		"jquery": "^3.6.0",
 		"vue": "^3.2.31",
-		"vuedraggable": "^2.24.3"
+		"vuedraggable": "^4.1.0"
 	},
 	"engines": {
 		"node": ">=10.0.0"
@@ -52,6 +52,7 @@
 		"babel-eslint": "^10.1.0",
 		"babel-loader": "^8.2.3",
 		"css-loader": "^6.7.1",
+		"duplicate-package-checker-webpack-plugin": "^3.0.0",
 		"eslint": "^8.6.0",
 		"eslint-config-standard": "^16.0.3",
 		"eslint-import-resolver-webpack": "^0.13.2",
