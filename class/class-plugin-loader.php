@@ -70,6 +70,7 @@ if ( ! class_exists( 'Plugin_Loader' ) ) :
 						'create_answer'                 => wp_create_nonce( 'gifttest_create_questionaire_answer' ),
 						'create_gift'                   => wp_create_nonce( 'gifttest_create_questionaire_gift' ),
 					),
+					'tinyMceApiKey'									=> 'no-api-key', # TODO: move to config
 					'user_can_delete'     => current_user_can( 'delete_posts' ),
 					'text'                => $this::settings_js_translations(),
 					'vue_components_path' => plugin_dir_url( __FILE__ ) . '../js/',

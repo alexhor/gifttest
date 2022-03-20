@@ -274,7 +274,6 @@ export default defineComponent({
 						self.loadedQuestionaire = json
 						self.displayMessage(self.text.import_successful_save_the_questionaire_if_you_want_to_keep_it, 'success')
 					} catch (e) {
-						console.debug(e)
 						self.displayMessage(self.text.import_failed_invalid_file_content, 'error')
 					}
 
@@ -445,8 +444,7 @@ export default defineComponent({
 				} else if (typeof response.message !== 'undefined' && response.message !== null) {
 					self.displayMessage(response.message, response.status)
 				}
-			}, 'json').fail(function(e) {
-				console.debug(e)
+			}, 'json').fail(function() {
 				console.debug('Creating Questionaire failed')
 			}).always(function() {
 			// reactivate button

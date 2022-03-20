@@ -110,7 +110,7 @@
 													</label>
 													<input :id="'answerValue_' + answer.element.id"
 														v-model="answer.element.value"
-														type="number"
+														type="text"
 														:placeholder="text.answer_value"
 														@input="emitElementListUpdate">
 													<button class="button button-danger" @click="deleteAnswer(element.id, answer.element.id)">
@@ -165,13 +165,16 @@
 											v-model="element.data.text"
 											:placeholder="text.content"
 											:init="{
-												height: 200,
+												min_height: 300,
+												max_height: 800,
+												resize: true,
 												menu: {},
 												toolbar: [
 													'undo redo | fontselect fontsizeselect formatselect | forecolor backcolor | removeformat | fullscreen',
 													'casechange | bold italic underline strikethrough | bullist numlist outdent indent | blockquote hr link unlink',
 												],
 											}"
+											api-key="krnjha9dl66ncl6m2u2na18cvr4bnhndkkgx72vqvnzj2jek"
 											@input="emitElementListUpdate" />
 									</td>
 								</tr>
@@ -274,6 +277,7 @@ export default {
 					id: 3,
 				},
 			},
+			tinyMceApiKey: gifttest.tinyMceApiKey,
 		}
 	},
 	watch: {
@@ -367,8 +371,7 @@ export default {
 				} else {
 					self.displayMessage(response.message, response.status)
 				}
-			}, 'json').fail(function(e) {
-				console.debug(e)
+			}, 'json').fail(function() {
 				console.debug('Adding answer failed')
 			}).always(function() {
 				// loading done

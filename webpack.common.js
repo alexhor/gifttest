@@ -6,6 +6,7 @@ const packageJson = require('./package.json')
 const webpack = require('webpack');
 const appName = packageJson.name
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 	entry: {
@@ -20,6 +21,17 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			{
+				test: /skin\.css$/i,
+				use: [MiniCssExtractPlugin.loader, 'css-loader'],
+			},
+			{
+				test: /content\.css$/i,
+				loader: 'css-loader',
+				options: {
+					esModule: false,
+				},
+			},
 			{
 				test: /\.css$/,
 				exclude: [ /node_modules/, /wpcs/ ],
@@ -49,7 +61,8 @@ module.exports = {
 		new webpack.ProvidePlugin({
 			jQuery: require.resolve('jquery'),
 		}),
-		new DuplicatePackageCheckerPlugin()
+		new DuplicatePackageCheckerPlugin(),
+		new MiniCssExtractPlugin()
 	],
 	resolve: {
 		extensions: ['*', '.js', '.vue'],

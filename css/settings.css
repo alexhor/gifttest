@@ -3,6 +3,10 @@
 	display: none;
 }
 
+.hidden {
+	display: none;
+}
+
 th {
 	text-align: left;
 }
@@ -166,7 +170,8 @@ button.button-copy {
 
 .elements .toggle-element-contents,
 .elements .element-contents-counterpart,
-.toggle-contents, .contents-counterpart {
+.toggle-contents, .contents-counterpart,
+.contentsCounterpart {
 	cursor: pointer;
 }
 

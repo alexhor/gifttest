@@ -658,7 +658,7 @@ function add_option( string $option, mixed $value = '', string $deprecated = '',
  */
 function delete_option( string $option ) {
 	global $db;
-	$request = $db->prepare("DELTE FROM options WHERE name = ?");
+	$request = $db->prepare("DELETE FROM options WHERE name = ?");
 	$request->bind_param('s', $option);
 	$request->execute();
 	$request->close();
@@ -844,10 +844,70 @@ function wp_strip_all_tags( $string, $remove_breaks = false ) {
 }
 
 /**
- * Removes slashes from a string
+ * Removes slashes from a string or recursively removes slashes from strings within an array.
+ *
+ * This should be used to remove slashes from data passed to core API that
+ * expects data to be unslashed.
+ *
+ * @since 3.6.0
+ *
+ * @param string|array $value String or array of data to unslash.
+ * @return string|array Unslashed `$value`.
  */
-function wp_unslash( string $value ) {
-	return stripslashes( $value );
+function wp_unslash( string|array $value ) {
+	return stripslashes_deep( $value );
+}
+
+/**
+ * Navigates through an array, object, or scalar, and removes slashes from the values.
+ *
+ * @since 2.0.0
+ *
+ * @param mixed $value The value to be stripped.
+ * @return mixed Stripped value.
+ */
+function stripslashes_deep( $value ) {
+	return map_deep( $value, 'stripslashes_from_strings_only' );
+}
+
+/**
+ * Callback function for `stripslashes_deep()` which strips slashes from strings.
+ *
+ * @since 4.4.0
+ *
+ * @param mixed $value The array or string to be stripped.
+ * @return mixed The stripped value.
+ */
+function stripslashes_from_strings_only( $value ) {
+	return is_string( $value ) ? stripslashes( $value ) : $value;
+}
+
+/**
+ * Maps a function to all non-iterable elements of an array or an object.
+ *
+ * This is similar to `array_walk_recursive()` but acts upon objects too.
+ *
+ * @since 4.4.0
+ *
+ * @param mixed    $value    The array, object, or scalar.
+ * @param callable $callback The function to map onto $value.
+ * @return mixed The value with the callback applied to all non-arrays and non-objects inside it.
+ */
+function map_deep( $value, $callback ) {
+	if ( is_array( $value ) ) {
+		foreach ( $value as $index => $item ) {
+			$value[ $index ] = map_deep( $item, $callback );
+		}
+	} elseif ( is_object( $value ) ) {
+		$object_vars = get_object_vars( $value );
+		foreach ( $object_vars as $property_name => $property_value ) {
+			$value->$property_name = map_deep( $property_value, $callback );
+		}
+	} else {
+		$value = call_user_func( $callback, $value );
+	}
+
+	return $value;
 }
 
 /**
@@ -879,7 +939,7 @@ function wp_parse_args( $args, $defaults = array() ) {
 	return $parsed_args;
 }
 
-function apply_filters( string $filter, mixed $data, mixed $context ) {
+function apply_filters( string $filter, mixed $data, mixed $context=array() ) {
 	return $data;
 }
 

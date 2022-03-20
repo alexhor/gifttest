@@ -59,13 +59,16 @@
 											v-model="gift.element.data.text"
 											:placeholder="text.gift_text"
 											:init="{
-												height: 200,
+												min_height: 300,
+												max_height: 800,
+												resize: true,
 												menu: {},
 												toolbar: [
 													'undo redo | fontselect fontsizeselect formatselect | forecolor backcolor | removeformat | fullscreen',
 													'casechange | bold italic underline strikethrough | bullist numlist outdent indent | blockquote hr link unlink',
 												],
 											}"
+											api-key="krnjha9dl66ncl6m2u2na18cvr4bnhndkkgx72vqvnzj2jek"
 											@input="emitGiftListUpdate" />
 									</td>
 								</tr>
@@ -162,6 +165,7 @@ export default {
 		return {
 			giftList: this.modelValue,
 			addingGiftInProgress: false,
+			tinyMceApiKey: gifttest.tinyMceApiKey,
 		}
 	},
 	watch: {
@@ -184,7 +188,7 @@ export default {
 		questionIndex(questionId) {
 			let questionIndex = false
 			jQuery.each(this.availableQuestionList, function(i, tmpQuestion) {
-				if (tmpQuestion.id.toString() === questionId) {
+				if (tmpQuestion.id.toString() === questionId.toString()) {
 					questionIndex = i
 					return false
 				}
@@ -194,7 +198,7 @@ export default {
 		getQuestionById(questionId) {
 			let question = false
 			jQuery.each(this.availableQuestionList, function(i, tmpQuestion) {
-				if (tmpQuestion.id.toString() === questionId) {
+				if (tmpQuestion.id.toString() === questionId.toString()) {
 					question = tmpQuestion
 					return false
 				}

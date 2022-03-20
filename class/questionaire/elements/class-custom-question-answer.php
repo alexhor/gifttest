@@ -49,7 +49,7 @@ if ( ! class_exists( 'Custom_Question_Answer' ) ) :
 				$data,
 				array(
 					'text'  => '',
-					'value' => array(),
+					'value' => '',
 				)
 			);
 		}
@@ -73,14 +73,10 @@ if ( ! class_exists( 'Custom_Question_Answer' ) ) :
 		 * @since 1.0.0
 		 */
 		public function jsonSerialize() : mixed {
-			$sanitizedValue = array();
-			foreach( $this->data['value'] as $key => $value ) {
-				$sanitizedValue[ sanitize_text_field( $key ) ] = sanitize_text_field( $value );
-			}
 			return array(
 				'id'    => (int) sanitize_text_field( $this->get_id() ),
 				'text'  => sanitize_text_field( $this->data['text'] ),
-				'value' => $sanitizedValue,
+				'value' => sanitize_text_field( $this->data['value'] ),
 			);
 		}
 	}
