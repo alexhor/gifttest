@@ -125,7 +125,6 @@
 <script>
 /* global ajaxurl */
 /* global jQuery */
-/* global Vue */
 /* global gifttest */
 import draggable from 'vuedraggable'
 import Editor from '@tinymce/tinymce-vue'
@@ -228,7 +227,7 @@ export default {
 
 			jQuery.each(self.giftList, function(i, gift) {
 				if (gift.id === giftId) {
-					Vue.delete(self.giftList, i)
+					self.giftList.splice(i, 1)
 					return false
 				}
 			})
@@ -267,9 +266,12 @@ export default {
 				} else {
 					self.displayMessage(response.message, response.status)
 				}
+			}, 'json').fail(function() {
+				console.debug('Adding gift failed')
+			}).always(function() {
 				// loading done
 				self.addingGiftInProgress = false
-			}, 'json')
+			})
 		},
 		toggleContents() {
 			jQuery(this.$refs.contents).toggle()

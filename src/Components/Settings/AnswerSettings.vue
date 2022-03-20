@@ -87,7 +87,6 @@
 <script>
 /* global ajaxurl */
 /* global jQuery */
-/* global Vue */
 /* global gifttest */
 import draggable from 'vuedraggable'
 __webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
@@ -142,7 +141,7 @@ export default {
 
 			jQuery.each(self.answerList, function(i, answer) {
 				if (answer.id === answerId) {
-					Vue.delete(self.answerList, i)
+					self.answerList.splice(i, 1)
 					return false
 				}
 			})
@@ -177,9 +176,12 @@ export default {
 				} else {
 					self.displayMessage(response.message, response.status)
 				}
+			}, 'json').fail(function() {
+				console.debug('Adding answer failed')
+			}).always(function() {
 				// loading done
 				self.addingAnswerInProgress = false
-			}, 'json')
+			})
 		},
 		toggleContents() {
 			jQuery(this.$refs.contents).toggle()

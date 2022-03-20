@@ -226,7 +226,6 @@
 <script>
 /* global ajaxurl */
 /* global jQuery */
-/* global Vue */
 /* global gifttest */
 import Editor from '@tinymce/tinymce-vue'
 import draggable from 'vuedraggable'
@@ -299,7 +298,7 @@ export default {
 
 			jQuery.each(self.elementList, function(i, element) {
 				if (element.id === elementId) {
-					Vue.delete(self.elementList, i)
+					self.elementList.splice(i, 1)
 					return false
 				}
 			})
@@ -311,7 +310,7 @@ export default {
 
 			jQuery.each(element.data.answers_list, function(i, answer) {
 				if (answer.id === answerId) {
-					Vue.delete(element.data.answers_list, i)
+					element.data.answers_list.splice(i, 1)
 					return false
 				}
 			})
@@ -368,9 +367,13 @@ export default {
 				} else {
 					self.displayMessage(response.message, response.status)
 				}
+			}, 'json').fail(function(e) {
+				console.debug(e)
+				console.debug('Adding answer failed')
+			}).always(function() {
 				// loading done
 				self.addingAnswerInProgress = false
-			}, 'json')
+			})
 		},
 		toggleBody(elementId) {
 			if (typeof elementId === 'undefined' || elementId === null) return
