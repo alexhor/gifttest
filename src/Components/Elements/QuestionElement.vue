@@ -30,7 +30,7 @@
 export default {
 	name: 'QuestionElement',
 	props: {
-		value: {
+		modelValue: {
 			type: Object,
 			required: true,
 			default() { return {} },
@@ -58,7 +58,7 @@ export default {
 	},
 	data() {
 		return {
-			element: this.value,
+			element: this.modelValue,
 			resultAnswerId: this.result,
 			latestRequestId: '',
 		}

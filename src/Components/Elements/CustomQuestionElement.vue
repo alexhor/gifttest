@@ -30,7 +30,7 @@
 export default {
 	name: 'CustomQuestionElement',
 	props: {
-		value: {
+		modelValue: {
 			type: Object,
 			required: true,
 			default() { return {} },
@@ -53,8 +53,8 @@ export default {
 	},
 	data() {
 		return {
-			element: this.value,
-			answersList: this.value.data.answers_list,
+			element: this.modelValue,
+			answersList: this.modelValue.data.answers_list,
 			resultAnswerId: this.result,
 			latestRequestId: '',
 		}

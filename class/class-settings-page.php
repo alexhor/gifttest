@@ -182,7 +182,7 @@ if ( ! class_exists( 'Settings_Page' ) ) :
 		 *
 		 * @since 1.0.0
 		 */
-		public function get_questionaire_list() {
+		public static function get_questionaire_list() {
 			$questionaire_list = array();
 			$id_list           = get_option( 'gifttest_questionaire_id_list', array() );
 			foreach ( $id_list as $questionaire_id ) {

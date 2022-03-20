@@ -32,6 +32,8 @@
  */
 namespace Gift_Test;
 
+use Gift_Test\Questionaire\Questionaire;
+
 // Load giftest
 define( 'ABSPATH',  __DIR__ );
 require_once ABSPATH . '/functions.php';
@@ -42,5 +44,23 @@ $loader = new Plugin_Loader();
 do_action('init');
 do_action('wp_enqueue_scripts');
 require_once plugin_dir_path( __FILE__ ) . 'parts/header.php';
-echo '<div id="gifttest"></div>';
+
+// Get all questionaires
+$questionaireList = Settings_Page::get_questionaire_list();
+
+// If only one questionaire exists, show it straight away
+if ( 1 == count( $questionaireList ) ) {
+	echo Shortcode::render_shortcode( [ 'test-id' => $questionaireList[0]->get_id() ] );
+}
+// Check if a valid questionaire was selected
+else if ( isset( $_REQUEST['test-id'] ) && false !== Questionaire::get( $_REQUEST['test-id'] ) ) {
+	echo Shortcode::render_shortcode( [ 'test-id' => $_REQUEST['test-id'] ] );
+}
+// Show questionaire selection
+else {
+	foreach ( $questionaireList as $questionaire ) {
+		echo '<a href="?test-id=' . $questionaire->get_id() . '">' . $questionaire->get_name() . '</a><br>';
+	}
+}
+
 require_once plugin_dir_path( __FILE__ ) . 'parts/footer.php';

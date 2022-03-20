@@ -17,7 +17,7 @@
 export default {
 	name: 'ContentElement',
 	props: {
-		value: {
+		modelValue: {
 			type: Object,
 			required: true,
 			default() { return {} },
@@ -35,11 +35,11 @@ export default {
 	},
 	data() {
 		return {
-			element: this.value,
+			element: this.modelValue,
 		}
 	},
 	watch: {
-		value(newValue, oldValue) {
+		modelValue(newValue, oldValue) {
 			this.element = newValue
 		},
 	},

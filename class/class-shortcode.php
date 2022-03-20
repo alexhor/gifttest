@@ -41,6 +41,8 @@ if ( ! class_exists( 'Shortcode' ) ) :
 			$attributes = shortcode_atts( array( 'test-id' => '1' ), $attributes );
 
 			// Get styles and scripts.
+			//wp_register_script( 'vuejs', plugin_dir_url( __FILE__ ) . '../js/vue.min.js', array(), '2.6.11', false );
+			wp_register_script( 'gifttest-questionaire', plugin_dir_url( __FILE__ ) . '../js/gifttest_Questionaire.js', array( 'jquery', 'vuejs' ), '1.0.0', false );
 			wp_localize_script(
 				'gifttest-questionaire',
 				'gifttest',
@@ -63,6 +65,7 @@ if ( ! class_exists( 'Shortcode' ) ) :
 					'vue_components_path' => plugin_dir_url( __FILE__ ) . '../js/',
 				)
 			);
+
 			wp_enqueue_script( 'gifttest-questionaire' );
 			wp_enqueue_style( 'gifttest-style' );
 

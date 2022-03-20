@@ -70,7 +70,7 @@ if ( ! class_exists( 'Plugin_Loader' ) ) :
 						'create_answer'                 => wp_create_nonce( 'gifttest_create_questionaire_answer' ),
 						'create_gift'                   => wp_create_nonce( 'gifttest_create_questionaire_gift' ),
 					),
-					'tinyMceApiKey'									=> 'no-api-key', # TODO: move to config
+					'tinyMceApiKey'									=> 'abc', # TODO: move to config
 					'user_can_delete'     => current_user_can( 'delete_posts' ),
 					'text'                => $this::settings_js_translations(),
 					'vue_components_path' => plugin_dir_url( __FILE__ ) . '../js/',
@@ -85,8 +85,6 @@ if ( ! class_exists( 'Plugin_Loader' ) ) :
 		 * @since 1.0.0
 		 */
 		public function scripts() {
-			//wp_register_script( 'vuejs', plugin_dir_url( __FILE__ ) . '../js/vue.min.js', array(), '2.6.11', false );
-			wp_register_script( 'gifttest-questionaire', plugin_dir_url( __FILE__ ) . '../js/gifttest_Questionaire.js', array( 'jquery', 'vuejs' ), '1.0.0', false );
 			wp_register_style( 'gifttest-style', plugin_dir_url( __FILE__ ) . '../css/style.css', array(), '1.0.0' );
 		}
 

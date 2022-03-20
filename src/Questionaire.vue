@@ -57,14 +57,15 @@
 <script>
 /* global jQuery */
 /* global gifttest */
-// __webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
+import { defineComponent, defineAsyncComponent } from 'vue'
+__webpack_public_path__ = gifttest.vue_components_path // eslint-disable-line
 
-const ScoreBoard = () => import(/* webpackChunkName: "ScoreBoard" */'./Components/ScoreBoard.vue')
-const ContentElement = () => import(/* webpackChunkName: "ContentElement" *//* webpackPrefetch: true */'./Components/Elements/ContentElement.vue')
-const QuestionElement = () => import(/* webpackChunkName: "QuestionElement" *//* webpackPrefetch: true */'./Components/Elements/QuestionElement.vue')
-const CustomQuestionElement = () => import(/* webpackChunkName: "CustomQuestionElement" *//* webpackPrefetch: true */'./Components/Elements/CustomQuestionElement.vue')
+const ScoreBoard = defineAsyncComponent(() => import(/* webpackChunkName: "ScoreBoard" */'./Components/ScoreBoard.vue'))
+const ContentElement = defineAsyncComponent(() => import(/* webpackChunkName: "ContentElement" *//* webpackPrefetch: true */'./Components/Elements/ContentElement.vue'))
+const QuestionElement = defineAsyncComponent(() => import(/* webpackChunkName: "QuestionElement" *//* webpackPrefetch: true */'./Components/Elements/QuestionElement.vue'))
+const CustomQuestionElement = defineAsyncComponent(() => import(/* webpackChunkName: "CustomQuestionElement" *//* webpackPrefetch: true */'./Components/Elements/CustomQuestionElement.vue'))
 
-export default {
+export default defineComponent({
 	name: 'Questionaire',
 	components: {
 		ContentElement,
@@ -114,10 +115,6 @@ export default {
 	beforeMount() {
 		this.pluginDirUrl = gifttest.plugin_dir_url
 		this.loadQuestionaire()
-		// load components needed right away
-		ContentElement()
-		QuestionElement()
-		CustomQuestionElement()
 	},
 	methods: {
 		nextElement(result) {
@@ -155,9 +152,6 @@ export default {
 					self.giftList = response.data.gift_list
 
 					jQuery(document.body).trigger('post-load')
-
-					// load additional components needed later
-					ScoreBoard()
 				}
 			}, 'json').fail(function() {
 				console.debug('Loading Questionaire failed')
@@ -166,5 +160,5 @@ export default {
 			})
 		},
 	},
-}
+})
 </script>
